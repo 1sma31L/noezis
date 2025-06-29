@@ -1,9 +1,13 @@
+"use client";
 import React from "react";
 import { ModeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 function NavBar() {
+  const { data: session, status } = useSession();
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 px-10 py-4 backdrop-blur-sm">
       <ul className="flex w-full flex-row items-center justify-between gap-2">
@@ -23,12 +27,31 @@ function NavBar() {
           </Link>
         </li>
         <li className="flex flex-row items-center justify-center gap-2">
-          <Button variant="default" className="rounded-full" size={"lg"}>
-            <Link href="/signup">Get Started</Link>
-          </Button>
-          <Button variant="outline" className="rounded-full" size={"lg"}>
-            <Link href="/signin">Login</Link>
-          </Button>
+          {!session ? (
+            <>
+              <Button variant="default" className="rounded-full" size={"lg"}>
+                <Link href="/signup">Get Started</Link>
+              </Button>
+              <Button variant="outline" className="rounded-full" size={"lg"}>
+                <Link href="/signin">Login</Link>
+              </Button>
+            </>
+          ) : (
+            <div className="flex flex-row items-center justify-center gap-2">
+              <Avatar>
+                <AvatarImage src={session.user?.image ?? ""} />
+                <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <Button
+                onClick={() => signOut()}
+                variant="destructive"
+                className="rounded-full"
+                size={"lg"}
+              >
+                Logout
+              </Button>
+            </div>
+          )}
           <ModeToggle />
         </li>
       </ul>
