@@ -11,10 +11,10 @@ export default function Home() {
   const [imageError, setImageError] = useState(false);
 
   // Public query - available to all users
-  const hello = api.post.hello.useQuery({ text: "TRPC" });
+  const hello = api.test.hello.useQuery({ text: "TRPC" });
 
   // Protected query - only available when logged in
-  const secretMessage = api.post.getSecretMessage.useQuery(undefined, {
+  const secretMessage = api.test.getSecretMessage.useQuery(undefined, {
     enabled: !!session, // Only run query when session exists
   });
 
