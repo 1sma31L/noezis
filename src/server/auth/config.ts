@@ -1,6 +1,6 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import GithubProvider from "next-auth/providers/github";
 
 import { db } from "@/server/db";
 import {
@@ -9,6 +9,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema";
+import { env } from "@/env";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -38,7 +39,12 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    DiscordProvider,
+    GithubProvider({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      clientId: env.GITHUB_CLIENT_ID,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
     /**
      * ...add more providers here.
      *
