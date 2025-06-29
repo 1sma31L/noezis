@@ -1,10 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { api } from "@/trpc/react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -23,70 +26,86 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-500 to-purple-600 text-white">
-      <div className="space-y-6 text-center">
-        <h1 className="text-6xl font-bold">Noezis</h1>
-        <p className="text-xl">Social media for the modern age</p>
+    <main className="bg-background relative min-h-screen px-4">
+      <div className="absolute top-4 right-4">
+        <ModeToggle />
+      </div>
 
-        {/* TRPC Query Results */}
-        <div className="space-y-2">
-          <p className="text-lg">
-            {hello.isLoading ? "Loading..." : hello.data?.greeting}
-          </p>
-          {session && (
-            <p className="text-lg italic">
-              {secretMessage.isLoading
-                ? "Loading secret..."
-                : secretMessage.data}
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <div className="w-full max-w-lg space-y-8">
+          <div className="space-y-2 text-center">
+            <h1 className="text-foreground text-4xl font-bold tracking-tight sm:text-6xl">
+              Noezis
+            </h1>
+            <p className="text-muted-foreground text-lg">
+              Social media for the modern age
             </p>
-          )}
-        </div>
+          </div>
 
-        <div className="mt-8 space-y-4">
-          {status === "loading" ? (
-            <p className="text-lg">Loading...</p>
-          ) : session ? (
-            <div className="space-y-4">
-              <div className="flex items-center justify-center gap-3">
-                {session.user?.image && !imageError ? (
-                  <img
-                    src={session.user.image}
-                    alt="Profile"
-                    className="h-10 w-10 rounded-full bg-white/10"
-                    onError={handleImageError}
-                  />
-                ) : (
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-lg font-semibold uppercase">
-                    {session.user?.name?.[0] ?? "U"}
-                  </div>
-                )}
-                <p className="text-lg">
-                  Welcome, {session.user?.name ?? "User"}!
+          {/* TRPC Query Results */}
+          <Card className="bg-muted/50 border-none shadow-none">
+            <CardContent className="space-y-2 p-4 text-center">
+              <p className="text-muted-foreground text-sm">
+                {hello.isLoading ? "Loading..." : hello.data?.greeting}
+              </p>
+              {session && (
+                <p className="text-muted-foreground text-sm italic">
+                  {secretMessage.isLoading
+                    ? "Loading secret..."
+                    : secretMessage.data}
                 </p>
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6">
+            {status === "loading" ? (
+              <div className="text-center">
+                <p className="text-muted-foreground text-sm">Loading...</p>
               </div>
-              <button
-                onClick={() => void signOut({ callbackUrl: "/" })}
-                className="rounded-lg bg-white/10 px-6 py-2 font-semibold transition hover:bg-white/20"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <div className="space-x-4">
-              <Link
-                href="/signin"
-                className="rounded-lg bg-white px-6 py-3 font-semibold text-blue-600 transition hover:bg-blue-50"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-lg border-2 border-white bg-transparent px-6 py-3 font-semibold transition hover:bg-white/10"
-              >
-                Sign Up
-              </Link>
-            </div>
-          )}
+            ) : session ? (
+              <div className="space-y-6">
+                <div className="flex flex-col items-center gap-4">
+                  <Avatar className="h-16 w-16">
+                    {session.user?.image && !imageError ? (
+                      <AvatarImage
+                        src={session.user.image}
+                        alt={session.user?.name ?? "User"}
+                        onError={handleImageError}
+                      />
+                    ) : null}
+                    <AvatarFallback className="text-lg">
+                      {session.user?.name?.[0] ?? "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="space-y-1 text-center">
+                    <p className="text-lg font-medium">
+                      Welcome, {session.user?.name ?? "User"}!
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      {session.user?.email}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => void signOut({ callbackUrl: "/" })}
+                  className="w-full"
+                >
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <Button asChild variant="default" size="lg" className="w-full">
+                  <Link href="/signin">Sign In</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="w-full">
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </main>

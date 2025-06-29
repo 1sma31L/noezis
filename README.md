@@ -1,29 +1,160 @@
-# Create T3 App
+# Noezis
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern social media platform focused on high-quality discussions, knowledge sharing, and rational discourse. Inspired by Quora and LessWrong, Noezis aims to create a space where users can engage in meaningful conversations, share expertise, and explore complex topics in depth.
 
-## What's next? How do I make an app with this?
+## Core Features (MVP)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Rich text discussion threads
+- Basic commenting system
+- User profiles
+- Topic categorization
+- Basic search
+- Authentication
+- Voting system
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Frontend
 
-## Learn More
+- [x] Next.js 15 (App Router)
+- [x] React 19
+- [x] TypeScript
+- [x] Tailwind CSS
+- [x] Shadcn/ui
+- [x] Lucide Icons
+- [x] Iconify Icons
+- [ ] TipTap Editor
+- [ ] React Query
+- [ ] Framer Motion
+- [ ] React Hook Form
+- [ ] Zod (Form Validation)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Backend
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- [x] tRPC
+- [x] Drizzle ORM
+- [x] PostgreSQL
+- [x] NextAuth.js
+- [ ] Redis (Caching)
+- [ ] AWS S3 (Media Storage)
+- [ ] Elasticsearch (Search)
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### DevOps & Tools
 
-## How do I deploy this?
+- [x] Bun (Package Manager & Runtime)
+- [x] ESLint
+- [x] Prettier
+- [ ] Docker
+- [ ] GitHub Actions
+- [ ] Jest
+- [ ] Cypress
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## MVP Development Roadmap (3 Weeks)
+
+### Week 1 (Core Foundation)
+
+- [x] Project initialization with Next.js
+- [x] Setup TypeScript and ESLint
+- [x] Implement authentication with NextAuth
+- [x] Create basic layout and theme system
+- [ ] Design and implement user profile schema
+- [ ] Create user profile pages (view/edit)
+- [ ] Setup basic navigation and routing
+
+### Week 2 (Discussion Features)
+
+- [ ] Design and implement post schema
+- [ ] Create post creation page with basic editor
+- [ ] Implement post listing and pagination
+- [ ] Add basic commenting functionality
+- [ ] Create post detail page
+- [ ] Implement basic voting system
+- [ ] Add post categories/tags
+
+### Week 3 (Polish & Essential Features)
+
+- [ ] Implement basic search functionality
+- [ ] Add user profile images and settings
+- [ ] Create homepage feed with filters
+- [ ] Implement basic moderation tools
+- [ ] Add error handling and loading states
+- [ ] Optimize performance
+- [ ] Deploy MVP
+
+## Future Features (Post-MVP)
+
+### Enhanced Discussion
+
+- Nested comments with infinite depth
+- Rich text editor with markdown support
+- Real-time updates
+- Draft saving
+- Post versioning
+
+### User Experience
+
+- Karma/reputation system
+- User achievements
+- Notifications system
+- Following system
+- Bookmarks and reading lists
+
+### Content Organization
+
+- Advanced topic hierarchy
+- Tag system with synonyms
+- Custom feeds
+- Content recommendation engine
+
+### Platform Features
+
+- Advanced search with Elasticsearch
+- Media upload and management
+- Analytics dashboard
+- API for third-party integrations
+- Mobile app
+
+### Moderation & Administration
+
+- Advanced moderation tools
+- User roles and permissions
+- Content flagging system
+- Automated content moderation
+- Admin dashboard
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/noezis.git
+
+# Install dependencies
+bun install
+
+# Setup environment variables
+cp .env.example .env
+
+# Start the development server
+bun dev
+
+# Start the database
+./start-database.sh
+```
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Inspired by Quora and LessWrong
+- Built with modern web technologies
+- Focused on fostering meaningful discussions
+
+---
+
+_Note: This is a work in progress. Features and timelines may change as development progresses._
