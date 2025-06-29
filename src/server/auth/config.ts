@@ -40,9 +40,7 @@ declare module "next-auth" {
 export const authConfig = {
   providers: [
     GithubProvider({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       clientId: env.GITHUB_CLIENT_ID,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
     /**

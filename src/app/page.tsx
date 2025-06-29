@@ -3,15 +3,38 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { api } from "@/trpc/react";
 
 export default function Home() {
   const { data: session, status } = useSession();
+
+  // Public query - available to all users
+  const hello = api.post.hello.useQuery({ text: "TRPC" });
+
+  // Protected query - only available when logged in
+  const secretMessage = api.post.getSecretMessage.useQuery(undefined, {
+    enabled: !!session, // Only run query when session exists
+  });
 
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-500 to-purple-600 text-white">
       <div className="space-y-6 text-center">
         <h1 className="text-6xl font-bold">Noezis</h1>
         <p className="text-xl">Social media for the modern age</p>
+
+        {/* TRPC Query Results */}
+        <div className="space-y-2">
+          <p className="text-lg">
+            {hello.isLoading ? "Loading..." : hello.data?.greeting}
+          </p>
+          {session && (
+            <p className="text-lg italic">
+              {secretMessage.isLoading
+                ? "Loading secret..."
+                : secretMessage.data}
+            </p>
+          )}
+        </div>
 
         <div className="mt-8 space-y-4">
           {status === "loading" ? (

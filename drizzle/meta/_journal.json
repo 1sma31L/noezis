@@ -15,6 +15,13 @@
       "when": 1751209560426,
       "tag": "0001_tired_lionheart",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751210684032,
+      "tag": "0002_smart_silhouette",
+      "breakpoints": true
     }
   ]
 }
