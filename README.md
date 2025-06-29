@@ -24,7 +24,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] Lucide Icons
 - [x] Iconify Icons
 - [ ] TipTap Editor
-- [ ] React Query
+- [x] React Query
 - [ ] Framer Motion
 - [ ] React Hook Form
 - [ ] Zod (Form Validation)
@@ -53,13 +53,22 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 
 ### Week 1 (Core Foundation)
 
+Day 1:
+
 - [x] Project initialization with Next.js
 - [x] Setup TypeScript and ESLint
 - [x] Implement authentication with NextAuth
 - [x] Create basic layout and theme system
+- [x] Create homepage with card layout
+- [x] Setup basic navigation and routing
+
+Day 2:
+
+- [ ] Make homepage responsive
 - [ ] Design and implement user profile schema
-- [ ] Create user profile pages (view/edit)
-- [ ] Setup basic navigation and routing
+- [ ] Create user profile pages (view/edit) (personal/other)
+
+---
 
 ### Week 2 (Discussion Features)
 

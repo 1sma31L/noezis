@@ -4,7 +4,9 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { type ReactNode } from "react";
 
-import { Providers } from "@/app/components/providers";
+import { Providers } from "@/components/providers";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -23,7 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <NavBar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

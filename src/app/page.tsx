@@ -6,12 +6,21 @@ import { api } from "@/trpc/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { ModeToggle } from "@/components/theme-toggle";
+import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [imageError, setImageError] = useState(false);
 
   // Public query - available to all users
   const hello = api.test.hello.useQuery({ text: "TRPC" });
@@ -21,93 +30,63 @@ export default function Home() {
     enabled: !!session, // Only run query when session exists
   });
 
-  const handleImageError = () => {
-    setImageError(true);
-  };
-
   return (
-    <main className="bg-background relative min-h-screen px-4">
-      <div className="absolute top-4 right-4">
-        <ModeToggle />
-      </div>
-
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <div className="w-full max-w-lg space-y-8">
-          <div className="space-y-2 text-center">
-            <h1 className="text-foreground text-4xl font-bold tracking-tight sm:text-6xl">
+    <main className="relative flex min-h-screen flex-col items-center justify-center px-4 py-10">
+      {/* CARD */}
+      <Card className="shadow-4xl absolute top-76 left-72 z-10 flex min-w-96 flex-col items-center justify-center rounded-2xl shadow-2xl">
+        <CardHeader className="flex w-full flex-col items-center justify-center gap-2">
+          <CardTitle className="text-center text-4xl tracking-tight">
+            Discuss, Share, and Connect with{" "}
+            <span className="from-primary/90 to-primary/70 bg-gradient-to-r bg-clip-text text-transparent">
               Noezis
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Social media for the modern age
-            </p>
+            </span>
+          </CardTitle>
+          <CardDescription className="text-md text-center">
+            Noezis is a social media platform for the modern age.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex w-full flex-col items-center justify-center gap-4">
+          <Button className="w-full rounded-xl py-6 text-lg" size="lg">
+            <Icon icon="mdi:google" className="mr-2" />
+            Sign in with Google
+          </Button>
+          <Button className="w-full rounded-xl py-6 text-lg" size="lg">
+            <Icon icon="mdi:github" className="mr-2" />
+            Sign in with GitHub
+          </Button>
+          <div className="text-muted-foreground text-center text-sm">
+            {"or continue with"}
           </div>
-
-          {/* TRPC Query Results */}
-          <Card className="bg-muted/50 border-none shadow-none">
-            <CardContent className="space-y-2 p-4 text-center">
-              <p className="text-muted-foreground text-sm">
-                {hello.isLoading ? "Loading..." : hello.data?.greeting}
-              </p>
-              {session && (
-                <p className="text-muted-foreground text-sm italic">
-                  {secretMessage.isLoading
-                    ? "Loading secret..."
-                    : secretMessage.data}
-                </p>
-              )}
-            </CardContent>
-          </Card>
-
-          <div className="space-y-6">
-            {status === "loading" ? (
-              <div className="text-center">
-                <p className="text-muted-foreground text-sm">Loading...</p>
-              </div>
-            ) : session ? (
-              <div className="space-y-6">
-                <div className="flex flex-col items-center gap-4">
-                  <Avatar className="h-16 w-16">
-                    {session.user?.image && !imageError ? (
-                      <AvatarImage
-                        src={session.user.image}
-                        alt={session.user?.name ?? "User"}
-                        onError={handleImageError}
-                      />
-                    ) : null}
-                    <AvatarFallback className="text-lg">
-                      {session.user?.name?.[0] ?? "U"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1 text-center">
-                    <p className="text-lg font-medium">
-                      Welcome, {session.user?.name ?? "User"}!
-                    </p>
-                    <p className="text-muted-foreground text-sm">
-                      {session.user?.email}
-                    </p>
-                  </div>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => void signOut({ callbackUrl: "/" })}
-                  className="w-full"
-                >
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-3">
-                <Button asChild variant="default" size="lg" className="w-full">
-                  <Link href="/signin">Sign In</Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="w-full">
-                  <Link href="/signup">Sign Up</Link>
-                </Button>
-              </div>
-            )}
+          <Button
+            className="w-full rounded-xl py-6 text-lg"
+            size="lg"
+            variant="outline"
+          >
+            <Icon icon="mdi:email" className="mr-2" />
+            Sign in with Email
+          </Button>
+        </CardContent>
+        <CardFooter className="flex w-full flex-col items-center justify-center gap-2">
+          <div className="text-muted-foreground text-center text-xs">
+            By continuing, you agree to our{" "}
+            <Link href="/terms" className="text-primary">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" className="text-primary">
+              Privacy Policy
+            </Link>
           </div>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
+      {/* {"HERO PICTURE"} */}
+      <Image
+        src="/2001.jpg"
+        alt="Hero Picture"
+        width={1000}
+        height={1000}
+        className="absolute top-56 right-80 z-0 rounded-3xl dark:brightness-75"
+      />
     </main>
   );
 }
