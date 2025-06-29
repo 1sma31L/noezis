@@ -1,6 +1,22 @@
+"use client";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
+  const handleGoogleSignUp = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Error signing up with Google:", error);
+    }
+  };
+  const handleGitHubSignUp = async () => {
+    try {
+      await signIn("github", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Error signing up with GitHub:", error);
+    }
+  };
   return (
     <main className="flex h-screen items-center justify-center bg-gray-50">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
@@ -9,6 +25,7 @@ export default function SignUp() {
         <div className="space-y-4">
           <button
             type="button"
+            onClick={handleGitHubSignUp}
             className="flex w-full items-center justify-center gap-3 rounded-md bg-black px-4 py-2 text-white transition hover:bg-gray-800"
           >
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -19,6 +36,7 @@ export default function SignUp() {
 
           <button
             type="button"
+            onClick={handleGoogleSignUp}
             className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 transition hover:bg-gray-50"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24">

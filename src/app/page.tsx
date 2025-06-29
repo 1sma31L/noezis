@@ -4,9 +4,11 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { api } from "@/trpc/react";
+import { useState } from "react";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const [imageError, setImageError] = useState(false);
 
   // Public query - available to all users
   const hello = api.post.hello.useQuery({ text: "TRPC" });
@@ -15,6 +17,10 @@ export default function Home() {
   const secretMessage = api.post.getSecretMessage.useQuery(undefined, {
     enabled: !!session, // Only run query when session exists
   });
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-500 to-purple-600 text-white">
@@ -42,12 +48,17 @@ export default function Home() {
           ) : session ? (
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-3">
-                {session.user?.image && (
+                {session.user?.image && !imageError ? (
                   <img
                     src={session.user.image}
                     alt="Profile"
-                    className="h-10 w-10 rounded-full"
+                    className="h-10 w-10 rounded-full bg-white/10"
+                    onError={handleImageError}
                   />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-lg font-semibold uppercase">
+                    {session.user?.name?.[0] ?? "U"}
+                  </div>
                 )}
                 <p className="text-lg">
                   Welcome, {session.user?.name ?? "User"}!

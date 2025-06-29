@@ -11,6 +11,14 @@ export default function SignIn() {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
+
   return (
     <main className="flex h-screen items-center justify-center bg-gray-50">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
@@ -31,6 +39,7 @@ export default function SignIn() {
           <button
             type="button"
             className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 transition hover:bg-gray-50"
+            onClick={handleGoogleSignIn}
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
