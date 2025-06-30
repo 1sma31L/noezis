@@ -49,7 +49,7 @@ function LeftSidebar() {
             className="w-full justify-start gap-4 rounded-full px-6 py-6 text-xl"
           >
             {item.icon}
-            <span className="hidden lg:inline">{item.label}</span>
+            <span className="hidden text-sm lg:inline">{item.label}</span>
           </Button>
         </Link>
       ))}
