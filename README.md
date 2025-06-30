@@ -27,7 +27,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] React Query
 - [ ] Framer Motion
 - [ ] React Hook Form
-- [ ] Zod (Form Validation)
+- [x] Zod (Form Validation)
 
 ### Backend
 
@@ -64,31 +64,19 @@ Day 1:
 
 Day 2:
 
-- [ ] Make homepage responsive
-- [ ] Design and implement user profile schema
-- [ ] Create user profile pages (view/edit) (personal/other)
+- [x] Design and implement user profile schema
+- [x] Design the profile page
+- [ ] Edit profile info page (or mode)
+- [ ] impore the design system and colors
+- [ ] navbar design and footer
+- [ ] show all info in profile page
+
+Day 3:
+
+- [ ] Mobile responsive
+- [ ] Complete the post component design
 
 ---
-
-### Week 2 (Discussion Features)
-
-- [ ] Design and implement post schema
-- [ ] Create post creation page with basic editor
-- [ ] Implement post listing and pagination
-- [ ] Add basic commenting functionality
-- [ ] Create post detail page
-- [ ] Implement basic voting system
-- [ ] Add post categories/tags
-
-### Week 3 (Polish & Essential Features)
-
-- [ ] Implement basic search functionality
-- [ ] Add user profile images and settings
-- [ ] Create homepage feed with filters
-- [ ] Implement basic moderation tools
-- [ ] Add error handling and loading states
-- [ ] Optimize performance
-- [ ] Deploy MVP
 
 ## Future Features (Post-MVP)
 

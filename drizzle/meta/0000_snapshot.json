@@ -1,11 +1,11 @@
 {
-  "id": "002be255-da5f-41df-bfa5-86a6fda02233",
+  "id": "9ccbd2a1-c3ae-49ee-9619-8a25b534aaf5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.my-t3-app_account": {
-      "name": "my-t3-app_account",
+    "public.account": {
+      "name": "account",
       "schema": "",
       "columns": {
         "userId": {
@@ -93,23 +93,23 @@
         }
       },
       "foreignKeys": {
-        "my-t3-app_account_userId_my-t3-app_user_id_fk": {
-          "name": "my-t3-app_account_userId_my-t3-app_user_id_fk",
-          "tableFrom": "my-t3-app_account",
-          "tableTo": "my-t3-app_user",
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
-        "my-t3-app_account_provider_providerAccountId_pk": {
-          "name": "my-t3-app_account_provider_providerAccountId_pk",
+        "account_provider_providerAccountId_pk": {
+          "name": "account_provider_providerAccountId_pk",
           "columns": [
             "provider",
             "providerAccountId"
@@ -121,38 +121,97 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.my-t3-app_post": {
-      "name": "my-t3-app_post",
+    "public.profile": {
+      "name": "profile",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "varchar(255)",
           "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "byDefault",
-            "name": "my-t3-app_post_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "createdById": {
-          "name": "createdById",
+        "userId": {
+          "name": "userId",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bio": {
+          "name": "bio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bannerImage": {
+          "name": "bannerImage",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dateOfBirth": {
+          "name": "dateOfBirth",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interests": {
+          "name": "interests",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isVerified": {
+          "name": "isVerified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "isPrivate": {
+          "name": "isPrivate",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "isBanned": {
+          "name": "isBanned",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "isDeleted": {
+          "name": "isDeleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "createdAt": {
           "name": "createdAt",
@@ -165,64 +224,42 @@
           "name": "updatedAt",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
-      "indexes": {
-        "created_by_idx": {
-          "name": "created_by_idx",
-          "columns": [
-            {
-              "expression": "createdById",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "name_idx": {
-          "name": "name_idx",
-          "columns": [
-            {
-              "expression": "name",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
-        "my-t3-app_post_createdById_my-t3-app_user_id_fk": {
-          "name": "my-t3-app_post_createdById_my-t3-app_user_id_fk",
-          "tableFrom": "my-t3-app_post",
-          "tableTo": "my-t3-app_user",
+        "profile_userId_user_id_fk": {
+          "name": "profile_userId_user_id_fk",
+          "tableFrom": "profile",
+          "tableTo": "user",
           "columnsFrom": [
-            "createdById"
+            "userId"
           ],
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "profile_username_unique": {
+          "name": "profile_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.my-t3-app_session": {
-      "name": "my-t3-app_session",
+    "public.session": {
+      "name": "session",
       "schema": "",
       "columns": {
         "sessionToken": {
@@ -262,17 +299,17 @@
         }
       },
       "foreignKeys": {
-        "my-t3-app_session_userId_my-t3-app_user_id_fk": {
-          "name": "my-t3-app_session_userId_my-t3-app_user_id_fk",
-          "tableFrom": "my-t3-app_session",
-          "tableTo": "my-t3-app_user",
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -282,8 +319,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.my-t3-app_user": {
-      "name": "my-t3-app_user",
+    "public.user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -326,8 +363,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.my-t3-app_verification_token": {
-      "name": "my-t3-app_verification_token",
+    "public.verification_token": {
+      "name": "verification_token",
       "schema": "",
       "columns": {
         "identifier": {
@@ -352,8 +389,8 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "my-t3-app_verification_token_identifier_token_pk": {
-          "name": "my-t3-app_verification_token_identifier_token_pk",
+        "verification_token_identifier_token_pk": {
+          "name": "verification_token_identifier_token_pk",
           "columns": [
             "identifier",
             "token"

@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1751209367171,
-      "tag": "0000_exotic_betty_brant",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1751209560426,
-      "tag": "0001_tired_lionheart",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1751210684032,
-      "tag": "0002_smart_silhouette",
+      "when": 1751288125038,
+      "tag": "0000_adorable_raza",
       "breakpoints": true
     }
   ]

@@ -6,8 +6,15 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { api } from "@/trpc/react";
+
 function NavBar() {
   const { data: session, status } = useSession();
+  const { data: profile } = api.user.getProfileByUserId.useQuery(
+    { userId: session?.user?.id ?? "" },
+    { enabled: !!session?.user?.id },
+  );
+
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 px-10 py-4 backdrop-blur-sm">
       <ul className="flex w-full flex-row items-center justify-between gap-2">
@@ -38,10 +45,17 @@ function NavBar() {
             </>
           ) : (
             <div className="flex flex-row items-center justify-center gap-2">
-              <Avatar>
-                <AvatarImage src={session.user?.image ?? ""} />
-                <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <Link
+                href={profile ? `/users/${profile.username}` : "#"}
+                className="flex flex-row items-center justify-center gap-2"
+              >
+                <Avatar>
+                  <AvatarImage src={session.user?.image ?? ""} />
+                  <AvatarFallback>
+                    {session.user?.name?.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
               <Button
                 onClick={() => signOut()}
                 variant="destructive"

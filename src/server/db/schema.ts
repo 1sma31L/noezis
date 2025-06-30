@@ -2,12 +2,6 @@ import { relations, sql } from "drizzle-orm";
 import { index, pgTable, primaryKey } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
 export const users = pgTable("user", (d) => ({
   id: d
     .varchar({ length: 255 })
@@ -35,7 +29,7 @@ export const accounts = pgTable(
     userId: d
       .varchar({ length: 255 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     type: d.varchar({ length: 255 }).$type<AdapterAccount["type"]>().notNull(),
     provider: d.varchar({ length: 255 }).notNull(),
     providerAccountId: d.varchar({ length: 255 }).notNull(),
@@ -64,7 +58,7 @@ export const sessions = pgTable(
     userId: d
       .varchar({ length: 255 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     expires: d.timestamp({ mode: "date", withTimezone: true }).notNull(),
   }),
   (t) => [index("t_user_id_idx").on(t.userId)],
@@ -83,3 +77,39 @@ export const verificationTokens = pgTable(
   }),
   (t) => [primaryKey({ columns: [t.identifier, t.token] })],
 );
+
+export const profiles = pgTable("profile", (d) => ({
+  id: d
+    .varchar({ length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  username: d.varchar({ length: 50 }).notNull().unique(),
+  bio: d.text(),
+  location: d.varchar({ length: 100 }),
+  website: d.varchar({ length: 255 }),
+  bannerImage: d.varchar({ length: 255 }),
+  dateOfBirth: d.date(),
+  gender: d.varchar({ length: 50 }),
+  interests: d.text(),
+  isVerified: d.boolean().notNull().default(false),
+  isPrivate: d.boolean().notNull().default(false),
+  isBanned: d.boolean().notNull().default(false),
+  isDeleted: d.boolean().notNull().default(false),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const profilesRelations = relations(profiles, ({ one }) => ({
+  user: one(users, { fields: [profiles.userId], references: [users.id] }),
+}));
