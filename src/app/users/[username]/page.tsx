@@ -54,7 +54,7 @@ function UserProfile() {
                   icon="solar:verified-check-bold"
                   width="32"
                   height="32"
-                  style={{ color: "#0094ff" }}
+                  style={{ color: "#2a623d" }}
                 />
               )}
             </div>
