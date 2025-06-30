@@ -49,7 +49,7 @@ function UserProfile() {
           {user?.user.name ? (
             <div className="flex flex-row items-center justify-center gap-2">
               <h1 className="text-4xl font-bold">{user?.user.name}</h1>
-              {!user?.isVerified && (
+              {user?.isVerified && (
                 <Icon
                   icon="solar:verified-check-bold"
                   width="32"
