@@ -1,6 +1,4 @@
-"use client";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,8 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-
-export default function Home() {
+import { auth } from "@/server/auth";
+import { redirect } from "next/navigation";
+import SignInButton from "@/components/SignInButton";
+export default async function Home() {
+  const session = await auth();
+  if (session) {
+    redirect("/home");
+  }
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center px-4 py-10">
       {/* CARD */}
@@ -30,22 +34,8 @@ export default function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex w-full flex-col items-center justify-center gap-4">
-          <Button
-            onClick={() => signIn("google")}
-            className="w-full cursor-pointer rounded-xl py-6 text-lg"
-            size="lg"
-          >
-            <Icon icon="mdi:google" className="mr-2" />
-            Sign in with Google
-          </Button>
-          <Button
-            onClick={() => signIn("github")}
-            className="w-full cursor-pointer rounded-xl py-6 text-lg"
-            size="lg"
-          >
-            <Icon icon="mdi:github" className="mr-2" />
-            Sign in with GitHub
-          </Button>
+          <SignInButton provider="google" />
+          <SignInButton provider="github" />
           <div className="text-muted-foreground text-center text-sm">
             or continue to{" "}
           </div>

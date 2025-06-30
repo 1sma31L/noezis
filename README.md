@@ -66,14 +66,19 @@ Day 2:
 
 - [x] Design and implement user profile schema
 - [x] Design the profile page
-- [ ] Edit profile info page (or mode)
-- [ ] impore the design system and colors
-- [ ] navbar design and footer
-- [ ] show all info in profile page
+- [x] Mobile profile page
+- [x] navbar design and footer
+- [x] show all info in profile page
 
 Day 3:
 
-- [ ] Mobile responsive
+- [ ] impore the design system and colors
+- [ ] Mobile navbar
+- [ ] Mobile responsive (hero section)
+- [ ] Edit profile info page (or mode)
+
+Day 5:
+
 - [ ] Complete the post component design
 
 ---
