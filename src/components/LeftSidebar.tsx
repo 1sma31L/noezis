@@ -5,10 +5,12 @@ import { Button } from "./ui/button";
 import { Icon } from "@iconify/react";
 import { useSession } from "next-auth/react";
 import { api } from "@/trpc/react";
+import { usePathname } from "next/navigation";
 
 function LeftSidebar() {
+  const pathname = usePathname();
   const { data: session } = useSession();
-  const { data: profile } = api.user.getProfileByUserId.useQuery(
+  const { data: profile, isLoading } = api.user.getProfileByUserId.useQuery(
     { userId: session?.user?.id ?? "" },
     { enabled: !!session?.user?.id },
   );
@@ -16,27 +18,64 @@ function LeftSidebar() {
     {
       label: "Home",
       href: "/home",
-      icon: <Icon icon="ic:baseline-home" className="h-6! w-6!" />,
+      notActiveIcon: <Icon icon="ic:outline-home" className="h-6! w-6!" />,
+      activeIcon: (
+        <Icon
+          icon="ic:baseline-home"
+          className="h-6! w-6!"
+          style={{ color: "#2a623d" }}
+        />
+      ),
     },
     {
       label: "Explore",
       href: "/explore",
-      icon: <Icon icon="ic:baseline-explore" className="h-6! w-6!" />,
+      notActiveIcon: <Icon icon="ic:outline-explore" className="h-6! w-6!" />,
+      activeIcon: (
+        <Icon
+          icon="ic:baseline-explore"
+          className="h-6! w-6!"
+          style={{ color: "#2a623d" }}
+        />
+      ),
     },
     {
       label: "Notifications",
       href: "/notifications",
-      icon: <Icon icon="ic:baseline-notifications" className="h-6! w-6!" />,
+      notActiveIcon: (
+        <Icon icon="ic:outline-notifications" className="h-6! w-6!" />
+      ),
+      activeIcon: (
+        <Icon
+          icon="ic:baseline-notifications"
+          className="h-6! w-6!"
+          style={{ color: "#2a623d" }}
+        />
+      ),
     },
     {
       label: "Messages",
       href: "/messages",
-      icon: <Icon icon="ic:baseline-chat" className="h-6! w-6!" />,
+      notActiveIcon: <Icon icon="ic:outline-chat" className="h-6! w-6!" />,
+      activeIcon: (
+        <Icon
+          icon="ic:baseline-chat"
+          className="h-6! w-6!"
+          style={{ color: "#2a623d" }}
+        />
+      ),
     },
     {
       label: "Profile",
-      href: `/users/${profile?.username}`,
-      icon: <Icon icon="ic:baseline-person" className="h-6! w-6!" />,
+      href: `${profile?.id ? `/users/${profile?.username}` : "/signin"}`,
+      notActiveIcon: <Icon icon="ic:outline-person" className="h-6! w-6!" />,
+      activeIcon: (
+        <Icon
+          icon="ic:baseline-person"
+          className="h-6! w-6!"
+          style={{ color: "#2a623d" }}
+        />
+      ),
     },
   ];
 
@@ -47,8 +86,9 @@ function LeftSidebar() {
           <Button
             variant="ghost"
             className="w-full justify-start gap-4 rounded-full px-6 py-6 text-xl"
+            disabled={item.label === "Profile" && isLoading}
           >
-            {item.icon}
+            {pathname === item.href ? item.activeIcon : item.notActiveIcon}
             <span className="hidden text-sm lg:inline">{item.label}</span>
           </Button>
         </Link>

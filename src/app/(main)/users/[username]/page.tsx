@@ -47,12 +47,13 @@ function UserProfile() {
           />
         </div>
       ) : isLoading ? (
-        // Skeleton
         <div className="absolute z-0 h-40 w-full px-2 md:h-48">
           <div className="bg-muted h-full w-full animate-pulse rounded-2xl"></div>
         </div>
       ) : (
-        <div className="bg-primary absolute z-0 h-40 w-full rounded-2xl px-12 md:h-48"></div>
+        <div className="absolute z-0 h-40 w-full px-2 md:h-48">
+          <div className="bg-primary h-full w-full rounded-2xl"></div>
+        </div>
       )}
       <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-6 pt-24 text-sm md:gap-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
@@ -148,14 +149,14 @@ function UserProfile() {
                 </p>
               </div>
             ) : isLoading ? (
-              <div className="flex flex-row items-center justify-center gap-2">
+              <div className="flex flex-row items-center justify-center gap-1">
                 <Icon icon="mdi:map-marker" className="h-4 w-4 animate-pulse" />
                 <p className="text-muted-foreground animate-pulse">
                   Loading...
                 </p>
               </div>
             ) : (
-              <div className="flex flex-row items-center justify-center gap-2">
+              <div className="flex flex-row items-center justify-center gap-1">
                 <Icon icon="mdi:map-marker" className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   No location provided.
@@ -178,7 +179,7 @@ function UserProfile() {
                 Loading...
               </p>
             ) : (
-              <div className="flex flex-row items-center justify-center gap-2">
+              <div className="flex flex-row items-center justify-center gap-1">
                 <Icon icon="mdi:web" width="16" height="16" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   No website provided.
@@ -186,7 +187,7 @@ function UserProfile() {
               </div>
             )}
           </div>
-          <div className="flex flex-row items-center justify-center gap-2">
+          <div className="flex flex-row items-center justify-center gap-1">
             <Icon icon="mdi:calendar" width="16" height="16" />
             <p className="text-muted-foreground text-xs md:text-sm">
               Joined{" "}
@@ -197,13 +198,13 @@ function UserProfile() {
             </p>
           </div>
           <div className="flex flex-row items-center justify-start gap-4">
-            <div className="flex flex-row items-center justify-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-1">
               <Icon icon="mdi:account" width="16" height="16" />
               <p className="text-muted-foreground text-xs md:text-sm">
                 93 followers
               </p>
             </div>
-            <div className="flex flex-row items-center justify-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-1">
               <Icon icon="mdi:account" width="16" height="16" />
               <p className="text-muted-foreground text-xs md:text-sm">
                 93 following
@@ -212,7 +213,7 @@ function UserProfile() {
           </div>
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-2 pt-2 md:gap-4">
+        <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
           <Button className="rounded-full text-xs! md:text-sm!">
             <Icon icon="mdi:account-plus" className="h-4 w-4" />
             Follow

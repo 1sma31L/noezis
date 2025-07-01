@@ -4,6 +4,7 @@
 "use client";
 
 import * as React from "react";
+import { Icon } from "@iconify/react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -28,13 +29,25 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="flex items-center gap-3"
+        >
+          <Icon icon="mdi:weather-sunny" className="h-4 w-4" />
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="flex items-center gap-3"
+        >
+          <Icon icon="mdi:weather-night" className="h-4 w-4" />
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          onClick={() => setTheme("system")}
+          className="flex items-center gap-3"
+        >
+          <Icon icon="mdi:weather-cloudy" className="h-4 w-4" />
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -46,12 +46,12 @@ function NavBar() {
           {!session ? (
             <>
               <Button variant="default" className="rounded-full">
-                <Link href="/signup" className="text-xs md:text-base">
+                <Link href="/signup" className="!text-xs md:!text-base">
                   Get Started
                 </Link>
               </Button>
               <Button variant="outline" className="rounded-full">
-                <Link href="/signin" className="text-xs md:text-base">
+                <Link href="/signin" className="!text-xs md:!text-base">
                   Login
                 </Link>
               </Button>

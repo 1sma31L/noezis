@@ -16,7 +16,7 @@ export function Providers({ children }: { children: ReactNode }) {
     >
       <SessionProvider>
         <TRPCReactProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={true} /> */}
           {children}
         </TRPCReactProvider>
       </SessionProvider>

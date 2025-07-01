@@ -45,7 +45,7 @@ export default async function Home() {
             variant="outline"
           >
             <Icon icon="mdi:email" className="mr-2" />
-            <Link href="/signin">Sign in with Email</Link>
+            <Link href="/signup">Sign in with Email</Link>
           </Button>
         </CardContent>
         <CardFooter className="flex w-full flex-col items-center justify-center gap-2">

@@ -1,6 +1,7 @@
 import React from "react";
 import LeftSidebar from "@/components/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar";
+import MobileNavBar from "@/components/MobileNavBar";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <aside className="hidden xl:block">
         <RightSidebar />
       </aside>
+      <MobileNavBar />
     </div>
   );
 }
