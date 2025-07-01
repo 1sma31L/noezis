@@ -9,9 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { parseBioMentions } from "@/utils/parseBioMentions";
+import { useSession } from "next-auth/react";
 
 function UserProfile() {
   const { username } = useParams();
+  const { data: session } = useSession();
   const { data: user, isLoading } = api.user.getUserByUsername.useQuery({
     username: username as string,
   });
@@ -213,18 +215,22 @@ function UserProfile() {
           </div>
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
-          <Button className="rounded-full text-xs! md:text-sm!">
-            <Icon icon="mdi:account-plus" className="h-4 w-4" />
-            Follow
-          </Button>
-          <Button variant="outline" size="icon" className="rounded-full">
-            <Icon icon="mdi:message-outline" className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <Icon icon="mdi:dots-vertical" className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* Only show buttons when session is loaded AND it's not the user's own profile */}
+        {session && user?.user?.id && session.user?.id !== user.user.id && (
+          <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
+            <Button className="rounded-full text-xs! md:text-sm!">
+              <Icon icon="mdi:account-plus" className="h-4 w-4" />
+              Follow
+            </Button>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Icon icon="mdi:message-outline" className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <Icon icon="mdi:dots-vertical" className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+
         <Separator className="my-2 w-full" />
         <div className="flex w-full flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4">
           {navigationTabs.map((tab) => (

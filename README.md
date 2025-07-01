@@ -74,8 +74,8 @@ Day 3:
 
 - [ ] Add email Auth
 - [x] Mobile navbar
-- [ ] Mobile responsive (hero section)
-- [ ] Edit profile info page (or mode)
+- [x] Mobile responsive (hero section)
+- [x] Edit profile info page (or mode)
 - [ ] improve the design system and colors
       bugs:
 - [x] The profle page is wider
