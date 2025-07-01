@@ -26,7 +26,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [ ] TipTap Editor
 - [x] React Query
 - [ ] Framer Motion
-- [ ] React Hook Form
+- [x] React Hook Form
 - [x] Zod (Form Validation)
 
 ### Backend
@@ -72,11 +72,11 @@ Day 2:
 
 Day 3:
 
-- [ ] Add email Auth
 - [x] Mobile navbar
 - [x] Mobile responsive (hero section)
-- [ ] Edit profile info page (or mode)
 - [x] improve theme
+- [ ] Edit profile info page (or mode)
+- [ ] Add email Auth ?
       bugs:
 - [x] The profle page is wider
 
