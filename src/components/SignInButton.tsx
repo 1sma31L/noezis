@@ -10,8 +10,8 @@ function SignInButton({ provider }: { provider: Provider }) {
   };
   return (
     <Button
-      className="w-full cursor-pointer rounded-xl py-6 text-lg"
-      size="lg"
+      className="w-full cursor-pointer rounded-xl py-6"
+      size={"sm"}
       onClick={handleSignIn}
     >
       <Icon icon={`mdi:${provider}`} className="mr-2" />

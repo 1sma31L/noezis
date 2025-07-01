@@ -42,16 +42,19 @@ function NavBar() {
             <h1 className="font-bold sm:text-lg md:text-xl">Noezis.</h1>
           </Link>
         </li>
-        <li className="flex flex-row items-center justify-center gap-2">
+        <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
           {!session ? (
             <>
-              <Button variant="default" className="rounded-full">
-                <Link href="/signup" className="!text-xs md:!text-base">
+              <Button
+                variant="default"
+                className="hidden rounded-full sm:block"
+              >
+                <Link href="/signup" className="">
                   Get Started
                 </Link>
               </Button>
-              <Button variant="outline" className="rounded-full">
-                <Link href="/signin" className="!text-xs md:!text-base">
+              <Button variant="ghost" className="hidden rounded-full sm:block">
+                <Link href="/signin" className="">
                   Login
                 </Link>
               </Button>
@@ -109,9 +112,9 @@ function NavBar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <ModeToggle />
             </div>
           )}
+          <ModeToggle />
         </li>
       </ul>
     </nav>
