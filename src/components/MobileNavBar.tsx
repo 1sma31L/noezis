@@ -19,7 +19,7 @@ function MobileNavBar() {
     {
       label: "Home",
       href: "/home",
-      icon: "ic:baseline-home",
+      icon: "ic:outline-home",
       activeIcon: "ic:baseline-home",
     },
     {

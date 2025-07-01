@@ -73,7 +73,7 @@ Day 2:
 Day 3:
 
 - [ ] Add email Auth
-- [ ] Mobile navbar
+- [x] Mobile navbar
 - [ ] Mobile responsive (hero section)
 - [ ] Edit profile info page (or mode)
 - [ ] improve the design system and colors
