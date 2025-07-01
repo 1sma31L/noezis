@@ -60,11 +60,13 @@ function UserProfile() {
       <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-6 pt-24 text-sm md:gap-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
           {user?.user.image ? (
-            <img
-              src={user?.user.image}
-              alt={user?.user.name ?? "Profile Image"}
-              className="ring-background h-24 w-24 rounded-full ring-4 md:h-36 md:w-36"
-            />
+            <div className="ring-background flex h-24 w-24 items-center justify-center overflow-hidden rounded-full ring-4 md:h-36 md:w-36">
+              <img
+                src={user?.user.image}
+                alt={user?.user.name ?? "Profile Image"}
+                className="h-full w-full object-cover"
+              />
+            </div>
           ) : isLoading ? (
             <Avatar className="ring-background h-24 w-24 animate-pulse rounded-full ring-4 md:h-36 md:w-36">
               <AvatarFallback>
