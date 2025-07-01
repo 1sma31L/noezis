@@ -4,7 +4,7 @@ import RightSidebar from "@/components/RightSidebar";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container mx-auto flex min-h-screen">
+    <div className="relative top-[4.5rem] container mx-auto flex min-h-screen">
       <aside className="hidden lg:block">
         <LeftSidebar />
       </aside>

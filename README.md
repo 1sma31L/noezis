@@ -72,10 +72,13 @@ Day 2:
 
 Day 3:
 
-- [ ] impore the design system and colors
+- [ ] Add email Auth
+- [ ] improve the design system and colors
 - [ ] Mobile navbar
 - [ ] Mobile responsive (hero section)
 - [ ] Edit profile info page (or mode)
+      bugs:
+- [ ] The profle page is wider
 
 Day 5:
 

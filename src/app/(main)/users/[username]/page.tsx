@@ -37,7 +37,7 @@ function UserProfile() {
   ];
 
   return (
-    <main className="relative flex h-[200vh] items-start justify-center pt-20">
+    <div className="relative flex min-h-[200vh] items-start justify-center">
       {user?.bannerImage ? (
         <div className="absolute z-0 h-40 w-full px-2 md:h-48">
           <img
@@ -242,7 +242,7 @@ function UserProfile() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
