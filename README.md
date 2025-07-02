@@ -83,8 +83,11 @@ Day 4:
 
 - [ ] implement the private account
 - [ ] Edit profile info page (or mode)
-- [ ] imlement follower/following system
+
+Day 5:
+
 - [ ] Complete the post/answer components design
+- [ ] imlement follower/following system
 
 ---
 
