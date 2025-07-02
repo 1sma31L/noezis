@@ -6,7 +6,6 @@ import { type ReactNode } from "react";
 
 import { Providers } from "@/components/providers";
 import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
 
 const geist = Geist({
   subsets: ["latin"],

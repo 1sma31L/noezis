@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Icon } from "@iconify/react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-client";
 import { api } from "@/trpc/react";
 import { usePathname } from "next/navigation";
 

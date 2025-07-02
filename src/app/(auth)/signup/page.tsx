@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,22 +10,9 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Icon } from "@iconify/react";
+import { signInWithProvider } from "@/utils/auth";
 
 export default function SignUp() {
-  const handleGoogleSignUp = async () => {
-    try {
-      await signIn("google", { callbackUrl: "/" });
-    } catch (error) {
-      console.error("Error signing up with Google:", error);
-    }
-  };
-  const handleGitHubSignUp = async () => {
-    try {
-      await signIn("github", { callbackUrl: "/" });
-    } catch (error) {
-      console.error("Error signing up with GitHub:", error);
-    }
-  };
   return (
     <main className="bg-background flex h-screen items-center justify-center">
       <Card className="w-full max-w-md">
@@ -38,7 +24,7 @@ export default function SignUp() {
             <Button
               variant="outline"
               className="w-full bg-black text-white hover:bg-black/90 hover:text-white"
-              onClick={handleGitHubSignUp}
+              onClick={() => signInWithProvider("github")}
             >
               <Icon icon="mdi:github" width="24" height="24" />
               Continue with GitHub
@@ -47,7 +33,7 @@ export default function SignUp() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={handleGoogleSignUp}
+              onClick={() => signInWithProvider("google")}
             >
               <Icon icon="logos:google-icon" width="24" height="24" />
               Continue with Google

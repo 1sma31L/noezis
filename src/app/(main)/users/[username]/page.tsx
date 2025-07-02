@@ -9,12 +9,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { parseBioMentions } from "@/utils/parseBioMentions";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-client";
 
 function UserProfile() {
   const { username } = useParams();
   const { data: session } = useSession();
-  const { data: user, isLoading } = api.user.getUserByUsername.useQuery({
+  const { data: user, isLoading } = api.user.getProfileByUsername.useQuery({
     username: username as string,
   });
   console.log(user);
@@ -130,7 +130,6 @@ function UserProfile() {
         <div className="flex flex-col items-start justify-start gap-2 md:gap-4">
           {user?.bio ? (
             <p className="text-muted-foreground max-w-[700px]">
-              {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
               {parseBioMentions(user.bio)}
             </p>
           ) : isLoading ? (
