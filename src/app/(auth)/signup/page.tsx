@@ -11,8 +11,57 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Icon } from "@iconify/react";
 import { signInWithProvider } from "@/utils/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { signUp } from "@/lib/auth-client";
+
+const signUpSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(128, "Password must be less than 128 characters"),
+});
+
+type SignUpSchema = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const onSubmit = async (data: SignUpSchema) => {
+    try {
+      const result = await signUp.email({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      });
+
+      if (result.error) {
+        setError("root", {
+          message: result.error.message ?? "Failed to sign up",
+        });
+        return;
+      }
+
+      router.push("/home");
+    } catch (error) {
+      setError("root", {
+        message: "An unexpected error occurred",
+      });
+    }
+  };
+
   return (
     <main className="bg-background flex h-screen items-center justify-center">
       <Card className="w-full max-w-md">
@@ -51,7 +100,7 @@ export default function SignUp() {
             </div>
           </div>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <label
                 htmlFor="name"
@@ -59,7 +108,17 @@ export default function SignUp() {
               >
                 Full Name
               </label>
-              <Input type="text" id="name" placeholder="Enter your full name" />
+              <Input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+                {...register("name")}
+              />
+              {errors.name && (
+                <p className="text-destructive text-sm">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -69,7 +128,17 @@ export default function SignUp() {
               >
                 Email
               </label>
-              <Input type="email" id="email" placeholder="Enter your email" />
+              <Input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-destructive text-sm">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -83,11 +152,21 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 placeholder="Choose a password"
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-destructive text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
-            <Button type="submit" className="w-full">
-              Sign Up
+            {errors.root && (
+              <p className="text-destructive text-sm">{errors.root.message}</p>
+            )}
+
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Creating account..." : "Sign Up"}
             </Button>
           </form>
         </CardContent>

@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/navigation";
 
 function NavBar() {
   const { data: session } = useSession();
@@ -23,7 +24,7 @@ function NavBar() {
     { userId: session?.user?.id ?? "" },
     { enabled: !!session?.user?.id },
   );
-
+  const router = useRouter();
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-sm">
       <ul className="flex w-full flex-row items-center justify-between gap-2 text-sm md:text-base">
@@ -69,7 +70,7 @@ function NavBar() {
                   >
                     <Avatar>
                       <AvatarImage src={session.user?.image ?? ""} />
-                      <AvatarFallback>
+                      <AvatarFallback className="bg-primary">
                         {session.user?.name?.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
@@ -105,7 +106,15 @@ function NavBar() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive focus:text-destructive"
-                    onClick={() => signOut()}
+                    onClick={() =>
+                      signOut({
+                        fetchOptions: {
+                          onSuccess: () => {
+                            router.push("/signin"); // redirect to login page
+                          },
+                        },
+                      })
+                    }
                   >
                     <Icon icon="mdi:logout" className="mr-2 h-4 w-4" />
                     Log out

@@ -1,0 +1,1 @@
+ALTER TABLE "user" ALTER COLUMN "image" SET DEFAULT 'https://i.pinimg.com/736x/22/02/f1/2202f1513fa534d5e3698ae8619d9474.jpg';

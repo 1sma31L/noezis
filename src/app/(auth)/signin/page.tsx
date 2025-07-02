@@ -11,8 +11,52 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Icon } from "@iconify/react";
 import { signInWithProvider } from "@/utils/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/auth-client";
+
+const signInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+type SignInSchema = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = async (data: SignInSchema) => {
+    try {
+      const result = await signIn.email({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (result.error) {
+        setError("root", {
+          message: result.error.message ?? "Failed to sign in",
+        });
+        return;
+      }
+
+      router.push("/home");
+    } catch (error) {
+      setError("root", {
+        message: "An unexpected error occurred",
+      });
+    }
+  };
+
   return (
     <main className="bg-background flex h-screen items-center justify-center">
       <Card className="w-full max-w-md">
@@ -51,7 +95,7 @@ export default function SignIn() {
             </div>
           </div>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -59,7 +103,17 @@ export default function SignIn() {
               >
                 Email
               </label>
-              <Input type="email" id="email" placeholder="Enter your email" />
+              <Input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-destructive text-sm">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -73,11 +127,21 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 placeholder="Enter your password"
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-destructive text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
-            <Button type="submit" className="w-full">
-              Sign In
+            {errors.root && (
+              <p className="text-destructive text-sm">{errors.root.message}</p>
+            )}
+
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </Button>
           </form>
         </CardContent>

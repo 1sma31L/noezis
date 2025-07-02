@@ -4,6 +4,7 @@ import { db } from "../db";
 import * as schema from "../db/schema";
 import { env } from "@/env";
 import { profile } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -11,7 +12,9 @@ export const auth = betterAuth({
     schema: schema,
   }),
   secret: process.env.BETTER_AUTH_SECRET,
-
+  emailAndPassword: {
+    enabled: true,
+  },
   socialProviders: {
     github: {
       clientId: env.GITHUB_CLIENT_ID,
