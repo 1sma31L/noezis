@@ -75,14 +75,16 @@ Day 3:
 - [x] Mobile navbar
 - [x] Mobile responsive (hero section)
 - [x] improve theme
-- [ ] Edit profile info page (or mode)
-- [ ] Add email Auth ?
+- [x] Add email Auth ?
       bugs:
 - [x] The profle page is wider
 
 Day 4:
 
-- [ ] Complete the post component design
+- [ ] implement the private account
+- [ ] Edit profile info page (or mode)
+- [ ] imlement follower/following system
+- [ ] Complete the post/answer components design
 
 ---
 
