@@ -110,7 +110,7 @@ function NavBar() {
                       signOut({
                         fetchOptions: {
                           onSuccess: () => {
-                            router.push("/signin"); // redirect to login page
+                            router.push("/signin");
                           },
                         },
                       })

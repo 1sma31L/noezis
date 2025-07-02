@@ -4,7 +4,6 @@ import { db } from "../db";
 import * as schema from "../db/schema";
 import { env } from "@/env";
 import { profile } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

@@ -57,7 +57,7 @@ export default function SignUp() {
       router.push("/home");
     } catch (error) {
       setError("root", {
-        message: "An unexpected error occurred",
+        message: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
       });
     }
   };
