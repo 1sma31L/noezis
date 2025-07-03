@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { RiGithubLine, RiInstagramLine, RiTwitterXFill } from "react-icons/ri";
 import React from "react";
 
 const links = [
@@ -20,24 +20,15 @@ const links = [
 const socialLinks = [
   {
     href: "https://github.com/noezis",
-    label: "GitHub",
-    icon: <Icon icon="mdi:github" width="16" height="16" />,
+    icon: <RiGithubLine className="mr-2 h-4 w-4" />,
   },
   {
     href: "https://x.com/noezis",
-    label: "X",
-    icon: (
-      <Icon
-        icon="streamline-logos:x-twitter-logo-solid"
-        width="16"
-        height="16"
-      />
-    ),
+    icon: <RiTwitterXFill className="mr-2 h-4 w-4" />,
   },
   {
     href: "https://www.instagram.com/noezis",
-    label: "Instagram",
-    icon: <Icon icon="mdi:instagram" width="16" height="16" />,
+    icon: <RiInstagramLine className="mr-2 h-4 w-4" />,
   },
 ];
 

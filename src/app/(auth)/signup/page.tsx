@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/auth-client";
-import { RiGithubLine, RiGoogleLine } from "react-icons/ri";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -75,7 +75,7 @@ export default function SignUp() {
               className="w-full bg-black text-white hover:bg-black/90 hover:text-white"
               onClick={() => signInWithProvider("github")}
             >
-              <RiGithubLine />
+              <FaGithub />
               Continue with GitHub
             </Button>
 
@@ -84,7 +84,7 @@ export default function SignUp() {
               className="w-full"
               onClick={() => signInWithProvider("google")}
             >
-              <RiGoogleLine />
+              <FaGoogle />
               Continue with Google
             </Button>
           </div>

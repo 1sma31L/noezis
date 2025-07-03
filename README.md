@@ -22,7 +22,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] Tailwind CSS
 - [x] Shadcn/ui
 - [x] Lucide Icons
-- [x] Iconify Icons
+- [x] React Icons
 - [ ] TipTap Editor
 - [x] React Query
 - [ ] Framer Motion

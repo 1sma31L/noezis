@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { Button } from "./ui/button";
-import { Icon } from "@iconify/react";
 import { signInWithProvider } from "@/utils/auth";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 type Provider = "google" | "github";
 function SignInButton({ provider }: { provider: Provider }) {
   return (
@@ -11,7 +11,11 @@ function SignInButton({ provider }: { provider: Provider }) {
       size={"sm"}
       onClick={() => signInWithProvider(provider)}
     >
-      <Icon icon={`mdi:${provider}`} className="mr-2" />
+      {provider === "github" ? (
+        <FaGithub className="mr-2" />
+      ) : (
+        <FaGoogle className="mr-2" />
+      )}
       Sign in with {provider}
     </Button>
   );

@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
-import { RiGithubLine, RiGoogleLine } from "react-icons/ri";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -70,7 +70,7 @@ export default function SignIn() {
               className="w-full bg-black text-white hover:bg-black/90 hover:text-white"
               onClick={() => signInWithProvider("github")}
             >
-              <RiGithubLine />
+              <FaGithub />
               Continue with GitHub
             </Button>
 
@@ -79,7 +79,7 @@ export default function SignIn() {
               className="w-full"
               onClick={() => signInWithProvider("google")}
             >
-              <RiGoogleLine />
+              <FaGoogle />
               Continue with Google
             </Button>
           </div>
