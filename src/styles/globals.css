@@ -10,6 +10,7 @@ html {
     var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
 :root {
   --background: oklch(0.9981 0.0092 106.5647);
   --foreground: oklch(0.3438 0.0269 95.7226);
@@ -27,7 +28,7 @@ html {
   --accent-foreground: oklch(0.2671 0.0196 98.939);
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.923 0.003 48.717);
+  --border: oklch(0.9232 0.0026 48.7171);
   --input: oklch(0.7621 0.0156 98.3528);
   --ring: oklch(0.5937 0.1673 253.063);
   --chart-1: oklch(0.7078 0.0816 146.76);
@@ -80,7 +81,7 @@ html {
   --accent-foreground: oklch(0.9663 0.008 98.8792);
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.2512 0.0037 106.6627);
+  --border: oklch(0.2907 0.0034 164.8371);
   --input: oklch(0.4336 0.0113 100.2195);
   --ring: oklch(0.4312 0.0124 145.3561);
   --chart-1: oklch(0.7078 0.0816 146.76);

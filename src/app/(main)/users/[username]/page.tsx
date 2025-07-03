@@ -39,9 +39,9 @@ function UserProfile() {
   ];
 
   return (
-    <div className="relative flex min-h-[200vh] items-start justify-center">
+    <main className="relative flex min-h-[200vh] items-start justify-center px-2">
       {user?.bannerImage ? (
-        <div className="absolute z-0 h-40 w-full px-2 md:h-48">
+        <div className="absolute z-0 h-40 w-full md:h-48">
           <img
             src={user?.bannerImage}
             alt={user?.user.name ?? "Banner Image"}
@@ -49,15 +49,15 @@ function UserProfile() {
           />
         </div>
       ) : isLoading ? (
-        <div className="absolute z-0 h-40 w-full px-2 md:h-48">
+        <div className="absolute z-0 h-40 w-full md:h-48">
           <div className="bg-muted h-full w-full animate-pulse rounded-2xl"></div>
         </div>
       ) : (
-        <div className="absolute z-0 h-40 w-full px-2 md:h-48">
+        <div className="absolute z-0 h-40 w-full md:h-48">
           <div className="bg-primary h-full w-full rounded-2xl"></div>
         </div>
       )}
-      <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-6 pt-24 text-sm md:gap-4 md:text-base">
+      <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-4 pt-24 text-sm md:gap-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
           {user?.user.image ? (
             <div className="ring-background flex h-24 w-24 items-center justify-center overflow-hidden rounded-full ring-4 md:h-36 md:w-36">
@@ -233,24 +233,30 @@ function UserProfile() {
         )}
 
         <Separator className="my-2 w-full" />
-        <div className="flex w-full flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4">
+        <div className="flex h-5 w-full flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4">
           {navigationTabs.map((tab) => (
-            <Button
-              variant="ghost"
-              size="sm"
+            <div
               key={tab.label}
-              className={`${
-                tab.isActive
-                  ? "border-primary text-foreground border-b-3"
-                  : "text-muted-foreground hover:text-foreground"
-              } text-xs md:text-sm`}
+              className="flex h-5 flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4"
             >
-              {tab.label}
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                key={tab.label}
+                className={`${
+                  tab.isActive
+                    ? "border-primary text-foreground border-b-3"
+                    : "text-muted-foreground hover:text-foreground"
+                } text-xs md:text-sm`}
+              >
+                {tab.label}
+              </Button>
+              <Separator orientation="vertical" />
+            </div>
           ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -66,7 +66,7 @@ function NavBar() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-10 w-10 rounded-full"
+                    className="relative h-10 w-10 cursor-pointer rounded-full"
                   >
                     <Avatar>
                       <AvatarImage src={session.user?.image ?? ""} />
