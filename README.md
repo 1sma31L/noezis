@@ -36,7 +36,6 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] PostgreSQL
 - [x] NextAuth.js
 - [ ] Redis (Caching)
-- [ ] AWS S3 (Media Storage)
 - [ ] Elasticsearch (Search)
 
 ### DevOps & Tools
@@ -44,8 +43,6 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] Bun (Package Manager & Runtime)
 - [x] ESLint
 - [x] Prettier
-- [ ] Docker
-- [ ] GitHub Actions
 - [ ] Jest
 - [ ] Cypress
 
@@ -81,13 +78,72 @@ Day 3:
 
 Day 4:
 
-- [ ] implement the private account
-- [ ] Edit profile info page (or mode)
+- [x] Make all home componenets (quick takes, question, answer, post)
+- [x] mobile home page:
 
 Day 5:
 
-- [ ] Complete the post/answer components design
-- [ ] imlement follower/following system
+- [ ] Edit profile info page (or mode)
+- [ ] design/ the modal for the post/answer/question/quick take
+- [ ] add text editor for the post/answer/question/quick take
+
+Day 6:
+
+- [ ] backend/add the post/answer/question/quick take
+- [ ] add the post/answer/question/quick pages and implement nested comments
+
+Day 7:
+
+- [ ] implement follower/following system
+- [ ] design explore page
+- [ ] add the post/answer/question/quick take from follwing in home page
+
+Day 8:
+
+- [ ] add realtime optimization (Alby)
+- [ ] design the notification page
+- [ ] add search functionality
+
+Day 9:
+
+- [ ] whats trending page
+- [ ] design the settings page
+- [ ] draft for posts
+
+Day 10:
+
+- [ ] design the messages page and implement it
+- [ ] add spaces
+
+Day 11:
+
+- [ ] design the control page for post versioning and implement it
+- [ ] add role based access
+
+Day 12:
+
+- [ ] design the admin dashboard and implement it
+- [ ] add the admin dashboard
+
+Day 13:
+
+- [ ] add statistic to admin dashboard
+
+Day 14:
+
+- [ ] add karma system
+- [ ] add bookmarks and reading later system
+
+Day 15:
+
+- [ ] user activity
+- [ ] user achevments
+
+FEATURES (1 week)
+
+Day 16:
+
+- [ ] add redis for caching
 
 ---
 
