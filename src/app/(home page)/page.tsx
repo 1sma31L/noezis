@@ -8,9 +8,9 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Icon } from "@iconify/react";
 import Image from "next/image";
 import SignInButton from "@/components/SignInButton";
+import { RiMailLine } from "react-icons/ri";
 
 export default function Home() {
   return (
@@ -44,7 +44,7 @@ export default function Home() {
               or continue to{" "}
             </div>
             <Button className="w-full rounded-xl py-6" variant="outline">
-              <Icon icon="mdi:email" className="mr-2" />
+              <RiMailLine className="mr-2" />
               <Link href="/signup" className="">
                 Sign in with Email
               </Link>

@@ -15,8 +15,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
+import { RiUserLine, RiSettingsLine, RiLogoutBoxLine } from "react-icons/ri";
 
 function NavBar() {
   const { data: session } = useSession();
@@ -93,13 +93,13 @@ function NavBar() {
                       href={profile ? `/users/${profile.username}` : "#"}
                       className="flex items-center"
                     >
-                      <Icon icon="mdi:account" className="mr-2 h-4 w-4" />
+                      <RiUserLine className="mr-2 h-4 w-4" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/settings" className="flex items-center">
-                      <Icon icon="mdi:cog" className="mr-2 h-4 w-4" />
+                      <RiSettingsLine className="mr-2 h-4 w-4" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
@@ -116,7 +116,7 @@ function NavBar() {
                       })
                     }
                   >
-                    <Icon icon="mdi:logout" className="mr-2 h-4 w-4" />
+                    <RiLogoutBoxLine className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>

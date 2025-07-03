@@ -9,13 +9,13 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Icon } from "@iconify/react";
 import { signInWithProvider } from "@/utils/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
+import { RiGithubLine, RiGoogleLine } from "react-icons/ri";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -70,7 +70,7 @@ export default function SignIn() {
               className="w-full bg-black text-white hover:bg-black/90 hover:text-white"
               onClick={() => signInWithProvider("github")}
             >
-              <Icon icon="mdi:github" width="24" height="24" />
+              <RiGithubLine />
               Continue with GitHub
             </Button>
 
@@ -79,7 +79,7 @@ export default function SignIn() {
               className="w-full"
               onClick={() => signInWithProvider("google")}
             >
-              <Icon icon="logos:google-icon" width="24" height="24" />
+              <RiGoogleLine />
               Continue with Google
             </Button>
           </div>
