@@ -23,7 +23,10 @@ function LeftSidebar() {
   const { data: session } = useSession();
   const { data: profile, isLoading } = api.user.getProfileByUserId.useQuery(
     { userId: session?.user?.id ?? "" },
-    { enabled: !!session?.user?.id },
+    {
+      enabled: !!session?.user?.id,
+      staleTime: 1000 * 60 * 5,
+    },
   );
   const navigationItems = [
     {

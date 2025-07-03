@@ -22,7 +22,10 @@ function NavBar() {
   const { data: session } = useSession();
   const { data: profile } = api.user.getProfileByUserId.useQuery(
     { userId: session?.user?.id ?? "" },
-    { enabled: !!session?.user?.id },
+    {
+      enabled: !!session?.user?.id,
+      staleTime: 1000 * 60 * 5,
+    },
   );
   const router = useRouter();
   return (
