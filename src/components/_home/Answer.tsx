@@ -65,48 +65,58 @@ function Answer({ question, answer }: AnswerProps) {
   const truncateWords = (text: string, limit: number) => {
     const words = text.trim().split(/\s+/);
     if (words.length <= limit) return text;
-    return words.slice(0, limit).join(" ");
+    return words.slice(0, limit).join(" ") + "...";
   };
 
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       {/* Question Section */}
       <CardHeader className="flex w-full flex-col gap-4">
-        <div className="flex w-full items-center justify-between gap-4">
-          <Avatar className="h-8 w-8 md:h-10 md:w-10">
-            <AvatarImage src={question.user.image} alt={question.user.name} />
-            <AvatarFallback className="bg-primary text-background">
-              {question.user.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-            <p className="text-sm font-medium">{question.user.name}</p>
-            <p className="text-muted-foreground text-xs">{question.user.job}</p>
+        <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
+          <div className="flex flex-row items-center justify-start gap-2">
+            <Avatar className="h-8 w-8 md:h-10 md:w-10">
+              <AvatarImage src={question.user.image} alt={question.user.name} />
+              <AvatarFallback className="bg-primary text-background">
+                {question.user.name.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
+              <p className="text-xs font-medium md:text-base">
+                {question.user.name}
+              </p>
+              <p className="text-muted-foreground text-[9px] md:text-xs">
+                {question.user.job}
+              </p>
+            </div>
           </div>
 
-          {answer.isAccepted && (
-            <Badge
-              variant="outline"
-              className="rounded-full bg-green-500/10 text-green-500"
-            >
-              <Icon icon="mdi:check" className="mr-1 inline-block" />
-              Answer
-            </Badge>
-          )}
-          <p className="text-muted-foreground text-xs">{question.date}</p>
+          <div className="flex flex-row items-center justify-start gap-2">
+            {answer.isAccepted && (
+              <Badge
+                variant="outline"
+                className="rounded-full bg-green-500/10 text-green-500"
+              >
+                <Icon icon="mdi:check" className="mr-1 inline-block" />
+                Answer
+              </Badge>
+            )}
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {question.date}
+            </p>
+          </div>
         </div>
         <div>
-          <CardTitle className="text-base font-medium lg:text-lg">
+          <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
             {question.title}
           </CardTitle>
-          <CardDescription className="mt-2 text-sm">
+          <CardDescription className="mt-2 text-xs leading-6 sm:text-sm md:text-base">
             {question.content}
           </CardDescription>
           <div className="mt-2 flex flex-wrap gap-2">
             {question.tags.map((tag) => (
               <Badge
                 key={tag}
-                className="bg-accent text-muted-foreground text-xs"
+                className="bg-accent text-muted-foreground text-[9px] md:text-xs"
               >
                 {tag}
               </Badge>
@@ -128,14 +138,18 @@ function Answer({ question, answer }: AnswerProps) {
           </Avatar>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <p className="text-sm font-medium">{answer.user.name}</p>
+              <p className="text-xs font-medium md:text-base">
+                {answer.user.name}
+              </p>
             </div>
-            <p className="text-muted-foreground text-xs">{answer.user.job}</p>
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {answer.user.job}
+            </p>
           </div>
         </div>
 
         <div className="relative">
-          <p className="text-muted-foreground text-xs leading-7 sm:text-sm md:text-base">
+          <p className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
             {isExpanded
               ? answer.content
               : truncateWords(answer.content, MAX_WORDS)}
@@ -160,86 +174,92 @@ function Answer({ question, answer }: AnswerProps) {
             {isExpanded ? "See less" : "See more"}
           </Button>
         )}
-      </CardContent>
 
-      <CardFooter className="flex w-full flex-row items-center justify-between gap-2">
-        <div className="flex flex-row items-center justify-start gap-2">
-          {/* Voting */}
-          <div className="bg-muted/50 flex h-8 flex-row items-center justify-start gap-2 rounded-full px-2">
+        <div className="flex w-full flex-row items-center justify-between gap-2">
+          <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
+            {/* Voting */}
+            <div className="bg-muted/50 flex h-8 flex-row items-center justify-start gap-2 rounded-full px-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`text-muted-foreground hover:text-foreground flex flex-row items-center justify-start gap-2 ${
+                  isUpvoted ? "text-blue-500 hover:text-blue-500" : ""
+                }`}
+                onClick={() => {
+                  if (isDownvoted) setIsDownvoted(false);
+                  setIsUpvoted(!isUpvoted);
+                }}
+              >
+                <Icon icon="mdi:thumb-up" />
+                <span className="text-[9px] md:text-xs">{answer.upvotes}</span>
+              </Button>
+              <Separator orientation="vertical" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`text-muted-foreground hover:text-foreground ${
+                  isDownvoted ? "text-destructive hover:text-destructive" : ""
+                }`}
+                onClick={() => {
+                  if (isUpvoted) setIsUpvoted(false);
+                  setIsDownvoted(!isDownvoted);
+                }}
+              >
+                <Icon icon="mdi:thumb-down" />
+                <span className="text-[9px] md:text-xs">
+                  {answer.downvotes}
+                </span>
+              </Button>
+            </div>
+
+            {/* Comments */}
             <Button
               variant="ghost"
               size="sm"
-              className={`text-muted-foreground hover:text-foreground flex flex-row items-center justify-start gap-2 ${
-                isUpvoted ? "text-blue-500 hover:text-blue-500" : ""
-              }`}
-              onClick={() => {
-                if (isDownvoted) setIsDownvoted(false);
-                setIsUpvoted(!isUpvoted);
-              }}
+              className="text-muted-foreground hover:text-foreground"
             >
-              <Icon icon="mdi:thumb-up" />
-              <span className="text-xs">{answer.upvotes}</span>
+              <Icon icon="mdi:message" />
+              <p className="text-[9px] md:text-xs">{answer.comments}</p>
             </Button>
-            <Separator orientation="vertical" />
+
+            {/* Shares */}
             <Button
               variant="ghost"
               size="sm"
-              className={`text-muted-foreground hover:text-foreground ${
-                isDownvoted ? "text-destructive hover:text-destructive" : ""
-              }`}
-              onClick={() => {
-                if (isUpvoted) setIsUpvoted(false);
-                setIsDownvoted(!isDownvoted);
-              }}
+              className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
-              <Icon icon="mdi:thumb-down" />
-              <span className="text-xs">{answer.downvotes}</span>
+              <Icon icon="mdi:share" />
+              {answer.shares && (
+                <p className="text-[9px] md:text-xs">{answer.shares}</p>
+              )}
             </Button>
           </div>
 
-          {/* Comments */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="mdi:message" />
-            <p className="text-xs">{answer.comments}</p>
-          </Button>
-
-          {/* Shares */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="mdi:share" />
-            {answer.shares && <p className="text-xs">{answer.shares}</p>}
-          </Button>
+          {/* Save + Settings */}
+          <div className="flex flex-row items-center justify-start gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={() => setIsSaved(!isSaved)}
+            >
+              <Icon
+                icon="mdi:bookmark"
+                className={
+                  isSaved ? "text-yellow-500 hover:text-yellow-500" : ""
+                }
+              />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <Icon icon="mdi:dots-vertical" />
+            </Button>
+          </div>
         </div>
-
-        {/* Save + Settings */}
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-            onClick={() => setIsSaved(!isSaved)}
-          >
-            <Icon
-              icon="mdi:bookmark"
-              className={isSaved ? "text-yellow-500 hover:text-yellow-500" : ""}
-            />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="mdi:dots-vertical" />
-          </Button>
-        </div>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 }

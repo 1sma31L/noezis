@@ -39,7 +39,7 @@ function UserProfile() {
   ];
 
   return (
-    <main className="relative flex min-h-[200vh] items-start justify-center px-2">
+    <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
       {user?.bannerImage ? (
         <div className="absolute z-0 h-40 w-full md:h-48">
           <img
@@ -57,7 +57,7 @@ function UserProfile() {
           <div className="bg-primary h-full w-full rounded-2xl"></div>
         </div>
       )}
-      <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-4 pt-24 text-sm md:gap-4 md:text-base">
+      <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-3 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
           {user?.user.image ? (
             <div className="ring-background flex h-24 w-24 items-center justify-center overflow-hidden rounded-full ring-4 md:h-36 md:w-36">
@@ -233,11 +233,11 @@ function UserProfile() {
         )}
 
         <Separator className="my-2 w-full" />
-        <div className="flex h-5 w-full flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4">
-          {navigationTabs.map((tab) => (
+        <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">
+          {navigationTabs.map((tab, index) => (
             <div
               key={tab.label}
-              className="flex h-5 flex-row items-center justify-center gap-1 sm:gap-2 md:gap-4"
+              className="flex h-5 flex-row items-center justify-center gap-2 md:gap-4"
             >
               <Button
                 variant="ghost"
@@ -247,11 +247,13 @@ function UserProfile() {
                   tab.isActive
                     ? "border-primary text-foreground border-b-3"
                     : "text-muted-foreground hover:text-foreground"
-                } text-xs md:text-sm`}
+                } text-[10px] md:text-sm`}
               >
                 {tab.label}
               </Button>
-              <Separator orientation="vertical" />
+              {index !== navigationTabs.length - 1 && (
+                <Separator orientation="vertical" />
+              )}
             </div>
           ))}
         </div>

@@ -64,48 +64,53 @@ function Question({
         isAnswered ? "border-l-primary border-l-4" : ""
       }`}
     >
-      <CardHeader className="flex w-full flex-row items-center justify-start gap-2 md:gap-4">
-        <Avatar className="h-8 w-8 md:h-10 md:w-10">
-          <AvatarImage src={user.image} alt={user.name} />
-          <AvatarFallback className="bg-primary text-background">
-            {user.name.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-          <p className="text-sm font-medium">{user.name}</p>
-          <p className="text-muted-foreground text-xs">{user.job}</p>
+      <CardHeader className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
+        <div className="flex flex-row items-center justify-start gap-2">
+          <Avatar className="h-8 w-8 md:h-10 md:w-10">
+            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarFallback className="bg-primary text-background">
+              {user.name.charAt(0)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
+            <p className="text-xs font-medium md:text-base">{user.name}</p>
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {user.job}
+            </p>
+          </div>
         </div>
 
-        <Badge
-          variant="outline"
-          className="rounded-full bg-green-500/10 text-green-500"
-        >
-          <Icon icon="mdi:help-circle" className="mr-1 inline-block" />
-          Question
-        </Badge>
+        <div className="flex flex-row items-center justify-start gap-2">
+          <Badge
+            variant="outline"
+            className={`rounded-full ${
+              isAnswered
+                ? "bg-green-500/10 text-green-500"
+                : "bg-red-500/10 text-red-500"
+            }`}
+          >
+            {isAnswered ? (
+              <Icon icon="mdi:check" className="mr-1 inline-block" />
+            ) : (
+              <Icon icon="mdi:help-circle" className="mr-1 inline-block" />
+            )}
+            Question
+          </Badge>
 
-        <p className="text-muted-foreground text-xs">{date}</p>
+          <p className="text-muted-foreground text-[9px] md:text-xs">{date}</p>
+        </div>
       </CardHeader>
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-4">
-        <div className="flex w-full items-start justify-between gap-4">
+        <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
           <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
             {title}
           </CardTitle>
-          {isAnswered && (
-            <Badge
-              variant="outline"
-              className="bg-primary/20 text-primary rounded-full"
-            >
-              <Icon icon="mdi:check-circle" className="mr-1" />
-              Solved
-            </Badge>
-          )}
         </div>
 
         <CardDescription className="flex w-full flex-col gap-2">
           <div className="relative">
-            <p className="text-muted-foreground text-xs leading-7 sm:text-sm md:text-base">
+            <p className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
               {isExpanded ? content : truncateWords(content, MAX_WORDS)}
             </p>
             {!isExpanded && shouldShowMore && (
@@ -134,86 +139,88 @@ function Question({
           {tags.map((tag) => (
             <Badge
               key={tag}
-              className="bg-accent text-muted-foreground text-xs"
+              className="bg-accent text-muted-foreground text-[9px] md:text-xs"
             >
               {tag}
             </Badge>
           ))}
         </div>
+
+        <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
+          <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
+            {/* Answer Button */}
+            <Button
+              size="sm"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 !text-xs"
+            >
+              <Icon icon="mdi:message-reply-text" className="mr-1 md:mr-2" />
+              Answer
+            </Button>
+
+            {/* Follow Question */}
+            <Button
+              variant="outline"
+              size="sm"
+              className={` ${
+                isFollowing
+                  ? "bg-primary/10 text-primary border-primary"
+                  : "text-muted-foreground"
+              }`}
+              onClick={() => setIsFollowing(!isFollowing)}
+            >
+              <Icon
+                icon={isFollowing ? "mdi:bell" : "mdi:bell-outline"}
+                className="m-0 md:mr-2"
+              />
+              <span className="hidden md:block">
+                {isFollowing ? "Following" : "Follow"}
+              </span>
+            </Button>
+
+            {/* Answers Count */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <Icon icon="simple-icons:answer" />
+              {answers && <p className="text-xs">{answers}</p>}
+            </Button>
+
+            {/* Shares */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground hidden md:flex"
+            >
+              <Icon icon="mdi:share" />
+              {shares && <p className="text-xs">{shares}</p>}
+            </Button>
+          </div>
+
+          {/* Save */}
+          <div className="flex flex-row items-center justify-start gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={() => setIsSaved(!isSaved)}
+            >
+              <Icon
+                icon="mdi:bookmark"
+                className={isSaved ? "text-yellow-500" : ""}
+              />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <Icon icon="mdi:dots-vertical" />
+            </Button>
+          </div>
+        </div>
       </CardContent>
-
-      <CardFooter className="flex w-full flex-row items-center justify-between gap-2">
-        <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
-          {/* Answer Button */}
-          <Button
-            size="sm"
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
-          >
-            <Icon icon="mdi:message-reply-text" className="mr-2" />
-            Answer
-          </Button>
-
-          {/* Follow Question */}
-          <Button
-            variant="outline"
-            size="sm"
-            className={`${
-              isFollowing
-                ? "bg-primary/10 text-primary border-primary"
-                : "text-muted-foreground"
-            }`}
-            onClick={() => setIsFollowing(!isFollowing)}
-          >
-            <Icon
-              icon={isFollowing ? "mdi:bell" : "mdi:bell-outline"}
-              className="mr-2"
-            />
-            {isFollowing ? "Following" : "Follow"}
-          </Button>
-
-          {/* Answers Count */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="simple-icons:answer" />
-            {answers && <p className="text-xs">{answers}</p>}
-          </Button>
-
-          {/* Shares */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="mdi:share" />
-            {shares && <p className="text-xs">{shares}</p>}
-          </Button>
-        </div>
-
-        {/* Save */}
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-            onClick={() => setIsSaved(!isSaved)}
-          >
-            <Icon
-              icon="mdi:bookmark"
-              className={isSaved ? "text-primary" : ""}
-            />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Icon icon="mdi:dots-vertical" />
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 }
