@@ -2,10 +2,21 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Icon } from "@iconify/react";
 import { useSession } from "@/lib/auth-client";
 import { api } from "@/trpc/react";
 import { usePathname } from "next/navigation";
+import {
+  RiHome6Line,
+  RiHome6Fill,
+  RiMap2Line,
+  RiMap2Fill,
+  RiNotificationLine,
+  RiNotificationFill,
+  RiMessageLine,
+  RiMessageFill,
+  RiUser3Line,
+  RiUser3Fill,
+} from "react-icons/ri";
 
 function LeftSidebar() {
   const pathname = usePathname();
@@ -18,64 +29,32 @@ function LeftSidebar() {
     {
       label: "Home",
       href: "/home",
-      notActiveIcon: <Icon icon="ic:outline-home" className="h-6! w-6!" />,
-      activeIcon: (
-        <Icon
-          icon="ic:baseline-home"
-          className="h-6! w-6!"
-          style={{ color: "#2a623d" }}
-        />
-      ),
+      icon: RiHome6Line,
+      activeIcon: RiHome6Fill,
     },
     {
       label: "Explore",
       href: "/explore",
-      notActiveIcon: <Icon icon="ic:outline-explore" className="h-6! w-6!" />,
-      activeIcon: (
-        <Icon
-          icon="ic:baseline-explore"
-          className="h-6! w-6!"
-          style={{ color: "#2a623d" }}
-        />
-      ),
+      icon: RiMap2Line,
+      activeIcon: RiMap2Fill,
     },
     {
       label: "Notifications",
       href: "/notifications",
-      notActiveIcon: (
-        <Icon icon="ic:outline-notifications" className="h-6! w-6!" />
-      ),
-      activeIcon: (
-        <Icon
-          icon="ic:baseline-notifications"
-          className="h-6! w-6!"
-          style={{ color: "#2a623d" }}
-        />
-      ),
+      icon: RiNotificationLine,
+      activeIcon: RiNotificationFill,
     },
     {
       label: "Messages",
       href: "/messages",
-      notActiveIcon: <Icon icon="ic:outline-chat" className="h-6! w-6!" />,
-      activeIcon: (
-        <Icon
-          icon="ic:baseline-chat"
-          className="h-6! w-6!"
-          style={{ color: "#2a623d" }}
-        />
-      ),
+      icon: RiMessageLine,
+      activeIcon: RiMessageFill,
     },
     {
       label: "Profile",
       href: `${profile?.id ? `/users/${profile?.username}` : "/signin"}`,
-      notActiveIcon: <Icon icon="ic:outline-person" className="h-6! w-6!" />,
-      activeIcon: (
-        <Icon
-          icon="ic:baseline-person"
-          className="h-6! w-6!"
-          style={{ color: "#2a623d" }}
-        />
-      ),
+      icon: RiUser3Line,
+      activeIcon: RiUser3Fill,
     },
   ];
 
@@ -85,10 +64,14 @@ function LeftSidebar() {
         <Link key={item.label} href={item.href}>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-4 rounded-full px-6 py-6 text-xl"
+            className="w-full justify-start gap-4 rounded-full px-6 py-6"
             disabled={item.label === "Profile" && isLoading}
           >
-            {pathname === item.href ? item.activeIcon : item.notActiveIcon}
+            {pathname === item.href ? (
+              <item.activeIcon className="text-primary !h-5 !w-5" />
+            ) : (
+              <item.icon className="!h-5 !w-5" />
+            )}
             <span className="hidden text-sm lg:inline">{item.label}</span>
           </Button>
         </Link>

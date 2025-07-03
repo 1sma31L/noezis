@@ -4,10 +4,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/lib/auth-client";
 import { api } from "@/trpc/react";
-import { Icon } from "@iconify/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import {
+  RiFireLine,
+  RiQuestionLine,
+  RiMessage2Line,
+  RiMessage3Line,
+} from "react-icons/ri";
 
 function WhatDoYouThink() {
   const { data: session } = useSession();
@@ -15,10 +20,6 @@ function WhatDoYouThink() {
     { userId: session?.user?.id ?? "" },
     { enabled: !!session?.user?.id },
   );
-
-  if (!session) {
-    return null;
-  }
 
   return (
     <Card className="w-full px-1">
@@ -49,25 +50,22 @@ function WhatDoYouThink() {
         </div>
         <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">
           <Button variant="ghost" size={"sm"}>
-            <Icon icon="mdi:fire" className="hidden md:block" />
+            <RiFireLine className="hidden md:block" />
             <p>Quick Take</p>
           </Button>
           <Separator orientation="vertical" />
           <Button variant="ghost" size={"sm"}>
-            <Icon icon="mdi:help-circle-outline" className="hidden md:block" />
+            <RiQuestionLine className="hidden md:block" />
             <p>Ask</p>
           </Button>
           <Separator orientation="vertical" />
           <Button variant="ghost" size={"sm"}>
-            <Icon
-              icon="mdi:comment-question-outline"
-              className="hidden md:block"
-            />
+            <RiMessage2Line className="hidden md:block" />
             <p>Answer</p>
           </Button>
           <Separator orientation="vertical" />{" "}
           <Button variant="ghost" size={"sm"}>
-            <Icon icon="mdi:post-outline" className="hidden md:block" />
+            <RiMessage3Line className="hidden md:block" />
             <p>Post</p>
           </Button>
         </div>

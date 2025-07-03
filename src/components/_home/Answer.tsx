@@ -7,14 +7,24 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@iconify/react";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import {
+  RiCheckboxCircleFill,
+  RiThumbUpLine,
+  RiThumbDownLine,
+  RiMessage2Line,
+  RiShareLine,
+  RiBookmarkLine,
+  RiBookmarkFill,
+  RiMoreLine,
+  RiThumbUpFill,
+  RiThumbDownFill,
+} from "react-icons/ri";
 
 interface AnswerProps {
   question: {
@@ -96,7 +106,7 @@ function Answer({ question, answer }: AnswerProps) {
                 variant="outline"
                 className="rounded-full bg-green-500/10 text-green-500"
               >
-                <Icon icon="mdi:check" className="mr-1 inline-block" />
+                <RiCheckboxCircleFill className="mr-1 inline-block" />
                 Answer
               </Badge>
             )}
@@ -183,14 +193,18 @@ function Answer({ question, answer }: AnswerProps) {
                 variant="ghost"
                 size="sm"
                 className={`text-muted-foreground hover:text-foreground flex flex-row items-center justify-start gap-2 ${
-                  isUpvoted ? "text-blue-500 hover:text-blue-500" : ""
+                  isUpvoted ? "text-primary hover:text-primary" : ""
                 }`}
                 onClick={() => {
                   if (isDownvoted) setIsDownvoted(false);
                   setIsUpvoted(!isUpvoted);
                 }}
               >
-                <Icon icon="mdi:thumb-up" />
+                {isUpvoted ? (
+                  <RiThumbUpFill className="text-primary" />
+                ) : (
+                  <RiThumbUpLine />
+                )}
                 <span className="text-[9px] md:text-xs">{answer.upvotes}</span>
               </Button>
               <Separator orientation="vertical" />
@@ -205,7 +219,11 @@ function Answer({ question, answer }: AnswerProps) {
                   setIsDownvoted(!isDownvoted);
                 }}
               >
-                <Icon icon="mdi:thumb-down" />
+                {isDownvoted ? (
+                  <RiThumbDownFill className="text-destructive" />
+                ) : (
+                  <RiThumbDownLine />
+                )}
                 <span className="text-[9px] md:text-xs">
                   {answer.downvotes}
                 </span>
@@ -218,7 +236,7 @@ function Answer({ question, answer }: AnswerProps) {
               size="sm"
               className="text-muted-foreground hover:text-foreground"
             >
-              <Icon icon="mdi:message" />
+              <RiMessage2Line />
               <p className="text-[9px] md:text-xs">{answer.comments}</p>
             </Button>
 
@@ -228,7 +246,7 @@ function Answer({ question, answer }: AnswerProps) {
               size="sm"
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
-              <Icon icon="mdi:share" />
+              <RiShareLine />
               {answer.shares && (
                 <p className="text-[9px] md:text-xs">{answer.shares}</p>
               )}
@@ -243,19 +261,18 @@ function Answer({ question, answer }: AnswerProps) {
               className="text-muted-foreground hover:text-foreground"
               onClick={() => setIsSaved(!isSaved)}
             >
-              <Icon
-                icon="mdi:bookmark"
-                className={
-                  isSaved ? "text-yellow-500 hover:text-yellow-500" : ""
-                }
-              />
+              {isSaved ? (
+                <RiBookmarkFill className="text-yellow-500" />
+              ) : (
+                <RiBookmarkLine className="text-muted-foreground" />
+              )}
             </Button>
             <Button
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground"
             >
-              <Icon icon="mdi:dots-vertical" />
+              <RiMoreLine />
             </Button>
           </div>
         </div>

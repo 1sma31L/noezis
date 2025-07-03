@@ -3,7 +3,7 @@
 import React from "react";
 import { Input } from "./ui/input";
 import { Card } from "./ui/card";
-import { Icon } from "@iconify/react";
+import { RiSearchLine } from "react-icons/ri";
 
 function RightSidebar() {
   const trendingTopics = [
@@ -28,10 +28,7 @@ function RightSidebar() {
   return (
     <div className="sticky top-20 flex w-80 flex-col gap-4 px-4">
       <div className="relative">
-        <Icon
-          icon="mdi:magnify"
-          className="text-muted-foreground absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2"
-        />
+        <RiSearchLine className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
         <Input
           placeholder="Search"
           className="bg-card rounded-full pr-4 pl-10"

@@ -6,13 +6,22 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@iconify/react";
 import { Badge } from "@/components/ui/badge";
+import {
+  RiBookmarkLine,
+  RiCheckboxCircleFill,
+  RiQuestionLine,
+  RiMessage2Line,
+  RiShareLine,
+  RiMoreLine,
+  RiBookmarkFill,
+  RiNotificationLine,
+  RiNotificationFill,
+} from "react-icons/ri";
 
 interface QuestionProps {
   id: number;
@@ -90,9 +99,9 @@ function Question({
             }`}
           >
             {isAnswered ? (
-              <Icon icon="mdi:check" className="mr-1 inline-block" />
+              <RiCheckboxCircleFill className="mr-1 inline-block" />
             ) : (
-              <Icon icon="mdi:help-circle" className="mr-1 inline-block" />
+              <RiQuestionLine className="mr-1 inline-block" />
             )}
             Question
           </Badge>
@@ -153,7 +162,7 @@ function Question({
               size="sm"
               className="bg-primary text-primary-foreground hover:bg-primary/90 !text-xs"
             >
-              <Icon icon="mdi:message-reply-text" className="mr-1 md:mr-2" />
+              <RiMessage2Line className="mr-1 md:mr-2" />
               Answer
             </Button>
 
@@ -163,15 +172,13 @@ function Question({
               size="sm"
               className={` ${
                 isFollowing
-                  ? "bg-primary/10 text-primary border-primary"
+                  ? "bg-primary/10 text-primary border-primary hover:bg-primary/20 hover:text-primary"
                   : "text-muted-foreground"
               }`}
               onClick={() => setIsFollowing(!isFollowing)}
             >
-              <Icon
-                icon={isFollowing ? "mdi:bell" : "mdi:bell-outline"}
-                className="m-0 md:mr-2"
-              />
+              {isFollowing ? <RiNotificationFill /> : <RiNotificationLine />}
+
               <span className="hidden md:block">
                 {isFollowing ? "Following" : "Follow"}
               </span>
@@ -183,7 +190,7 @@ function Question({
               size="sm"
               className="text-muted-foreground hover:text-foreground"
             >
-              <Icon icon="simple-icons:answer" />
+              <RiMessage2Line />
               {answers && <p className="text-xs">{answers}</p>}
             </Button>
 
@@ -193,7 +200,7 @@ function Question({
               size="sm"
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
-              <Icon icon="mdi:share" />
+              <RiShareLine />
               {shares && <p className="text-xs">{shares}</p>}
             </Button>
           </div>
@@ -206,17 +213,18 @@ function Question({
               className="text-muted-foreground hover:text-foreground"
               onClick={() => setIsSaved(!isSaved)}
             >
-              <Icon
-                icon="mdi:bookmark"
-                className={isSaved ? "text-yellow-500" : ""}
-              />
+              {isSaved ? (
+                <RiBookmarkFill className="text-yellow-500" />
+              ) : (
+                <RiBookmarkLine className="text-muted-foreground" />
+              )}
             </Button>
             <Button
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground"
             >
-              <Icon icon="mdi:dots-vertical" />
+              <RiMoreLine />
             </Button>
           </div>
         </div>

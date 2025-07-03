@@ -4,12 +4,22 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { api } from "@/trpc/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { parseBioMentions } from "@/utils/parseBioMentions";
 import { useSession } from "@/lib/auth-client";
+import {
+  RiGlobalLine,
+  RiUserLine,
+  RiUserAddLine,
+  RiMessageLine,
+  RiMoreLine,
+  RiCalendarLine,
+  RiCheckboxCircleFill,
+  RiMapPin2Fill,
+  RiMapPin2Line,
+} from "react-icons/ri";
 
 function UserProfile() {
   const { username } = useParams();
@@ -70,7 +80,7 @@ function UserProfile() {
           ) : isLoading ? (
             <Avatar className="ring-background h-24 w-24 animate-pulse rounded-full ring-4 md:h-36 md:w-36">
               <AvatarFallback>
-                <Icon icon="mdi:account" className="h-10 w-10" />
+                <RiUserLine className="h-10 w-10" />
               </AvatarFallback>
             </Avatar>
           ) : (
@@ -89,8 +99,7 @@ function UserProfile() {
                     style={{ whiteSpace: "nowrap" }}
                   >
                     &nbsp;
-                    <Icon
-                      icon="solar:verified-check-bold"
+                    <RiCheckboxCircleFill
                       className="h-4 w-4 md:h-6 md:w-6 lg:h-8 lg:w-8"
                       style={{
                         color: "#2a623d",
@@ -146,21 +155,21 @@ function UserProfile() {
           <div className="flex flex-row items-center justify-start gap-4">
             {user?.location ? (
               <div className="flex w-full flex-row items-center justify-start gap-1">
-                <Icon icon="mdi:map-marker" className="h-4 w-4" />
+                <RiMapPin2Fill className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   {user?.location}
                 </p>
               </div>
             ) : isLoading ? (
               <div className="flex flex-row items-center justify-center gap-1">
-                <Icon icon="mdi:map-marker" className="h-4 w-4 animate-pulse" />
+                <RiMapPin2Fill className="h-4 w-4 animate-pulse" />
                 <p className="text-muted-foreground animate-pulse">
                   Loading...
                 </p>
               </div>
             ) : (
               <div className="flex flex-row items-center justify-center gap-1">
-                <Icon icon="mdi:map-marker" className="h-4 w-4" />
+                <RiMapPin2Line className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   No location provided.
                 </p>
@@ -172,7 +181,7 @@ function UserProfile() {
                 target="_blank"
                 className="text-muted-foreground flex flex-row items-center justify-start gap-1 text-xs md:text-sm"
               >
-                <Icon icon="mdi:web" width="16" height="16" />
+                <RiGlobalLine className="h-4 w-4" />
                 <p className="text-muted-foreground hover:text-primary text-xs hover:underline md:text-sm">
                   {user?.website}
                 </p>
@@ -183,7 +192,7 @@ function UserProfile() {
               </p>
             ) : (
               <div className="flex flex-row items-center justify-center gap-1">
-                <Icon icon="mdi:web" width="16" height="16" />
+                <RiGlobalLine className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   No website provided.
                 </p>
@@ -191,7 +200,7 @@ function UserProfile() {
             )}
           </div>
           <div className="flex flex-row items-center justify-center gap-1">
-            <Icon icon="mdi:calendar" width="16" height="16" />
+            <RiCalendarLine className="h-4 w-4" />
             <p className="text-muted-foreground text-xs md:text-sm">
               Joined{" "}
               {user?.createdAt.toLocaleDateString("en-US", {
@@ -202,13 +211,13 @@ function UserProfile() {
           </div>
           <div className="flex flex-row items-center justify-start gap-4">
             <div className="flex flex-row items-center justify-center gap-1">
-              <Icon icon="mdi:account" width="16" height="16" />
+              <RiUserLine className="h-4 w-4" />
               <p className="text-muted-foreground text-xs md:text-sm">
                 93 followers
               </p>
             </div>
             <div className="flex flex-row items-center justify-center gap-1">
-              <Icon icon="mdi:account" width="16" height="16" />
+              <RiUserLine className="h-4 w-4" />
               <p className="text-muted-foreground text-xs md:text-sm">
                 93 following
               </p>
@@ -220,14 +229,14 @@ function UserProfile() {
         {session && user?.user?.id && session.user?.id !== user.user.id && (
           <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
             <Button className="rounded-full text-xs! md:text-sm!">
-              <Icon icon="mdi:account-plus" className="h-4 w-4" />
+              <RiUserAddLine className="h-4 w-4" />
               Follow
             </Button>
             <Button variant="outline" size="icon" className="rounded-full">
-              <Icon icon="mdi:message-outline" className="h-4 w-4" />
+              <RiMessageLine className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="icon" className="rounded-full">
-              <Icon icon="mdi:dots-vertical" className="h-4 w-4" />
+              <RiMoreLine className="h-4 w-4" />
             </Button>
           </div>
         )}

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Icon } from "@iconify/react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -12,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { RiCloudyLine, RiMoonLine, RiSunLine } from "react-icons/ri";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
@@ -30,21 +30,21 @@ export function ModeToggle() {
           onClick={() => setTheme("light")}
           className="flex items-center gap-3"
         >
-          <Icon icon="mdi:weather-sunny" className="h-4 w-4" />
+          <RiSunLine className="h-4 w-4" />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
           className="flex items-center gap-3"
         >
-          <Icon icon="mdi:weather-night" className="h-4 w-4" />
+          <RiMoonLine className="h-4 w-4" />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("system")}
           className="flex items-center gap-3"
         >
-          <Icon icon="mdi:weather-cloudy" className="h-4 w-4" />
+          <RiCloudyLine className="h-4 w-4" />
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

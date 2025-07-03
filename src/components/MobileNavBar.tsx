@@ -2,10 +2,21 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icon } from "@iconify/react";
 import { useSession } from "@/lib/auth-client";
 import { api } from "@/trpc/react";
 import { cn } from "@/lib/utils";
+import {
+  RiHome6Line,
+  RiHome6Fill,
+  RiMap2Line,
+  RiMap2Fill,
+  RiAddLargeLine,
+  RiAddLargeFill,
+  RiMessageLine,
+  RiMessageFill,
+  RiUser3Line,
+  RiUser3Fill,
+} from "react-icons/ri";
 
 function MobileNavBar() {
   const pathname = usePathname();
@@ -19,33 +30,33 @@ function MobileNavBar() {
     {
       label: "Home",
       href: "/home",
-      icon: "ic:outline-home",
-      activeIcon: "ic:baseline-home",
+      icon: RiHome6Line,
+      activeIcon: RiHome6Fill,
     },
     {
       label: "Explore",
       href: "/explore",
-      icon: "ic:outline-explore",
-      activeIcon: "ic:baseline-explore",
+      icon: RiMap2Line,
+      activeIcon: RiMap2Fill,
     },
     {
       label: "Post",
       href: "#",
-      icon: "ic:outline-add-circle",
-      activeIcon: "ic:baseline-add-circle",
+      icon: RiAddLargeLine,
+      activeIcon: RiAddLargeFill,
       isSpecial: true,
     },
     {
       label: "Messages",
       href: "/messages",
-      icon: "ic:outline-chat",
-      activeIcon: "ic:baseline-chat",
+      icon: RiMessageLine,
+      activeIcon: RiMessageFill,
     },
     {
       label: "Profile",
       href: `${profile?.id ? `/users/${profile?.username}` : "/signin"}`,
-      icon: "ic:outline-person",
-      activeIcon: "ic:baseline-person",
+      icon: RiUser3Line,
+      activeIcon: RiUser3Fill,
     },
   ];
 
@@ -60,18 +71,15 @@ function MobileNavBar() {
             className={cn(
               "flex flex-col items-center justify-center",
               isActive ? "text-primary" : "text-muted-foreground",
-              item.isSpecial && "relative -top-4",
+              item.isSpecial && "relative -top-2",
               item.label === "Profile" && isLoading && "opacity-50",
             )}
           >
-            <Icon
-              icon={isActive ? item.activeIcon : item.icon}
-              className={cn(
-                "transition-all",
-                item.isSpecial ? "text-primary h-12 w-12" : "h-6 w-6",
-              )}
-            />
-            <span className="text-xs">{item.label}</span>
+            <div className="text-xl">
+              {isActive ? <item.activeIcon /> : <item.icon />}
+            </div>
+
+            <span className="text-[10px]">{item.label}</span>
           </Link>
         );
       })}
