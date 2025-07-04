@@ -22,7 +22,6 @@ import { useSession } from "@/lib/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import EditProfileDialog from "@/components/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
-import { useTheme } from "next-themes";
 
 function UserProfile() {
   const { username } = useParams();
@@ -47,8 +46,7 @@ function UserProfile() {
       isActive: false,
     },
   ];
-  const { resolvedTheme } = useTheme();
-  console.log("[resolvedTheme]=", resolvedTheme);
+
   return (
     <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
       {profile?.bannerImage ? (
