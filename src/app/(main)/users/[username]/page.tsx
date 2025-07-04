@@ -20,12 +20,15 @@ import {
 } from "react-icons/ri";
 import { useSession } from "@/lib/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
+import EditProfileDialog from "@/components/EditProfileDialog";
+import { env } from "@/env";
+import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
 
 function UserProfile() {
   const { username } = useParams();
   const { data: session } = useSession();
   const { data: profile, isLoading } = useProfileByUsername(username as string);
-
+  const isOwner = session?.user?.id === profile?.user?.id;
   const navigationTabs = [
     {
       label: "Posts",
@@ -48,21 +51,19 @@ function UserProfile() {
   return (
     <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
       {profile?.bannerImage ? (
-        <div className="absolute z-0 h-40 w-full md:h-48">
+        <div className="aspect-banner absolute z-0 h-40 w-full md:h-48">
           <img
-            src={profile?.bannerImage}
+            src={profile?.bannerImage ?? ANONYMOUS_BANNER_IMAGE}
             alt={profile?.user.name ?? "Banner Image"}
             className="h-40 w-full rounded-2xl object-cover md:h-48"
           />
         </div>
-      ) : isLoading ? (
-        <div className="absolute z-0 h-40 w-full md:h-48">
-          <div className="bg-muted h-full w-full animate-pulse rounded-2xl"></div>
-        </div>
       ) : (
-        <div className="absolute z-0 h-40 w-full md:h-48">
-          <div className="bg-primary h-full w-full rounded-2xl"></div>
-        </div>
+        isLoading && (
+          <div className="aspect-banner absolute z-0 h-40 w-full md:h-48">
+            <div className="bg-muted h-full w-full animate-pulse rounded-2xl"></div>
+          </div>
+        )
       )}
       <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-3 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
@@ -73,7 +74,6 @@ function UserProfile() {
                 alt={profile?.user.name ?? "Profile Image"}
                 className="h-full w-full object-cover"
               />
-              <RiCameraFill className="text-background absolute right-1/2 bottom-1/2 h-8 w-8 translate-x-1/2 translate-y-1/2 opacity-0 transition-opacity duration-300 xl:group-hover:opacity-100" />
             </div>
           ) : isLoading ? (
             <Avatar className="ring-background h-24 w-24 animate-pulse rounded-full ring-4 md:h-36 md:w-36">
@@ -86,6 +86,9 @@ function UserProfile() {
               <AvatarFallback>{profile?.user.name?.charAt(0)}</AvatarFallback>
             </Avatar>
           )}
+        </div>
+        <div className="flex w-full flex-row items-center justify-between gap-2">
+          {/*  */}
           {/* NAME */}
           {profile?.user.name ? (
             <div className="flex flex-col items-start justify-center">
@@ -132,8 +135,14 @@ function UserProfile() {
           ) : (
             <h1 className="text-4xl font-bold">No name</h1>
           )}
+          {/* EDIT PROFILE */}
+          <div className="flex flex-row items-center justify-center gap-2">
+            {(env.NEXT_PUBLIC_APP_ENV === "development" ||
+              (isOwner && profile)) &&
+              profile && <EditProfileDialog profile={profile} />}
+          </div>
+          {/*  */}
         </div>
-
         <div className="flex flex-col items-start justify-start gap-2 md:gap-4">
           {profile?.bio ? (
             <p className="text-muted-foreground max-w-[700px]">
@@ -224,22 +233,20 @@ function UserProfile() {
         </div>
 
         {/* Only show buttons when session is loaded AND it's not the user's own profile */}
-        {session &&
-          profile?.user?.id &&
-          session?.user?.id !== profile.user.id && (
-            <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
-              <Button className="rounded-full text-xs! md:text-sm!">
-                <RiUserAddLine className="h-4 w-4" />
-                Follow
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <RiMessageLine className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <RiMoreLine className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
+        {!isOwner && profile && (
+          <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
+            <Button className="rounded-full text-xs! md:text-sm!">
+              <RiUserAddLine className="h-4 w-4" />
+              Follow
+            </Button>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <RiMessageLine className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <RiMoreLine className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
 
         <Separator className="my-2 w-full" />
         <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">

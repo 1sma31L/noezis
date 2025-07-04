@@ -5,6 +5,11 @@
   @apply bg-primary text-primary-foreground;
 }
 
+/* YAYAYAYAYA */
+body {
+  @apply !min-w-full;
+}
+
 html {
   scrollbar-gutter: stable;
 }
@@ -36,7 +41,7 @@ html {
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.9232 0.0026 48.7171);
   --input: oklch(0.7621 0.0156 98.3528);
-  --ring: oklch(0.5937 0.1673 253.063);
+  --ring: oklch(0.4477 0.085 152.539);
   --chart-1: oklch(0.7078 0.0816 146.76);
   --chart-2: oklch(0.8952 0.039 115.135);
   --chart-3: oklch(0.634 0.1017 146.5876);
@@ -89,7 +94,7 @@ html {
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.2907 0.0034 164.8371);
   --input: oklch(0.4336 0.0113 100.2195);
-  --ring: oklch(0.4312 0.0124 145.3561);
+  --ring: oklch(0.4477 0.085 152.539);
   --chart-1: oklch(0.7078 0.0816 146.76);
   --chart-2: oklch(0.8952 0.039 115.135);
   --chart-3: oklch(0.634 0.1017 146.5876);
@@ -172,6 +177,8 @@ html {
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --aspect-banner: 16 / 4;
 }
 
 @layer base {

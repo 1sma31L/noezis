@@ -1,14 +1,13 @@
 import { sql, relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { ANONYMOUS_PROFILE_IMAGE } from "@/constants";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
-  image: text("image").default(
-    "https://i.pinimg.com/736x/22/02/f1/2202f1513fa534d5e3698ae8619d9474.jpg",
-  ),
+  image: text("image").default(ANONYMOUS_PROFILE_IMAGE),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
 });
