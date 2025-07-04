@@ -1,13 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+::selection {
+  @apply bg-primary text-primary-foreground;
+}
+
 html {
   scrollbar-gutter: stable;
 }
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-sans:
-    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    var(--font-manrope), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -44,9 +50,9 @@ html {
   --sidebar-accent-foreground: oklch(0.325 0 0);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --font-sans: Geist, sans-serif;
+  --font-sans: Manrope, sans-serif;
   --font-serif: Lora, serif;
-  --font-mono: Geist Mono, monospace;
+  --font-mono: "SF Mono", monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
@@ -97,9 +103,9 @@ html {
   --sidebar-accent-foreground: oklch(0.8074 0.0142 93.0137);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --font-sans: Geist, sans-serif;
+  --font-sans: Manrope, sans-serif;
   --font-serif: Lora, serif;
-  --font-mono: Geist Mono, monospace;
+  --font-mono: "SF Mono", monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
