@@ -16,7 +16,7 @@ export function Providers({ children }: { children: ReactNode }) {
           richColors
           closeButton
           position="top-center"
-          theme={resolvedTheme as "light" | "dark" | "system"}
+          theme={(resolvedTheme as "light" | "dark" | "system") ?? "system"}
         />
         {children}
       </TRPCReactProvider>
