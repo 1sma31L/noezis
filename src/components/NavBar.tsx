@@ -66,7 +66,10 @@ function NavBar() {
                     className="relative h-10 w-10 cursor-pointer rounded-full"
                   >
                     <Avatar>
-                      <AvatarImage src={session.user?.image ?? ""} />
+                      <AvatarImage
+                        src={session.user?.image ?? ""}
+                        className="object-cover"
+                      />
                       <AvatarFallback className="bg-primary">
                         {session.user?.name?.charAt(0)}
                       </AvatarFallback>

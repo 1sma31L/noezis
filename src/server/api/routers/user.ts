@@ -1,8 +1,13 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { profile } from "@/server/db/schema";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
+import { profile, user } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
+import { updateProfileSchema } from "@/lib/schemas/user";
 
 export const userRouter = createTRPCRouter({
   /**
@@ -51,5 +56,42 @@ export const userRouter = createTRPCRouter({
       }
 
       return profileWithUser;
+    }),
+  /**
+   * Update a profile
+   * @param profile - The profile to update
+   * @returns The updated profile
+   * @example
+   * const updatedProfile = await api.user.updateProfile({
+   *   name: "John Doe",
+   *   image: "https://example.com/image.jpg",
+   *   bio: "I am a software engineer",
+   *   location: "New York, NY",
+   *   website: "https://example.com",
+   *   bannerImage: "https://example.com/banner.jpg",
+   * });
+   */
+  updateProfile: protectedProcedure
+    .input(updateProfileSchema)
+    .mutation(async ({ ctx, input }) => {
+      const updatedUser = await ctx.db
+        .update(user)
+        .set({
+          name: input.name,
+          image: input.image,
+        })
+        .where(eq(user.id, ctx.session.user.id));
+
+      const updatedProfile = await ctx.db
+        .update(profile)
+        .set({
+          bio: input.bio,
+          location: input.location,
+          website: input.website,
+          bannerImage: input.bannerImage,
+        })
+        .where(eq(profile.userId, ctx.session.user.id));
+
+      return updatedProfile;
     }),
 });

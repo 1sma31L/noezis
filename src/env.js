@@ -13,6 +13,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     DATABASE_URL: z.string().url(),
+    APPWRITE_API_KEY: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -25,6 +26,8 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_APP_ENV: z.enum(["development", "production"]),
+    NEXT_PUBLIC_APPWRITE_PROJECT_ID: z.string(),
+    NEXT_PUBLIC_APPWRITE_ENDPOINT: z.string(),
   },
 
   /**
@@ -32,14 +35,20 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    // server
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
+    APPWRITE_API_KEY: process.env.APPWRITE_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
+    // client
     NEXT_PUBLIC_APP_ENV: process.env.NEXT_PUBLIC_APP_ENV,
+    NEXT_PUBLIC_APPWRITE_PROJECT_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
+    NEXT_PUBLIC_APPWRITE_ENDPOINT: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

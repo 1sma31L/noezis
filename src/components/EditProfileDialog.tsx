@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -26,30 +29,50 @@ import {
 } from "@/components/ui/drawer";
 import type { UserWithProfile } from "@/types/user";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { ANONYMOUS_BANNER_IMAGE, ANONYMOUS_PROFILE_IMAGE } from "@/constants";
+import { api } from "@/trpc/react";
+import { updateProfileSchema } from "@/lib/schemas/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { uploadImage } from "@/lib/utils";
+import { BUCKET_IDS } from "@/lib/appwrite";
+import { toast } from "sonner";
 
-const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  bio: z.string().optional().nullable(),
-  location: z.string().optional().nullable(),
-  website: z.string().url("Please enter a valid URL").optional().nullable(),
-  bannerImage: z.string().optional().nullable(),
-  image: z.string().optional().nullable(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof updateProfileSchema>;
 
 function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: updateProfile, isPending } =
+    api.user.updateProfile.useMutation({
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries({
+            queryKey: [["user", "getProfileByUsername"]],
+          }),
+          queryClient.invalidateQueries({
+            queryKey: [["user", "getProfileByUserId"]],
+          }),
+        ]);
+
+        toast.success("Profile updated successfully");
+        onClose();
+      },
+      onError: (error) => {
+        toast.error(error.message ?? "Failed to update profile");
+      },
+    });
+
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+    resolver: zodResolver(updateProfileSchema),
+    mode: "onChange",
+    values: {
       name: profile.user.name,
       bio: profile.bio ?? "",
       location: profile.location ?? "",
@@ -60,10 +83,13 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
   });
 
   const onSubmit = async (data: FormValues) => {
-    // TODO: Call your tRPC mutation here
-    console.log(data);
+    try {
+      await updateProfile(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  // Onclose restore the original values
+
   const onClose = () => {
     form.reset({
       name: profile.user.name,
@@ -101,22 +127,40 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
                 type="button"
                 variant="ghost"
                 size="icon"
-                onClick={() => {
-                  // open file picker
-                  const input = document.createElement("input");
-                  input.type = "file";
-                  input.accept = "image/*";
-                  input.onchange = () => {
-                    const file = input.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        form.setValue("bannerImage", reader.result as string);
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  };
-                  input.click();
+                onClick={async () => {
+                  try {
+                    // open file picker
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = "image/*";
+                    input.onchange = async () => {
+                      const file = input.files?.[0];
+                      if (file) {
+                        const toastId = toast.loading(
+                          "Uploading banner image...",
+                        );
+
+                        try {
+                          // Upload to Appwrite
+                          const imageUrl = await uploadImage(
+                            file,
+                            BUCKET_IDS.BANNER_PICTURES,
+                          );
+                          // Update form
+                          form.setValue("bannerImage", imageUrl);
+                          toast.dismiss(toastId);
+                          toast.success("Banner image uploaded successfully");
+                        } catch (error) {
+                          toast.dismiss(toastId);
+                          toast.error("Failed to upload banner image");
+                          console.error(error);
+                        }
+                      }
+                    };
+                    input.click();
+                  } catch (error) {
+                    console.error(error);
+                  }
                 }}
               >
                 <RiImageEditLine className="h-4 w-4" />
@@ -148,22 +192,40 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
                 type="button"
                 variant="ghost"
                 size="icon"
-                onClick={() => {
-                  // open file picker
-                  const input = document.createElement("input");
-                  input.type = "file";
-                  input.accept = "image/*";
-                  input.onchange = () => {
-                    const file = input.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        form.setValue("image", reader.result as string);
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  };
-                  input.click();
+                onClick={async () => {
+                  try {
+                    // open file picker
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = "image/*";
+                    input.onchange = async () => {
+                      const file = input.files?.[0];
+                      if (file) {
+                        const toastId = toast.loading(
+                          "Uploading profile image...",
+                        );
+
+                        try {
+                          // Upload to Appwrite
+                          const imageUrl = await uploadImage(
+                            file,
+                            BUCKET_IDS.PROFILE_PICTURES,
+                          );
+                          // Update form
+                          form.setValue("image", imageUrl);
+                          toast.dismiss(toastId);
+                          toast.success("Profile image uploaded successfully");
+                        } catch (error) {
+                          toast.dismiss(toastId);
+                          toast.error("Failed to upload profile image");
+                          console.error(error);
+                        }
+                      }
+                    };
+                    input.click();
+                  } catch (error) {
+                    console.error(error);
+                  }
                 }}
               >
                 <RiImageEditLine className="h-4 w-4" />
@@ -266,11 +328,17 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
         />
 
         <div className="flex flex-row items-center justify-end gap-2 py-4">
-          <Button type="button" variant="outline" size="sm" onClick={onClose}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onClose}
+            disabled={isPending}
+          >
             Cancel
           </Button>
-          <Button type="submit" size="sm" onClick={form.handleSubmit(onSubmit)}>
-            Save
+          <Button type="submit" size="sm" disabled={isPending}>
+            {isPending ? "Saving..." : "Save"}
           </Button>
         </div>
       </form>
