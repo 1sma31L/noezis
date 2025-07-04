@@ -110,7 +110,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
         className="flex flex-col gap-2 md:gap-4"
       >
         {/* BANNER and PROFILE IMAGE */}
-        <div className="aspect-banner relative flex flex-col gap-2 pb-10 lg:pb-20">
+        <div className="aspect-banner relative flex flex-col gap-2 pb-10">
           <div className="group relative overflow-hidden rounded-lg">
             <img
               src={form.watch("bannerImage") ?? ANONYMOUS_BANNER_IMAGE}
@@ -285,8 +285,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
               <Textarea
                 {...field}
                 value={field.value ?? ""}
-                className="h-12 text-sm"
-                rows={1}
+                className="h-10 text-sm lg:h-20"
               />
               <FormMessage />
             </FormItem>
@@ -362,7 +361,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Edit Profile</DialogTitle>
+              <DialogTitle className="sr-only">Edit Profile</DialogTitle>
             </DialogHeader>
             <ProfileForm onClose={onClose} />
           </DialogContent>
