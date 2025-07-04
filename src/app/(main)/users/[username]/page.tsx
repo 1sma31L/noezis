@@ -2,13 +2,11 @@
 "use client";
 import React from "react";
 import { useParams } from "next/navigation";
-import { api } from "@/trpc/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { parseBioMentions } from "@/utils/parseBioMentions";
-import { useSession } from "@/lib/auth-client";
 import {
   RiGlobalLine,
   RiUserLine,
@@ -20,14 +18,13 @@ import {
   RiMapPin2Fill,
   RiMapPin2Line,
 } from "react-icons/ri";
+import { useSession } from "@/lib/auth-client";
+import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
 function UserProfile() {
   const { username } = useParams();
   const { data: session } = useSession();
-  const { data: user, isLoading } = api.user.getProfileByUsername.useQuery({
-    username: username as string,
-  });
-  console.log(user);
+  const { data: profile, isLoading } = useProfileByUsername(username as string);
 
   const navigationTabs = [
     {
@@ -50,11 +47,11 @@ function UserProfile() {
 
   return (
     <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
-      {user?.bannerImage ? (
+      {profile?.bannerImage ? (
         <div className="absolute z-0 h-40 w-full md:h-48">
           <img
-            src={user?.bannerImage}
-            alt={user?.user.name ?? "Banner Image"}
+            src={profile?.bannerImage}
+            alt={profile?.user.name ?? "Banner Image"}
             className="h-40 w-full rounded-2xl object-cover md:h-48"
           />
         </div>
@@ -69,11 +66,11 @@ function UserProfile() {
       )}
       <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-3 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
-          {user?.user.image ? (
+          {profile?.user.image ? (
             <div className="ring-background flex h-24 w-24 items-center justify-center overflow-hidden rounded-full ring-4 md:h-36 md:w-36">
               <img
-                src={user?.user.image}
-                alt={user?.user.name ?? "Profile Image"}
+                src={profile?.user.image}
+                alt={profile?.user.name ?? "Profile Image"}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -85,15 +82,15 @@ function UserProfile() {
             </Avatar>
           ) : (
             <Avatar className="ring-background h-24 w-24 rounded-full ring-4 md:h-36 md:w-36">
-              <AvatarFallback>{user?.user.name?.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{profile?.user.name?.charAt(0)}</AvatarFallback>
             </Avatar>
           )}
           {/* NAME */}
-          {user?.user.name ? (
+          {profile?.user.name ? (
             <div className="flex flex-col items-start justify-center">
               <h1 className="inline text-xl leading-tight font-bold break-words lg:text-3xl">
-                {user?.user.name}
-                {user?.isVerified && (
+                {profile?.user.name}
+                {profile?.isVerified && (
                   <span
                     className="inline align-middle"
                     style={{ whiteSpace: "nowrap" }}
@@ -112,12 +109,12 @@ function UserProfile() {
               </h1>
 
               {/* USERNAME */}
-              {user?.username ? (
+              {profile?.username ? (
                 <Link
-                  href={`/users/${user?.username}`}
+                  href={`/users/${profile?.username}`}
                   className="text-primary hover:underline"
                 >
-                  @{user?.username}
+                  @{profile?.username}
                 </Link>
               ) : isLoading ? (
                 <p className="text-muted-foreground animate-pulse">
@@ -137,9 +134,9 @@ function UserProfile() {
         </div>
 
         <div className="flex flex-col items-start justify-start gap-2 md:gap-4">
-          {user?.bio ? (
+          {profile?.bio ? (
             <p className="text-muted-foreground max-w-[700px]">
-              {parseBioMentions(user.bio)}
+              {parseBioMentions(profile.bio)}
             </p>
           ) : isLoading ? (
             <div className="flex flex-row items-center justify-center gap-1 md:gap-2">
@@ -153,11 +150,11 @@ function UserProfile() {
             </p>
           )}
           <div className="flex flex-row items-center justify-start gap-4">
-            {user?.location ? (
+            {profile?.location ? (
               <div className="flex w-full flex-row items-center justify-start gap-1">
                 <RiMapPin2Fill className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
-                  {user?.location}
+                  {profile?.location}
                 </p>
               </div>
             ) : isLoading ? (
@@ -175,15 +172,15 @@ function UserProfile() {
                 </p>
               </div>
             )}
-            {user?.website ? (
+            {profile?.website ? (
               <Link
-                href={`https://${user?.website.split("://")[1] ?? user?.website}`}
+                href={`https://${profile?.website.split("://")[1] ?? profile?.website}`}
                 target="_blank"
                 className="text-muted-foreground flex flex-row items-center justify-start gap-1 text-xs md:text-sm"
               >
                 <RiGlobalLine className="h-4 w-4" />
                 <p className="text-muted-foreground hover:text-primary text-xs hover:underline md:text-sm">
-                  {user?.website}
+                  {profile?.website}
                 </p>
               </Link>
             ) : isLoading ? (
@@ -203,7 +200,7 @@ function UserProfile() {
             <RiCalendarLine className="h-4 w-4" />
             <p className="text-muted-foreground text-xs md:text-sm">
               Joined{" "}
-              {user?.createdAt.toLocaleDateString("en-US", {
+              {profile?.createdAt.toLocaleDateString("en-US", {
                 month: "long",
                 year: "numeric",
               })}
@@ -226,20 +223,22 @@ function UserProfile() {
         </div>
 
         {/* Only show buttons when session is loaded AND it's not the user's own profile */}
-        {session && user?.user?.id && session.user?.id !== user.user.id && (
-          <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
-            <Button className="rounded-full text-xs! md:text-sm!">
-              <RiUserAddLine className="h-4 w-4" />
-              Follow
-            </Button>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <RiMessageLine className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <RiMoreLine className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
+        {session &&
+          profile?.user?.id &&
+          session?.user?.id !== profile.user.id && (
+            <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
+              <Button className="rounded-full text-xs! md:text-sm!">
+                <RiUserAddLine className="h-4 w-4" />
+                Follow
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <RiMessageLine className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <RiMoreLine className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
 
         <Separator className="my-2 w-full" />
         <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">

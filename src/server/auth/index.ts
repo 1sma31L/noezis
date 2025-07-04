@@ -30,6 +30,9 @@ export const auth = betterAuth({
       maxAge: 5 * 60,
     },
   },
+  advanced: {
+    cookiePrefix: "noezis",
+  },
   databaseHooks: {
     user: {
       create: {

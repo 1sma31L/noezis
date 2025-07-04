@@ -1,0 +1,29 @@
+import { useSession } from "@/lib/auth-client";
+import { api } from "@/trpc/react";
+
+const PROFILE_QUERY_CONFIG = {
+  staleTime: 1000 * 60 * 5,
+  keepPreviousData: true,
+};
+
+export function useProfile() {
+  const { data: session } = useSession();
+
+  return api.user.getProfileByUserId.useQuery(
+    { userId: session?.user?.id ?? "" },
+    {
+      enabled: !!session?.user?.id,
+      ...PROFILE_QUERY_CONFIG,
+    },
+  );
+}
+
+export function useProfileByUsername(username: string) {
+  return api.user.getProfileByUsername.useQuery(
+    { username },
+    {
+      ...PROFILE_QUERY_CONFIG,
+      enabled: !!username,
+    },
+  );
+}

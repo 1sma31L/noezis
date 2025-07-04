@@ -2,8 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "@/lib/auth-client";
-import { api } from "@/trpc/react";
+import { useProfile } from "@/lib/hooks/useProfile";
 import { cn } from "@/lib/utils";
 import {
   RiHome6Line,
@@ -20,11 +19,7 @@ import {
 
 function MobileNavBar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const { data: profile, isLoading } = api.user.getProfileByUserId.useQuery(
-    { userId: session?.user?.id ?? "" },
-    { enabled: !!session?.user?.id },
-  );
+  const { data: profile, isLoading } = useProfile();
 
   const navigationItems = [
     {

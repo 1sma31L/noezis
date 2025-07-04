@@ -2,8 +2,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useSession } from "@/lib/auth-client";
-import { api } from "@/trpc/react";
+import { useProfile } from "@/lib/hooks/useProfile";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
@@ -15,12 +14,7 @@ import {
 } from "react-icons/ri";
 
 function WhatDoYouThink() {
-  const { data: session } = useSession();
-  const { data: profile } = api.user.getProfileByUserId.useQuery(
-    { userId: session?.user?.id ?? "" },
-    { enabled: !!session?.user?.id, staleTime: 1000 * 60 * 5 },
-  );
-
+  const { data: profile } = useProfile();
   return (
     <Card className="w-full px-1">
       <CardContent className="flex flex-col items-center justify-start gap-6">

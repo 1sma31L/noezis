@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { signOut, useSession } from "@/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { api } from "@/trpc/react";
+import { useProfile } from "@/lib/hooks/useProfile";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,13 +20,7 @@ import { RiUserLine, RiSettingsLine, RiLogoutBoxLine } from "react-icons/ri";
 
 function NavBar() {
   const { data: session } = useSession();
-  const { data: profile } = api.user.getProfileByUserId.useQuery(
-    { userId: session?.user?.id ?? "" },
-    {
-      enabled: !!session?.user?.id,
-      staleTime: 1000 * 60 * 5,
-    },
-  );
+  const { data: profile } = useProfile();
   const router = useRouter();
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-sm">

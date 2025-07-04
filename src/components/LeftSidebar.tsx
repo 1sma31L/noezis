@@ -2,8 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useSession } from "@/lib/auth-client";
-import { api } from "@/trpc/react";
+import { useProfile } from "@/lib/hooks/useProfile";
 import { usePathname } from "next/navigation";
 import {
   RiHome6Line,
@@ -20,14 +19,7 @@ import {
 
 function LeftSidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const { data: profile, isLoading } = api.user.getProfileByUserId.useQuery(
-    { userId: session?.user?.id ?? "" },
-    {
-      enabled: !!session?.user?.id,
-      staleTime: 1000 * 60 * 5,
-    },
-  );
+  const { data: profile, isLoading } = useProfile();
   const navigationItems = [
     {
       label: "Home",
