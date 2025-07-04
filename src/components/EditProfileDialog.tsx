@@ -120,7 +120,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
 
             <div
               className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
-                editMode ? "opacity-100" : "opacity-0"
+                editMode ? "block" : "hidden"
               }`}
             >
               <Button
@@ -185,7 +185,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
             />
             <div
               className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
-                editMode ? "opacity-100" : "opacity-0"
+                editMode ? "block" : "hidden"
               }`}
             >
               <Button
