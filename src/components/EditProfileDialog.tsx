@@ -373,10 +373,10 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
         <Drawer repositionInputs open={drawerOpen} onOpenChange={setDrawerOpen}>
           <DrawerTrigger asChild>
             <Button
+              size={"icon"}
               variant="outline"
               className="!md:text-sm text-muted-foreground !bg-primary/10 rounded-full !text-xs"
             >
-              <span className="hidden lg:block">Edit Profile</span>
               <RiEditLine className="h-4 w-4" />
             </Button>
           </DrawerTrigger>
