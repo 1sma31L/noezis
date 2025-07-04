@@ -67,11 +67,11 @@ function NavBar() {
                   >
                     <Avatar>
                       <AvatarImage
-                        src={session.user?.image ?? ""}
+                        src={profile?.user?.image ?? ""}
                         className="object-cover"
                       />
                       <AvatarFallback className="bg-primary">
-                        {session.user?.name?.charAt(0)}
+                        {profile?.user?.name?.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -80,10 +80,10 @@ function NavBar() {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm leading-none font-medium">
-                        {session.user?.name}
+                        {profile?.user?.name}
                       </p>
                       <p className="text-muted-foreground text-xs leading-none">
-                        {session.user?.email}
+                        {profile?.user?.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>

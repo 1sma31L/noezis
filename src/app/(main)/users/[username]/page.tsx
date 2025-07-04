@@ -21,7 +21,6 @@ import {
 import { useSession } from "@/lib/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import EditProfileDialog from "@/components/EditProfileDialog";
-import { env } from "@/env";
 import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
 import { useTheme } from "next-themes";
 
