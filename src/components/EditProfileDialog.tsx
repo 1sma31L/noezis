@@ -376,7 +376,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
               variant="outline"
               className="!md:text-sm text-muted-foreground !bg-primary/10 rounded-full !text-xs"
             >
-              Edit Profile
+              <span className="hidden lg:block">Edit Profile</span>
               <RiEditLine className="h-4 w-4" />
             </Button>
           </DrawerTrigger>
