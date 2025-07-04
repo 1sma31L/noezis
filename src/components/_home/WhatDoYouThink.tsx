@@ -27,6 +27,7 @@ function WhatDoYouThink() {
               <AvatarImage
                 src={profile?.user.image ?? ""}
                 alt={profile?.user.name ?? "User avatar"}
+                className="object-cover"
               />
               <AvatarFallback className="bg-primary">
                 {profile?.user.name?.charAt(0)}
