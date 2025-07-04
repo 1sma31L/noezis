@@ -73,6 +73,7 @@ function UserProfile() {
                 alt={profile?.user.name ?? "Profile Image"}
                 className="h-full w-full object-cover"
               />
+              <RiCameraFill className="text-background absolute right-1/2 bottom-1/2 h-8 w-8 translate-x-1/2 translate-y-1/2 opacity-0 transition-opacity duration-300 xl:group-hover:opacity-100" />
             </div>
           ) : isLoading ? (
             <Avatar className="ring-background h-24 w-24 animate-pulse rounded-full ring-4 md:h-36 md:w-36">
