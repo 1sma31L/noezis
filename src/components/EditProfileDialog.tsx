@@ -91,44 +91,47 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
               alt="Banner"
               className="h-30 w-full rounded-lg object-cover transition-all duration-300 lg:group-hover:blur-sm"
             />
-            {editMode && (
-              <div className="bg-accent/20 absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300 hover:opacity-100">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    // open file picker
-                    const input = document.createElement("input");
-                    input.type = "file";
-                    input.accept = "image/*";
-                    input.onchange = () => {
-                      const file = input.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                          form.setValue("bannerImage", reader.result as string);
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    };
-                    input.click();
-                  }}
-                >
-                  <RiImageEditLine className="h-4 w-4" />
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() =>
-                    form.setValue("bannerImage", ANONYMOUS_BANNER_IMAGE)
-                  }
-                >
-                  <RiDeleteBinLine className="h-4 w-4" />
-                </Button>
-              </div>
-            )}
+
+            <div
+              className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
+                editMode ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  // open file picker
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = () => {
+                    const file = input.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        form.setValue("bannerImage", reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  };
+                  input.click();
+                }}
+              >
+                <RiImageEditLine className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() =>
+                  form.setValue("bannerImage", ANONYMOUS_BANNER_IMAGE)
+                }
+              >
+                <RiDeleteBinLine className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
           <div className="ring-background group absolute top-16 left-2 overflow-hidden rounded-full ring-2">
             <img
@@ -136,44 +139,44 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
               alt="Profile"
               className="ring-primary h-22 w-22 rounded-full object-cover ring-1 transition-all duration-300 lg:group-hover:blur-sm"
             />
-            {editMode && (
-              <div className="bg-accent/20 absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300 hover:opacity-100 lg:opacity-0">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    // open file picker
-                    const input = document.createElement("input");
-                    input.type = "file";
-                    input.accept = "image/*";
-                    input.onchange = () => {
-                      const file = input.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                          form.setValue("image", reader.result as string);
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    };
-                    input.click();
-                  }}
-                >
-                  <RiImageEditLine className="h-4 w-4" />
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() =>
-                    form.setValue("image", ANONYMOUS_PROFILE_IMAGE)
-                  }
-                >
-                  <RiDeleteBinLine className="h-4 w-4" />
-                </Button>
-              </div>
-            )}
+            <div
+              className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
+                editMode ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  // open file picker
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = () => {
+                    const file = input.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        form.setValue("image", reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  };
+                  input.click();
+                }}
+              >
+                <RiImageEditLine className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => form.setValue("image", ANONYMOUS_PROFILE_IMAGE)}
+              >
+                <RiDeleteBinLine className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
         {/* SHOW EDIT BUTTONS IN MOBILE */}
