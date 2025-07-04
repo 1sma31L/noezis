@@ -83,12 +83,12 @@ Day 4:
 
 Day 5:
 
-- [ ] Edit profile info page (or mode)
-- [ ] design/ the modal for the post/answer/question/quick take
-- [ ] add text editor for the post/answer/question/quick take
+- [x] Edit profile info page (or mode)
 
 Day 6:
 
+- [ ] design/ the modal for the post/answer/question/quick take
+- [ ] add text editor for the post/answer/question/quick take
 - [ ] backend/add the post/answer/question/quick take
 - [ ] add the post/answer/question/quick pages and implement nested comments
 
