@@ -139,9 +139,7 @@ function UserProfile() {
           )}
           {/* EDIT PROFILE */}
           <div className="flex flex-row items-center justify-center gap-2">
-            {(env.NEXT_PUBLIC_APP_ENV === "development" ||
-              (isOwner && profile)) &&
-              profile && <EditProfileDialog profile={profile} />}
+            {isOwner && profile && <EditProfileDialog profile={profile} />}
           </div>
           {/*  */}
         </div>
