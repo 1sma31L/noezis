@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -27,21 +24,27 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import type { UserWithProfile } from "@/types/user";
+import type { UserWithProfile } from "@/lib/types/user";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { ANONYMOUS_BANNER_IMAGE, ANONYMOUS_PROFILE_IMAGE } from "@/constants";
 import { api } from "@/trpc/react";
 import { updateProfileSchema } from "@/lib/schemas/user";
 import { useQueryClient } from "@tanstack/react-query";
-import { uploadImage } from "@/lib/utils";
-import { BUCKET_IDS } from "@/lib/appwrite";
+import { uploadImage } from "@/helpers/appwrite";
+import { BUCKET_IDS } from "@/lib/clients/appwrite-client";
 import { toast } from "sonner";
 
-type FormValues = z.infer<typeof updateProfileSchema>;
+type updateProfileSchema = z.infer<typeof updateProfileSchema>;
 
 function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -69,7 +72,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
       },
     });
 
-  const form = useForm<FormValues>({
+  const form = useForm<updateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),
     mode: "onChange",
     values: {
@@ -82,7 +85,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: updateProfileSchema) => {
     try {
       await updateProfile(data);
     } catch (error) {
@@ -115,18 +118,21 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
             <img
               src={form.watch("bannerImage") ?? ANONYMOUS_BANNER_IMAGE}
               alt="Banner"
-              className="h-30 w-full rounded-lg object-cover transition-all duration-300 lg:group-hover:blur-sm"
+              className={`h-30 w-full rounded-lg object-cover transition-all duration-300 ${
+                editMode ? "blur-xs" : "lg:group-hover:blur-xs"
+              }`}
             />
 
             <div
-              className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
-                editMode ? "block" : "hidden"
+              className={`bg-accent/20 absolute inset-0 items-center justify-center transition-opacity duration-300 ${
+                editMode ? "flex lg:hidden" : "hidden lg:group-hover:flex"
               }`}
             >
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
+                className=""
                 onClick={async () => {
                   try {
                     // open file picker
@@ -181,11 +187,13 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
             <img
               src={form.watch("image") ?? ANONYMOUS_PROFILE_IMAGE}
               alt="Profile"
-              className="ring-primary h-22 w-22 rounded-full object-cover ring-1 transition-all duration-300 lg:group-hover:blur-sm"
+              className={`ring-primary h-22 w-22 rounded-full object-cover ring-1 transition-all duration-300 ${
+                editMode ? "blur-xs" : "lg:group-hover:blur-xs"
+              }`}
             />
             <div
-              className={`bg-accent/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300 hover:opacity-100 ${
-                editMode ? "block" : "hidden"
+              className={`bg-accent/20 absolute inset-0 items-center justify-center transition-opacity duration-300 ${
+                editMode ? "flex lg:hidden" : "hidden lg:group-hover:flex"
               }`}
             >
               <Button
@@ -250,7 +258,7 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
             className="!text-xs"
             onClick={() => setEditMode(!editMode)}
           >
-            {editMode ? "Preview" : "Edit"}
+            {editMode ? "Preview" : "Edit pictures"}
             {editMode ? (
               <RiEyeLine className="h-4 w-4" />
             ) : (

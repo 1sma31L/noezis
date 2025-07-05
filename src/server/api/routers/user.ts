@@ -15,7 +15,7 @@ export const userRouter = createTRPCRouter({
    * @param username - The username of the profile to get
    * @returns The profile with the user
    * @example
-   * const profile = await api.user.getProfileByUsername({ username: "john_doe" });
+   * const profile = await api.user.getProfileByUsername({ username: "absurdvoid" });
    */
   getProfileByUsername: publicProcedure
     .input(z.object({ username: z.string() }))
@@ -39,7 +39,7 @@ export const userRouter = createTRPCRouter({
    * @param userId - The id of the user to get the profile for
    * @returns The profile with the user
    * @example
-   * const profile = await api.user.getProfileByUserId({ userId: "123" });
+   * const profile = await api.user.getProfileByUserId({ userId: "939393" });
    */
   getProfileByUserId: publicProcedure
     .input(z.object({ userId: z.string() }))
@@ -61,14 +61,12 @@ export const userRouter = createTRPCRouter({
    * Update a profile
    * @param profile - The profile to update
    * @returns The updated profile
-   * @example
-   * const updatedProfile = await api.user.updateProfile({
-   *   name: "John Doe",
+   * @example const { updatedUser, updatedProfile } = await api.user.updateProfile({
+   *   name: "Ismail Boussekine",
    *   image: "https://example.com/image.jpg",
    *   bio: "I am a software engineer",
-   *   location: "New York, NY",
-   *   website: "https://example.com",
-   *   bannerImage: "https://example.com/banner.jpg",
+   *   location: "Algiers, Algeria",
+   *   website: "https://ismailboussekine.com",
    * });
    */
   updateProfile: protectedProcedure
@@ -92,6 +90,6 @@ export const userRouter = createTRPCRouter({
         })
         .where(eq(profile.userId, ctx.session.user.id));
 
-      return updatedProfile;
+      return { updatedUser, updatedProfile };
     }),
 });

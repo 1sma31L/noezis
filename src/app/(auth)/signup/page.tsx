@@ -9,22 +9,14 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { signInWithProvider } from "@/utils/auth";
+import { signInWithProvider } from "@/helpers/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import type { z } from "zod";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/auth-client";
+import { signUp } from "@/lib/clients/auth-client";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-
-const signUpSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(128, "Password must be less than 128 characters"),
-});
+import { signUpSchema } from "@/lib/schemas/user";
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 

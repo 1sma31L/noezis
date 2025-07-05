@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { parseBioMentions } from "@/utils/parseBioMentions";
+import { parseBioMentions } from "@/helpers/strings/parseBioMentions";
 import {
   RiGlobalLine,
   RiUserLine,
@@ -18,7 +18,7 @@ import {
   RiMapPin2Fill,
   RiMapPin2Line,
 } from "react-icons/ri";
-import { useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/clients/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import EditProfileDialog from "@/components/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/constants";

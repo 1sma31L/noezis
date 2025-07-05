@@ -1,4 +1,4 @@
-import { useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/clients/auth-client";
 import { api } from "@/trpc/react";
 
 const PROFILE_QUERY_CONFIG = {

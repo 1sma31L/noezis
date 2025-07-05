@@ -9,18 +9,14 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { signInWithProvider } from "@/utils/auth";
+import { signInWithProvider } from "@/helpers/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import type { z } from "zod";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/auth-client";
+import { signIn } from "@/lib/clients/auth-client";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-
-const signInSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+import { signInSchema } from "@/lib/schemas/user";
 
 type SignInSchema = z.infer<typeof signInSchema>;
 

@@ -1,4 +1,4 @@
-import { signIn } from "@/lib/auth-client";
+import { signIn } from "@/lib/clients/auth-client";
 
 export const signInWithProvider = async (provider: "github" | "google") => {
   try {
