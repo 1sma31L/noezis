@@ -87,54 +87,40 @@ Day 5:
 
 Day 6:
 
+- [ ] Add zustand as state managment
+- [ ] optmizie the queries and caching (react query/trpc/drizzle)
+      bugs:
+- [ ] form values not updated
+
 - [ ] design/ the modal for the post/answer/question/quick take
 - [ ] add text editor for the post/answer/question/quick take
 - [ ] backend/add the post/answer/question/quick take
 - [ ] add the post/answer/question/quick pages and implement nested comments
-
-Day 7:
-
 - [ ] implement follower/following system
 - [ ] design explore page
 - [ ] add the post/answer/question/quick take from follwing in home page
-
-Day 8:
 
 - [ ] add realtime optimization (Alby)
 - [ ] design the notification page
 - [ ] add search functionality
 
-Day 9:
-
 - [ ] whats trending page
 - [ ] design the settings page
 - [ ] draft for posts
 
-Day 10:
-
 - [ ] design the messages page and implement it
 - [ ] add spaces
-
-Day 11:
 
 - [ ] design the control page for post versioning and implement it
 - [ ] add role based access
 
-Day 12:
-
 - [ ] design the admin dashboard and implement it
 - [ ] add the admin dashboard
 
-Day 13:
-
 - [ ] add statistic to admin dashboard
-
-Day 14:
 
 - [ ] add karma system
 - [ ] add bookmarks and reading later system
-
-Day 15:
 
 - [ ] user activity
 - [ ] user achevments

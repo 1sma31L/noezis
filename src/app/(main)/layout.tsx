@@ -1,7 +1,7 @@
 import React from "react";
-import LeftSidebar from "@/components/LeftSidebar";
-import RightSidebar from "@/components/RightSidebar";
-import MobileNavBar from "@/components/MobileNavBar";
+import LeftSidebar from "@/components/layouts/LeftSidebar";
+import RightSidebar from "@/components/layouts/RightSidebar";
+import MobileNavBar from "@/components/layouts/mobile/MobileNavBar";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (

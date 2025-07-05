@@ -20,7 +20,7 @@ import {
 } from "react-icons/ri";
 import { useSession } from "@/lib/clients/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
-import EditProfileDialog from "@/components/EditProfileDialog";
+import EditProfileDialog from "@/components/buttons/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
 
 function UserProfile() {
@@ -49,7 +49,7 @@ function UserProfile() {
 
   return (
     <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
-      {profile?.bannerImage ? (
+      {!isLoading && profile && (
         <div className="aspect-banner absolute z-0 h-40 w-full md:h-48">
           <img
             src={profile?.bannerImage ?? ANONYMOUS_BANNER_IMAGE}
@@ -57,12 +57,6 @@ function UserProfile() {
             className="h-40 w-full rounded-2xl object-cover md:h-48"
           />
         </div>
-      ) : (
-        isLoading && (
-          <div className="aspect-banner absolute z-0 h-40 w-full md:h-48">
-            <div className="bg-muted h-full w-full animate-pulse rounded-2xl"></div>
-          </div>
-        )
       )}
       <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-3 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">

@@ -1,8 +1,8 @@
-import Post from "@/components/_home/Post";
-import Answer from "@/components/_home/Answer";
-import Question from "@/components/_home/Question";
-import QuickTake from "@/components/_home/QuickTake";
-import WhatDoYouThink from "@/components/_home/WhatDoYouThink";
+import Post from "@/components/pages/home/Post";
+import Answer from "@/components/pages/home/Answer";
+import Question from "@/components/pages/home/Question";
+import QuickTake from "@/components/pages/home/QuickTake";
+import WhatDoYouThink from "@/components/pages/home/WhatDoYouThink";
 import React from "react";
 
 const posts = [

@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import Image from "next/image";
-import SignInButton from "@/components/SignInButton";
+import SignInButton from "@/components/buttons/SignInButton";
 import { RiMailLine } from "react-icons/ri";
 
 export default function Home() {

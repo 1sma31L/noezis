@@ -4,8 +4,8 @@ import { type Metadata } from "next";
 import { Manrope } from "next/font/google";
 import { type ReactNode } from "react";
 
-import { Providers } from "@/components/providers";
-import NavBar from "@/components/NavBar";
+import { Providers } from "@/providers";
+import NavBar from "@/components/layouts/NavBar";
 
 const manrope = Manrope({
   subsets: ["latin"],

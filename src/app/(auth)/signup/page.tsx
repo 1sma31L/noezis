@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/clients/auth-client";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signUpSchema } from "@/lib/schemas/user";
+import { toast } from "sonner";
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
@@ -46,8 +47,10 @@ export default function SignUp() {
         return;
       }
 
+      toast.success("Signed up successfully");
       router.push("/home");
     } catch (error) {
+      toast.error("Failed to sign up");
       setError("root", {
         message: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
       });

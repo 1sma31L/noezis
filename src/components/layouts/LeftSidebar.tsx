@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useProfile } from "@/lib/hooks/useProfile";
 import { usePathname } from "next/navigation";
 import {

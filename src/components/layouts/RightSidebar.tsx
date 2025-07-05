@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Input } from "./ui/input";
-import { Card } from "./ui/card";
+import { Input } from "../ui/input";
+import { Card } from "../ui/card";
 import { RiSearchLine } from "react-icons/ri";
 
 function RightSidebar() {

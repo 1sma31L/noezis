@@ -24,7 +24,7 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import type { UserWithProfile } from "@/lib/types/user";
+import type { ProfileWithUser } from "@/lib/types/user";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import {
@@ -46,7 +46,7 @@ import { toast } from "sonner";
 
 type updateProfileSchema = z.infer<typeof updateProfileSchema>;
 
-function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
+function EditProfileDialog({ profile }: { profile: ProfileWithUser }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -116,7 +116,10 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
         <div className="aspect-banner relative flex flex-col gap-2 pb-10">
           <div className="group relative overflow-hidden rounded-lg">
             <img
-              src={form.watch("bannerImage") ?? ANONYMOUS_BANNER_IMAGE}
+              src={
+                // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+                (form.watch("bannerImage") || null) ?? ANONYMOUS_BANNER_IMAGE
+              }
               alt="Banner"
               className={`h-30 w-full rounded-lg object-cover transition-all duration-300 ${
                 editMode ? "blur-xs" : "lg:group-hover:blur-xs"
@@ -185,7 +188,8 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
           </div>
           <div className="ring-background group absolute top-16 left-2 overflow-hidden rounded-full ring-2">
             <img
-              src={form.watch("image") ?? ANONYMOUS_PROFILE_IMAGE}
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+              src={(form.watch("image") || null) ?? ANONYMOUS_PROFILE_IMAGE}
               alt="Profile"
               className={`ring-primary h-22 w-22 rounded-full object-cover ring-1 transition-all duration-300 ${
                 editMode ? "blur-xs" : "lg:group-hover:blur-xs"
@@ -293,7 +297,8 @@ function EditProfileDialog({ profile }: { profile: UserWithProfile }) {
               <Textarea
                 {...field}
                 value={field.value ?? ""}
-                className="h-10 text-sm lg:h-20"
+                className="h-16 w-full text-sm lg:h-20"
+                rows={4}
               />
               <FormMessage />
             </FormItem>

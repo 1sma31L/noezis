@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { ModeToggle } from "@/components/theme-toggle";
+import { ModeToggle } from "@/components/buttons/ModeToggle";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { signOut, useSession } from "@/lib/clients/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useProfile } from "@/lib/hooks/useProfile";

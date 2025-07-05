@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/clients/auth-client";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signInSchema } from "@/lib/schemas/user";
+import { toast } from "sonner";
 
 type SignInSchema = z.infer<typeof signInSchema>;
 
@@ -44,9 +45,9 @@ export default function SignIn() {
         });
         return;
       }
-
       router.push("/home");
     } catch (error) {
+      toast.error("Failed to sign in");
       setError("root", {
         message: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
       });

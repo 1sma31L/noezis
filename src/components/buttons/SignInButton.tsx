@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { signInWithProvider } from "@/helpers/auth";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 type Provider = "google" | "github";
