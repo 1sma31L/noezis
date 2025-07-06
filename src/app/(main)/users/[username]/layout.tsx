@@ -58,7 +58,7 @@ function UserProfile({
   ];
 
   return (
-    <main className="relative flex min-h-[200vh] flex-col items-start justify-center gap-2 md:gap-4">
+    <main className="relative flex flex-col items-start justify-center gap-4 md:gap-6">
       <div className="flex w-full flex-col items-start justify-center gap-2 px-2 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
         {!isLoading && profile && (
           <div className="aspect-banner absolute top-0 right-0 -z-10 h-40 w-full md:h-48">
@@ -252,7 +252,7 @@ function UserProfile({
         <Separator className="my-2 w-full" />
         <ProfileTabs navigationTabs={navigationTabs} />
       </div>
-      <div>{children}</div>
+      <div className="w-full py-2">{children}</div>
     </main>
   );
 }

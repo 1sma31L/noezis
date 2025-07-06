@@ -57,7 +57,7 @@ What trends do you see shaping the future of web development?`,
     },
   ];
   return (
-    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4 py-4">
+    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4">
       {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}

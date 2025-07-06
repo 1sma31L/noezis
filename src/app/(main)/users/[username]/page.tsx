@@ -178,7 +178,7 @@ However, it's important to note that AI is an assistant, not a replacement. The 
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-start justify-start gap-2 py-4 md:gap-4">
+    <div className="flex min-h-screen flex-col items-start justify-start gap-2 md:gap-4">
       {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}
@@ -189,7 +189,7 @@ However, it's important to note that AI is an assistant, not a replacement. The 
       {posts.map((post) => (
         <Post key={post.id} {...post} />
       ))}
-    </main>
+    </div>
   );
 }
 

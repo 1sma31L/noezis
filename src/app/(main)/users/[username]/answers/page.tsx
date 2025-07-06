@@ -62,7 +62,7 @@ However, it's important to note that AI is an assistant, not a replacement. The 
     },
   };
   return (
-    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4 py-4">
+    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4">
       <Answer {...exampleAnswer} />
     </div>
   );

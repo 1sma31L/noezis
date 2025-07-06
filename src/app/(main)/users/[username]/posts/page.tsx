@@ -62,7 +62,7 @@ The tech industry has a unique opportunity to lead the way in sustainable innova
     },
   ];
   return (
-    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4 py-4">
+    <div className="flex min-h-screen w-full flex-col items-start justify-start gap-4">
       {posts.map((post) => (
         <Post key={post.id} {...post} />
       ))}
