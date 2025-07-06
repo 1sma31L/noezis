@@ -90,8 +90,16 @@ function Answer({ question, answer }: AnswerProps) {
               </AvatarFallback>
             </Avatar>
             <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-              <p className="text-xs font-medium md:text-base">
+              <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
                 {question.user.name}
+                {question.user.isVerified && (
+                  <RiCheckboxCircleFill
+                    style={{
+                      color: "#2a623d",
+                      display: "inline-block",
+                    }}
+                  />
+                )}
               </p>
               <p className="text-muted-foreground text-[9px] md:text-xs">
                 {question.user.job}
@@ -147,8 +155,16 @@ function Answer({ question, answer }: AnswerProps) {
           </Avatar>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <p className="text-xs font-medium md:text-base">
+              <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
                 {answer.user.name}
+                {answer.user.isVerified && (
+                  <RiCheckboxCircleFill
+                    style={{
+                      color: "#2a623d",
+                      display: "inline-block",
+                    }}
+                  />
+                )}
               </p>
             </div>
             <p className="text-muted-foreground text-[9px] md:text-xs">

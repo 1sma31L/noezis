@@ -1,4 +1,3 @@
-import Footer from "@/components/layouts/Footer";
 import { redirect } from "next/navigation";
 import React from "react";
 import { auth } from "@/server/auth";
@@ -11,12 +10,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
   if (session?.user?.id) {
     redirect("/home");
   }
-  return (
-    <div>
-      {children}
-      <Footer />
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 export default Layout;

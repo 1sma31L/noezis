@@ -43,24 +43,40 @@ function WhatDoYouThink() {
             </Button>
           </div>
         </div>
-        <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">
-          <Button variant="ghost" size={"sm"}>
-            <RiFireLine className="hidden md:block" />
+        <div className="flex h-5 w-full flex-row items-center justify-between gap-1 sm:justify-center md:gap-2">
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className="!px-1 text-xs sm:!px-2 md:text-sm"
+          >
+            <RiFireLine className="!h-3 !w-3" />
             <p>Quick Take</p>
           </Button>
           <Separator orientation="vertical" />
-          <Button variant="ghost" size={"sm"}>
-            <RiQuestionLine className="hidden md:block" />
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className="!px-1 text-xs sm:!px-2 md:text-sm"
+          >
+            <RiQuestionLine className="!h-3 !w-3" />
             <p>Ask</p>
           </Button>
           <Separator orientation="vertical" />
-          <Button variant="ghost" size={"sm"}>
-            <RiMessage2Line className="hidden md:block" />
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className="!px-1 text-xs sm:!px-2 md:text-sm"
+          >
+            <RiMessage2Line className="!h-3 !w-3" />
             <p>Answer</p>
           </Button>
           <Separator orientation="vertical" />{" "}
-          <Button variant="ghost" size={"sm"}>
-            <RiMessage3Line className="hidden md:block" />
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className="!px-1 text-xs sm:!px-2 md:text-sm"
+          >
+            <RiMessage3Line className="!h-3 !w-3" />
             <p>Post</p>
           </Button>
         </div>

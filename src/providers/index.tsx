@@ -9,7 +9,12 @@ import { Toaster } from "sonner";
 export function Providers({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <TRPCReactProvider>
         <ReactQueryDevtools initialIsOpen={false} />
         <Toaster

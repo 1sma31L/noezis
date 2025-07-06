@@ -17,6 +17,7 @@ import {
   RiThumbUpFill,
   RiThumbDownFill,
   RiBookmarkFill,
+  RiCheckboxCircleFill,
 } from "react-icons/ri";
 
 interface QuickTakeProps {
@@ -56,17 +57,29 @@ function QuickTake({
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       <CardHeader className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
-        <Avatar className="h-8 w-8 md:h-10 md:w-10">
-          <AvatarImage src={user.image} alt={user.name} />
-          <AvatarFallback className="bg-primary text-background">
-            {user.name.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-          <p className="text-xs font-medium md:text-base">{user.name}</p>
-          <p className="text-muted-foreground text-[9px] md:text-xs">
-            {user.job}
-          </p>
+        <div className="flex flex-row items-center justify-start gap-2">
+          <Avatar className="h-8 w-8 md:h-10 md:w-10">
+            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarFallback className="bg-primary text-background">
+              {user.name.charAt(0)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
+            <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
+              {user.name}
+              {user.isVerified && (
+                <RiCheckboxCircleFill
+                  style={{
+                    color: "#2a623d",
+                    display: "inline-block",
+                  }}
+                />
+              )}
+            </p>
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {user.job}
+            </p>
+          </div>
         </div>
         <div className="flex flex-row items-center justify-start gap-2">
           <Badge

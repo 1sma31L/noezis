@@ -19,7 +19,7 @@ import {
 
 function LeftSidebar() {
   const pathname = usePathname();
-  const { data: profile, isLoading } = useProfile();
+  const { data: profile, isPending } = useProfile();
   const navigationItems = [
     {
       label: "Home",
@@ -55,22 +55,29 @@ function LeftSidebar() {
 
   return (
     <div className="sticky top-20 flex w-72 flex-col gap-2 px-4">
-      {navigationItems.map((item) => (
-        <Link key={item.label} href={item.href}>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-4 rounded-full px-6 py-6"
-            disabled={item.label === "Profile" && isLoading}
-          >
-            {pathname === item.href ? (
-              <item.activeIcon className="text-primary !h-5 !w-5" />
-            ) : (
-              <item.icon className="!h-5 !w-5" />
-            )}
-            <span className="hidden text-sm lg:inline">{item.label}</span>
-          </Button>
-        </Link>
-      ))}
+      {navigationItems.map((item) => {
+        const isActive = pathname.includes(item.href);
+        return (
+          <Link key={item.label} href={item.href}>
+            <Button
+              variant="ghost"
+              className={`w-full justify-start gap-4 rounded-full px-6 py-6 ${
+                isActive
+                  ? "bg-primary/10 hover:bg-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20"
+                  : ""
+              }`}
+              disabled={item.label === "Profile" && isPending}
+            >
+              {isActive ? (
+                <item.activeIcon className="text-primary !h-5 !w-5" />
+              ) : (
+                <item.icon className="!h-5 !w-5" />
+              )}
+              <span className="hidden text-sm lg:inline">{item.label}</span>
+            </Button>
+          </Link>
+        );
+      })}
       <div className="mt-4 flex w-full items-center justify-center">
         <Button className="bg-primary w-full rounded-full px-6 py-6 text-xl font-semibold">
           <span className="hidden lg:inline">Post</span>

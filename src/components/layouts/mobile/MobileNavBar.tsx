@@ -58,7 +58,7 @@ function MobileNavBar() {
   return (
     <nav className="bg-background/80 border-border fixed right-0 bottom-0 left-0 z-50 container mx-auto flex h-16 items-center justify-around border-x border-t backdrop-blur-md lg:hidden">
       {navigationItems.map((item) => {
-        const isActive = pathname === item.href;
+        const isActive = pathname.includes(item.href);
         return (
           <Link
             key={item.label}

@@ -22,6 +22,7 @@ import {
   RiShareLine,
   RiBookmarkLine,
   RiBookmarkFill,
+  RiCheckboxCircleFill,
 } from "react-icons/ri";
 
 interface PostProps {
@@ -85,7 +86,17 @@ function Post({
           </AvatarFallback>
         </Avatar>
         <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-          <p className="text-xs font-medium md:text-base">{user.name}</p>
+          <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
+            {user.name}
+            {user.isVerified && (
+              <RiCheckboxCircleFill
+                style={{
+                  color: "#2a623d",
+                  display: "inline-block",
+                }}
+              />
+            )}
+          </p>
           <p className="text-muted-foreground text-[9px] md:text-xs">
             {user.job}
           </p>

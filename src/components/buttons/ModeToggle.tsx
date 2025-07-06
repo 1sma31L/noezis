@@ -28,21 +28,21 @@ export function ModeToggle() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem
           onClick={() => setTheme("light")}
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 text-xs md:text-sm"
         >
           <RiSunLine className="h-4 w-4" />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 text-xs md:text-sm"
         >
           <RiMoonLine className="h-4 w-4" />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("system")}
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 text-xs md:text-sm"
         >
           <RiCloudyLine className="h-4 w-4" />
           System

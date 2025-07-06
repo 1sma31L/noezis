@@ -10,13 +10,19 @@ import { useProfile } from "@/lib/hooks/useProfile";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { RiUserLine, RiSettingsLine, RiLogoutBoxLine } from "react-icons/ri";
+import {
+  RiUserLine,
+  RiSettingsLine,
+  RiLogoutBoxLine,
+  RiNotificationLine,
+} from "react-icons/ri";
 
 function NavBar() {
   const { data: session } = useSession();
@@ -41,6 +47,8 @@ function NavBar() {
           </Link>
         </li>
         <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
+          <ModeToggle />
+
           {!session ? (
             <>
               <Button
@@ -59,6 +67,37 @@ function NavBar() {
             </>
           ) : (
             <div className="flex flex-row items-center justify-center gap-2">
+              {/* NOTIFICATIONS */}
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full"
+                  >
+                    <RiNotificationLine className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <p className="text-sm leading-none font-medium">
+                      Notifications
+                    </p>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {/* No notifications yet */}
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link href="/notifications">
+                        <RiNotificationLine className="mr-2 h-4 w-4" />
+                        <p className="text-sm leading-none font-medium">
+                          No notifications yet
+                        </p>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -123,7 +162,6 @@ function NavBar() {
               </DropdownMenu>
             </div>
           )}
-          <ModeToggle />
         </li>
       </ul>
     </nav>

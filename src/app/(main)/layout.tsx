@@ -9,7 +9,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       <aside className="hidden lg:block">
         <LeftSidebar />
       </aside>
-      <div className="border-border flex-1 border-x px-2 pb-24">{children}</div>
+      <div className="border-border flex-1 border-x px-2 pb-24 md:px-4">
+        {children}
+      </div>
       <aside className="hidden xl:block">
         <RightSidebar />
       </aside>

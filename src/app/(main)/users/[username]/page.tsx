@@ -1,270 +1,194 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
+import Post from "@/components/pages/home/Post";
+import Answer from "@/components/pages/home/Answer";
+import Question from "@/components/pages/home/Question";
+import QuickTake from "@/components/pages/home/QuickTake";
 import React from "react";
-import { useParams } from "next/navigation";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { parseBioMentions } from "@/helpers/strings/parseBioMentions";
-import {
-  RiGlobalLine,
-  RiUserLine,
-  RiUserAddLine,
-  RiMessageLine,
-  RiMoreLine,
-  RiCalendarLine,
-  RiCheckboxCircleFill,
-  RiMapPin2Fill,
-  RiMapPin2Line,
-} from "react-icons/ri";
-import { useSession } from "@/lib/clients/auth-client";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
-import EditProfileDialog from "@/components/buttons/EditProfileDialog";
-import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
+import { use } from "react";
 
-function UserProfile() {
-  const { username } = useParams();
-  const { data: session } = useSession();
-  const { data: profile, isLoading } = useProfileByUsername(username as string);
-  const isOwner = session?.user?.id === profile?.user?.id;
-  const navigationTabs = [
+function UserProfile({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = use(params);
+  const { data: profile } = useProfileByUsername(username);
+
+  const userInfo = {
+    id: 1,
+    name:
+      profile?.user.name ??
+      username.charAt(0).toUpperCase() + username.slice(1),
+    username: profile?.username ?? username,
+    image:
+      profile?.user.image ??
+      `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`,
+    job: "Tech Enthusiast",
+    isVerified: profile?.isVerified ?? true,
+  };
+
+  const posts = [
     {
-      label: "Posts",
-      isActive: true,
+      user: userInfo,
+      id: 1,
+      title: "The Future of Technology",
+      upvotes: 324,
+      downvotes: 12,
+      comments: 45,
+      shares: 15,
+      views: 2890,
+      date: "2024-03-20",
+      content: `Technology is rapidly evolving and shaping our future in unprecedented ways. From artificial intelligence to quantum computing, we're witnessing transformative changes across all sectors of society.
+
+The integration of AI in our daily lives has already begun to show its impact. Smart homes, autonomous vehicles, and personalized digital experiences are just the beginning. The potential applications seem limitless.
+
+As we move forward, it's crucial to consider both the opportunities and challenges these advancements bring. We must ensure that technological progress serves humanity's best interests while addressing concerns about privacy, security, and ethical implications.`,
+      thumbnail:
+        "https://images.hindustantimes.com/img/2022/05/16/1600x900/bm_1652705745405_1652705756503.png",
+      tags: ["technology", "future", "innovation"],
     },
     {
-      label: "Questions",
-      isActive: false,
-    },
-    {
-      label: "Answers",
-      isActive: false,
-    },
-    {
-      label: "Comments",
-      isActive: false,
+      user: userInfo,
+      id: 2,
+      title: "Building Sustainable Tech Solutions",
+      date: "2024-03-19",
+      content: `Sustainability in technology is no longer optional - it's a necessity. As we develop new solutions, we must consider their environmental impact and long-term sustainability.
+
+Green computing initiatives, energy-efficient data centers, and eco-friendly hardware design are becoming increasingly important. We need to focus on creating technology that not only solves problems but does so in an environmentally conscious way.
+
+The tech industry has a unique opportunity to lead the way in sustainable innovation. By incorporating green practices into our development processes, we can create a more sustainable future for generations to come.`,
+      thumbnail:
+        "https://images.businessnewsdaily.com/app/uploads/2022/04/04082844/1554241953.jpeg",
+      upvotes: 456,
+      downvotes: 23,
+      comments: 67,
+      shares: 28,
+      views: 3450,
+      tags: ["sustainability", "technology", "innovation"],
     },
   ];
 
+  const questions = [
+    {
+      id: 1,
+      title: "What's your take on the future of web development?",
+      content: `As someone deeply involved in web development, I've been thinking about where the industry is heading. I'd love to hear your thoughts on:
+
+1. The role of AI in web development
+2. The evolution of frontend frameworks
+3. The impact of WebAssembly
+4. The future of serverless architecture
+
+What trends do you see shaping the future of web development?`,
+      user: userInfo,
+      date: "2024-03-18",
+      tags: ["webdev", "frontend", "technology", "future"],
+      upvotes: 145,
+      downvotes: 8,
+      answers: 12,
+      views: 1678,
+      isAnswered: false,
+      shares: 7,
+    },
+    {
+      id: 2,
+      title: "How do you approach learning new technologies?",
+      content: `With the rapid pace of technological change, staying updated can be challenging. I'm curious about effective learning strategies:
+
+- How do you prioritize which technologies to learn?
+- What resources do you find most helpful?
+- How do you balance learning with practical application?
+- What's your approach to evaluating new tools and frameworks?`,
+      user: userInfo,
+      date: "2024-03-17",
+      tags: ["learning", "technology", "career", "development"],
+      upvotes: 234,
+      downvotes: 15,
+      answers: 18,
+      views: 2456,
+      isAnswered: true,
+      shares: 45,
+    },
+  ];
+
+  const quickTakes = [
+    {
+      id: 1,
+      content:
+        "Just explored the latest features in TypeScript 5.0 - the decorator improvements and const type parameters are game-changers for type-safe development! 🚀 #TypeScript #WebDev",
+      user: userInfo,
+      date: "2024-03-20",
+      upvotes: 78,
+      downvotes: 3,
+      shares: 12,
+      tags: ["typescript", "webdev", "programming"],
+      comments: 8,
+    },
+    {
+      id: 2,
+      content:
+        "Hot take: The future of development is in developer experience (DX). Tools that prioritize DX while maintaining performance will win the next decade. Look at what Bun, Next.js, and Vercel are doing! 🔥",
+      user: userInfo,
+      date: "2024-03-19",
+      upvotes: 123,
+      downvotes: 7,
+      shares: 18,
+      tags: ["dx", "development", "future"],
+      comments: 6,
+    },
+  ];
+
+  const exampleAnswer = {
+    question: {
+      id: 3,
+      title: "What's the role of AI in modern software development?",
+      content:
+        "As AI tools become more prevalent in software development, I'm curious about their impact on our workflow. How are AI tools changing the way we write and maintain code?",
+      user: {
+        id: 1,
+        name: "John Doe",
+        username: "john_doe",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie",
+        job: "Tech Enthusiast",
+        isVerified: true,
+      },
+      date: "2024-03-15",
+      tags: ["AI", "Software Development", "Technology", "Future"],
+    },
+    answer: {
+      id: 1,
+      content: `AI is revolutionizing software development in several key ways:
+
+1. Code Generation: AI can now generate boilerplate code, suggest completions, and even implement entire functions based on natural language descriptions.
+
+2. Code Review: AI tools can analyze code for potential bugs, security vulnerabilities, and performance issues before deployment.
+
+3. Testing: AI can generate test cases, identify edge cases, and help maintain test coverage as code evolves.
+
+4. Documentation: AI assists in creating and maintaining documentation, making it easier to keep docs in sync with code changes.
+
+5. Development Workflow: AI-powered tools are streamlining various aspects of the development process, from git commit messages to deployment strategies.
+
+However, it's important to note that AI is an assistant, not a replacement. The developer's expertise in system design, architecture decisions, and understanding business requirements remains crucial.`,
+      user: userInfo,
+      date: "2024-03-16",
+      upvotes: 156,
+      downvotes: 3,
+      comments: 42,
+      isAccepted: true,
+      shares: 8,
+    },
+  };
+
   return (
-    <main className="relative flex min-h-[200vh] items-start justify-center px-0 md:px-2">
-      {!isLoading && profile && (
-        <div className="aspect-banner absolute z-0 h-40 w-full md:h-48">
-          <img
-            src={profile?.bannerImage ?? ANONYMOUS_BANNER_IMAGE}
-            alt={profile?.user.name ?? "Banner Image"}
-            className="h-40 w-full rounded-2xl object-cover md:h-48"
-          />
-        </div>
-      )}
-      <div className="z-10 flex w-full flex-col items-start justify-center gap-2 px-3 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
-        <div className="flex w-full flex-col items-start justify-between gap-4 md:gap-6">
-          {profile?.user.image ? (
-            <div className="ring-background flex h-24 w-24 items-center justify-center overflow-hidden rounded-full ring-4 md:h-36 md:w-36">
-              <img
-                src={profile?.user.image}
-                alt={profile?.user.name ?? "Profile Image"}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ) : isLoading ? (
-            <Avatar className="ring-background h-24 w-24 animate-pulse rounded-full ring-4 md:h-36 md:w-36">
-              <AvatarFallback>
-                <RiUserLine className="h-10 w-10" />
-              </AvatarFallback>
-            </Avatar>
-          ) : (
-            <Avatar className="ring-background h-24 w-24 rounded-full ring-4 md:h-36 md:w-36">
-              <AvatarFallback>{profile?.user.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
-          )}
-        </div>
-        <div className="flex w-full flex-row items-center justify-between gap-2">
-          {/*  */}
-          {/* NAME */}
-          {profile?.user.name ? (
-            <div className="flex flex-col items-start justify-center">
-              <h1 className="inline text-xl leading-tight font-bold break-words lg:text-3xl">
-                {profile?.user.name}
-                {profile?.isVerified && (
-                  <span
-                    className="inline align-middle"
-                    style={{ whiteSpace: "nowrap" }}
-                  >
-                    &nbsp;
-                    <RiCheckboxCircleFill
-                      className="h-4 w-4 md:h-6 md:w-6 lg:h-8 lg:w-8"
-                      style={{
-                        color: "#2a623d",
-                        display: "inline-block",
-                        marginBottom: "0.35rem",
-                      }}
-                    />
-                  </span>
-                )}
-              </h1>
-
-              {/* USERNAME */}
-              {profile?.username ? (
-                <Link
-                  href={`/users/${profile?.username}`}
-                  className="text-primary hover:underline"
-                >
-                  @{profile?.username}
-                </Link>
-              ) : isLoading ? (
-                <p className="text-muted-foreground animate-pulse">
-                  Loading...
-                </p>
-              ) : (
-                <p className="text-muted-foreground">No username provided.</p>
-              )}
-            </div>
-          ) : isLoading ? (
-            <h1 className="animate-pulse text-xl font-bold md:text-4xl">
-              Loading...
-            </h1>
-          ) : (
-            <h1 className="text-4xl font-bold">No name</h1>
-          )}
-          {/* EDIT PROFILE */}
-          <div className="flex flex-row items-center justify-center gap-2">
-            {isOwner && profile && <EditProfileDialog profile={profile} />}
-          </div>
-          {/*  */}
-        </div>
-        <div className="flex flex-col items-start justify-start gap-2 md:gap-4">
-          {profile?.bio ? (
-            <p className="text-muted-foreground max-w-[700px]">
-              {parseBioMentions(profile.bio)}
-            </p>
-          ) : isLoading ? (
-            <div className="flex flex-row items-center justify-center gap-1 md:gap-2">
-              <p className="text-muted-foreground max-w-[700px] animate-pulse">
-                Loading...
-              </p>
-            </div>
-          ) : (
-            <p className="text-muted-foreground max-w-[700px]">
-              No bio provided.
-            </p>
-          )}
-          <div className="flex flex-row items-center justify-start gap-4">
-            {profile?.location ? (
-              <div className="flex w-full flex-row items-center justify-start gap-1">
-                <RiMapPin2Fill className="h-4 w-4" />
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  {profile?.location}
-                </p>
-              </div>
-            ) : isLoading ? (
-              <div className="flex flex-row items-center justify-center gap-1">
-                <RiMapPin2Fill className="h-4 w-4 animate-pulse" />
-                <p className="text-muted-foreground animate-pulse">
-                  Loading...
-                </p>
-              </div>
-            ) : (
-              <div className="flex flex-row items-center justify-center gap-1">
-                <RiMapPin2Line className="h-4 w-4" />
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  No location provided.
-                </p>
-              </div>
-            )}
-            {profile?.website ? (
-              <Link
-                href={`https://${profile?.website.split("://")[1] ?? profile?.website}`}
-                target="_blank"
-                className="text-muted-foreground flex flex-row items-center justify-start gap-1 text-xs md:text-sm"
-              >
-                <RiGlobalLine className="h-4 w-4" />
-                <p className="text-muted-foreground hover:text-primary text-xs hover:underline md:text-sm">
-                  {profile?.website}
-                </p>
-              </Link>
-            ) : isLoading ? (
-              <p className="text-muted-foreground animate-pulse text-xs md:text-sm">
-                Loading...
-              </p>
-            ) : (
-              <div className="flex flex-row items-center justify-center gap-1">
-                <RiGlobalLine className="h-4 w-4" />
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  No website provided.
-                </p>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-row items-center justify-center gap-1">
-            <RiCalendarLine className="h-4 w-4" />
-            <p className="text-muted-foreground text-xs md:text-sm">
-              Joined{" "}
-              {profile?.createdAt.toLocaleDateString("en-US", {
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-4">
-            <div className="flex flex-row items-center justify-center gap-1">
-              <RiUserLine className="h-4 w-4" />
-              <p className="text-muted-foreground text-xs md:text-sm">
-                93 followers
-              </p>
-            </div>
-            <div className="flex flex-row items-center justify-center gap-1">
-              <RiUserLine className="h-4 w-4" />
-              <p className="text-muted-foreground text-xs md:text-sm">
-                93 following
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Only show buttons when session is loaded AND it's not the user's own profile */}
-        {!isOwner && profile && (
-          <div className="flex flex-row items-center justify-center gap-1 pt-2 md:gap-2">
-            <Button className="rounded-full text-xs! md:text-sm!">
-              <RiUserAddLine className="h-4 w-4" />
-              Follow
-            </Button>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <RiMessageLine className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <RiMoreLine className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
-
-        <Separator className="my-2 w-full" />
-        <div className="flex h-5 w-full flex-row items-center justify-center gap-2 md:gap-4">
-          {navigationTabs.map((tab, index) => (
-            <div
-              key={tab.label}
-              className="flex h-5 flex-row items-center justify-center gap-2 md:gap-4"
-            >
-              <Button
-                variant="ghost"
-                size="sm"
-                key={tab.label}
-                className={`${
-                  tab.isActive
-                    ? "border-primary text-foreground border-b-3"
-                    : "text-muted-foreground hover:text-foreground"
-                } text-[10px] md:text-sm`}
-              >
-                {tab.label}
-              </Button>
-              {index !== navigationTabs.length - 1 && (
-                <Separator orientation="vertical" />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+    <main className="flex min-h-screen flex-col items-start justify-start gap-2 py-4 md:gap-4">
+      {questions.map((question) => (
+        <Question key={question.id} {...question} />
+      ))}
+      {quickTakes.map((quickTake) => (
+        <QuickTake key={quickTake.id} {...quickTake} />
+      ))}
+      <Answer {...exampleAnswer} />
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
     </main>
   );
 }

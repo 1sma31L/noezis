@@ -23,7 +23,7 @@ import {
   RiNotificationFill,
 } from "react-icons/ri";
 
-interface QuestionProps {
+export interface QuestionProps {
   id: number;
   title: string;
   content: string;
@@ -81,8 +81,19 @@ function Question({
               {user.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
+
           <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-            <p className="text-xs font-medium md:text-base">{user.name}</p>
+            <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
+              {user.name}
+              {user.isVerified && (
+                <RiCheckboxCircleFill
+                  style={{
+                    color: "#2a623d",
+                    display: "inline-block",
+                  }}
+                />
+              )}
+            </p>
             <p className="text-muted-foreground text-[9px] md:text-xs">
               {user.job}
             </p>
@@ -168,20 +179,16 @@ function Question({
 
             {/* Follow Question */}
             <Button
-              variant="outline"
-              size="sm"
+              variant="ghost"
+              size="icon"
               className={` ${
                 isFollowing
-                  ? "bg-primary/10 text-primary border-primary hover:bg-primary/20 hover:text-primary"
-                  : "text-muted-foreground"
+                  ? "text-primary hover:text-primary/80"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               onClick={() => setIsFollowing(!isFollowing)}
             >
               {isFollowing ? <RiNotificationFill /> : <RiNotificationLine />}
-
-              <span className="hidden md:block">
-                {isFollowing ? "Following" : "Follow"}
-              </span>
             </Button>
 
             {/* Answers Count */}
