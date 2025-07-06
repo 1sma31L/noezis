@@ -30,8 +30,8 @@ function NavBar() {
   const router = useRouter();
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-sm">
-      <ul className="flex w-full flex-row items-center justify-between gap-2 text-sm md:text-base">
-        <li className="flex flex-row items-center justify-center gap-1">
+      <ul className="flex w-full flex-row items-center justify-between gap-1 text-sm md:text-base lg:gap-2">
+        <li>
           <Link
             href="/"
             className="flex flex-row items-center justify-center gap-2"
@@ -46,7 +46,7 @@ function NavBar() {
             <h1 className="font-bold sm:text-lg md:text-xl">Noezis.</h1>
           </Link>
         </li>
-        <li className="flex flex-row items-center justify-center gap-2">
+        <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
           <ModeToggle />
 
           {!session ? (
@@ -66,9 +66,9 @@ function NavBar() {
               </Button>
             </>
           ) : (
-            <div className="flex flex-row items-center justify-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-1 lg:gap-2">
               {/* NOTIFICATIONS */}
-              <DropdownMenu modal={false}>
+              <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
@@ -98,7 +98,7 @@ function NavBar() {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <DropdownMenu modal={false}>
+              <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"

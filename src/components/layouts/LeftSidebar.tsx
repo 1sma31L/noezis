@@ -58,24 +58,26 @@ function LeftSidebar() {
       {navigationItems.map((item) => {
         const isActive = pathname.includes(item.href);
         return (
-          <Link key={item.label} href={item.href}>
-            <Button
-              variant="ghost"
-              className={`w-full justify-start gap-4 rounded-full px-6 py-6 ${
-                isActive
-                  ? "bg-primary/10 hover:bg-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20"
-                  : ""
-              }`}
-              disabled={item.label === "Profile" && isPending}
-            >
+          <Button
+            key={item.label}
+            variant="ghost"
+            className={`w-full justify-start gap-4 rounded-full px-6 py-6 ${
+              isActive
+                ? "bg-primary/10 hover:bg-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20"
+                : ""
+            }`}
+            disabled={item.label === "Profile" && isPending}
+            asChild
+          >
+            <Link key={item.label} href={item.href}>
               {isActive ? (
                 <item.activeIcon className="text-primary !h-5 !w-5" />
               ) : (
                 <item.icon className="!h-5 !w-5" />
               )}
               <span className="hidden text-sm lg:inline">{item.label}</span>
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         );
       })}
       <div className="mt-4 flex w-full items-center justify-center">
