@@ -46,7 +46,7 @@ function NavBar() {
             <h1 className="font-bold sm:text-lg md:text-xl">Noezis.</h1>
           </Link>
         </li>
-        <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
+        <li className="flex flex-row items-center justify-center gap-2">
           <ModeToggle />
 
           {!session ? (
