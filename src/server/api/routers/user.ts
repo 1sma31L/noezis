@@ -6,7 +6,7 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { profile, user } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, not, or, and } from "drizzle-orm";
 import { updateProfileSchema } from "@/lib/schemas/user";
 
 export const userRouter = createTRPCRouter({
@@ -60,6 +60,7 @@ export const userRouter = createTRPCRouter({
 
   getAllAccounts: publicProcedure.query(async ({ ctx }) => {
     const accounts = await ctx.db.query.profile.findMany({
+      where: and(eq(profile.isBanned, false), eq(profile.isDeleted, false)),
       with: {
         user: true,
       },
