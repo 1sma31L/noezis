@@ -36,7 +36,7 @@ function MobileNavBar() {
     },
     {
       label: "Post",
-      href: "#",
+      href: "/posts/create",
       icon: RiAddLargeLine,
       activeIcon: RiAddLargeFill,
       isSpecial: true,

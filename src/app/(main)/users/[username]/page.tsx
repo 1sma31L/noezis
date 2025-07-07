@@ -6,11 +6,14 @@ import QuickTake from "@/components/pages/home/QuickTake";
 import React from "react";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import { use } from "react";
+import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
+import { useSession } from "@/lib/clients/auth-client";
 
 function UserProfile({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
   const { data: profile } = useProfileByUsername(username);
-
+  const { data: session } = useSession();
+  const isOwner = session?.user.id === profile?.user.id;
   const userInfo = {
     id: 1,
     name:
@@ -179,6 +182,7 @@ However, it's important to note that AI is an assistant, not a replacement. The 
 
   return (
     <div className="flex min-h-screen flex-col items-start justify-start gap-2 md:gap-4">
+      {isOwner && <WhatDoYouThink />}
       {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}

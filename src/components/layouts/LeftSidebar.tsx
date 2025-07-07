@@ -19,7 +19,7 @@ import {
 
 function LeftSidebar() {
   const pathname = usePathname();
-  const { data: profile, isPending } = useProfile();
+  const { data: profile, isLoading } = useProfile();
   const navigationItems = [
     {
       label: "Home",
@@ -66,7 +66,7 @@ function LeftSidebar() {
                 ? "bg-primary/10 hover:bg-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20"
                 : ""
             }`}
-            disabled={item.label === "Profile" && isPending}
+            disabled={item.label === "Profile" && isLoading}
             asChild
           >
             <Link key={item.label} href={item.href}>
@@ -81,8 +81,14 @@ function LeftSidebar() {
         );
       })}
       <div className="mt-4 flex w-full items-center justify-center">
-        <Button className="bg-primary w-full rounded-full px-6 py-6 text-xl font-semibold">
-          <span className="hidden lg:inline">Post</span>
+        <Button
+          className={`bg-primary w-full rounded-full px-6 py-6 text-xl font-semibold ${
+            isLoading ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          asChild
+          disabled={!profile?.id || isLoading}
+        >
+          <Link href={profile?.id ? `/posts/create` : "/signin"}>Post</Link>
         </Button>
       </div>
     </div>

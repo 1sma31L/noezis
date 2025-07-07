@@ -74,10 +74,13 @@ function WhatDoYouThink() {
           <Button
             variant="ghost"
             size={"sm"}
+            asChild
             className="!px-1 text-xs sm:!px-2 md:text-sm"
           >
-            <RiMessage3Line className="!h-3 !w-3" />
-            <p>Post</p>
+            <Link href="/posts/create" className="flex items-center gap-1">
+              <RiMessage3Line className="!h-3 !w-3" />
+              <p>Post</p>
+            </Link>
           </Button>
         </div>
       </CardContent>

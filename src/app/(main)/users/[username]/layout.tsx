@@ -22,6 +22,7 @@ import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import EditProfileDialog from "@/components/buttons/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
 import ProfileTabs from "@/components/ProfileTabs";
+import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 
 function UserProfile({
   params,
@@ -252,7 +253,9 @@ function UserProfile({
         <Separator className="my-2 w-full" />
         <ProfileTabs navigationTabs={navigationTabs} />
       </div>
-      <div className="w-full py-2">{children}</div>
+      {/* WhatDoYouWantToAsk */}
+
+      <div className="w-full">{children}</div>
     </main>
   );
 }
