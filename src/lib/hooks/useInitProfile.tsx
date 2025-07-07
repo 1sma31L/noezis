@@ -19,7 +19,7 @@ export function useInitProfile() {
   );
 }
 
-export function useProfileByUsername(username: string) {
+export function useInitProfileByUsername(username: string) {
   return api.user.getProfileByUsername.useQuery(
     { username },
     {

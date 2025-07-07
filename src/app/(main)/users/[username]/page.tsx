@@ -3,16 +3,18 @@ import Post from "@/components/pages/home/Post";
 import Answer from "@/components/pages/home/Answer";
 import Question from "@/components/pages/home/Question";
 import QuickTake from "@/components/pages/home/QuickTake";
-import React from "react";
-import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
+import React, { useEffect } from "react";
+import { useInitProfileByUsername } from "@/lib/hooks/useInitProfile";
 import { use } from "react";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import { useSession } from "@/lib/clients/auth-client";
+import { useVisitedProfileStore } from "@/lib/store/profile";
 
 function UserProfile({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { data: profile } = useProfileByUsername(username);
+  const { data: profile } = useInitProfileByUsername(username);
   const { data: session } = useSession();
+
   const isOwner = session?.user.id === profile?.user.id;
   const userInfo = {
     id: 1,

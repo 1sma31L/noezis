@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import Answer from "@/components/pages/home/Answer";
-import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
 import { use } from "react";
+import { useVisitedProfileStore } from "@/lib/store/profile";
 
 function UserAnswers({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { data: profile } = useProfileByUsername(username);
+  const { visitedProfile: profile } = useVisitedProfileStore();
 
   const userInfo = {
     id: 1,

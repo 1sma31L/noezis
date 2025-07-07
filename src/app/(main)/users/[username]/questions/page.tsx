@@ -1,12 +1,12 @@
 "use client";
 import Question, { type QuestionProps } from "@/components/pages/home/Question";
-import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
 import { use } from "react";
 import React from "react";
+import { useVisitedProfileStore } from "@/lib/store/profile";
 
 function UserQuestions({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { data: profile } = useProfileByUsername(username);
+  const { visitedProfile: profile } = useVisitedProfileStore();
   const userInfo = {
     id: 1,
     name:

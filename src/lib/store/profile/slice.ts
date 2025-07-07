@@ -3,6 +3,15 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import type { ProfileWithUser } from "@/lib/types/user";
 
+interface VisitedProfileState {
+  visitedProfile: ProfileWithUser | null;
+  setVisitedProfile: (profile: ProfileWithUser | null) => void;
+  isOwner: boolean;
+  setIsOwner: (isOwner: boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+}
+
 interface ProfileState {
   profile: ProfileWithUser | null;
   setProfile: (profile: ProfileWithUser | null) => void;
@@ -24,6 +33,22 @@ export const useProfileStore = create<ProfileState>()(
     }),
     {
       name: "profile-store",
+    },
+  ),
+);
+
+export const useVisitedProfileStore = create<VisitedProfileState>()(
+  devtools(
+    (set) => ({
+      visitedProfile: null,
+      setVisitedProfile: (profile) => set({ visitedProfile: profile }),
+      isOwner: false,
+      setIsOwner: (isOwner) => set({ isOwner }),
+      isLoading: false,
+      setIsLoading: (isLoading) => set({ isLoading }),
+    }),
+    {
+      name: "visited-profile-store",
     },
   ),
 );

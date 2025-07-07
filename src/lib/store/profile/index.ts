@@ -1,3 +1,3 @@
-import { useProfileStore } from "./slice";
+import { useProfileStore, useVisitedProfileStore } from "./slice";
 
-export { useProfileStore };
+export { useProfileStore, useVisitedProfileStore };
