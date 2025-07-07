@@ -57,6 +57,17 @@ export const userRouter = createTRPCRouter({
 
       return profileWithUser;
     }),
+
+  getAllAccounts: publicProcedure.query(async ({ ctx }) => {
+    const accounts = await ctx.db.query.profile.findMany({
+      with: {
+        user: true,
+      },
+    });
+
+    return accounts;
+  }),
+
   /**
    * Update a profile
    * @param profile - The profile to update

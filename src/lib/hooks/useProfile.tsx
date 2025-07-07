@@ -11,6 +11,7 @@ export function useProfile() {
 
   return api.user.getProfileByUserId.useQuery(
     { userId: session?.user?.id ?? "" },
+    
     {
       enabled: !!session?.user?.id,
       ...PROFILE_QUERY_CONFIG,
