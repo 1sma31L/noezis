@@ -108,7 +108,7 @@ Day 8:
 Day 9:
 
 - [ ] fetch posts and quick takes in profile and home page
-- [ ] add comments and nested comments
+- [ ] add comments and nested comments along with a page for each content type
 
 Day 10:
 
