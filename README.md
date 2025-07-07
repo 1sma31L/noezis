@@ -87,110 +87,128 @@ Day 5:
 
 Day 6:
 
+- [x] add posts and all pages in profiel
+- [x] add explore page
+- [x] better navbar and notification icon for mobile
+- [x] optmizie the queries and caching (react query/trpc/drizzle)
+
+Day 7:
+
+- [ ] better explore page +notifications page
+- [ ] make the modals and dialog for creating posts and quick takes
 - [ ] Add zustand as state managment
-- [ ] optmizie the queries and caching (react query/trpc/drizzle)
       bugs:
 - [ ] form values not updated
 
-- [ ] design/ the modal for the post/answer/question/quick take
-- [ ] add text editor for the post/answer/question/quick take
-- [ ] backend/add the post/answer/question/quick take
-- [ ] add the post/answer/question/quick pages and implement nested comments
-- [ ] implement follower/following system
-- [ ] design explore page
-- [ ] add the post/answer/question/quick take from follwing in home page
+Day 8:
 
-- [ ] add realtime optimization (Alby)
-- [ ] design the notification page
-- [ ] add search functionality
+- [ ] add text editor
+- [ ] trpc procedures for creating and fetching posts and quick takes
+
+Day 9:
+
+- [ ] fetch posts and quick takes in profile and home page
+- [ ] add comments and nested comments
+
+Day 10:
+
+- [ ] modals and dialogs for createing q/a
+- [ ] implemting the q/a creating and fetching them
+
+Day 11:
 
 - [ ] whats trending page
-- [ ] design the settings page
-- [ ] draft for posts
+- [ ] implement follower/following system
 
-- [ ] design the messages page and implement it
+Day 12:
+
+- [ ] add search functionality
+- [ ] design the settings page
+
+Day 13:
+
 - [ ] add spaces
+- [ ] Advanced Topic hierarchy
+
+Day 14:
+
+- [ ] add realtime optimization (Alby)
+- [ ] design the messages page and implement it
+
+Day 15:
 
 - [ ] design the control page for post versioning and implement it
 - [ ] add role based access
 
+Day 16:
+
 - [ ] design the admin dashboard and implement it
 - [ ] add the admin dashboard
 
+Day 17:
+
+- [ ] Media upload and management (video player)
 - [ ] add statistic to admin dashboard
+
+Day 18:
 
 - [ ] add karma system
 - [ ] add bookmarks and reading later system
+
+Day 19:
 
 - [ ] user activity
 - [ ] user achevments
 
 FEATURES (1 week)
 
-Day 16:
+Day 20:
 
+- [ ] draft for posts
 - [ ] add redis for caching
 
----
+Day 21:
 
-## Future Features (Post-MVP)
+- [ ] Content flagging system
+- [ ] Advanced moderation tools (perspectiveapi)
 
-### Enhanced Discussion
+Day 22:
 
-- Nested comments with infinite depth
-- Rich text editor with markdown support
-- Real-time updates
-- Draft saving
-- Post versioning
+- [ ] Advanced search with Elasticsearch
 
-### User Experience
+Day 24:
 
-- Karma/reputation system
-- User achievements
-- Notifications system
-- Following system
-- Bookmarks and reading lists
+- [ ] Tag system with synonyms
+- [ ] Trending keywords
 
-### Content Organization
+Day 25:
 
-- Advanced topic hierarchy
-- Tag system with synonyms
-- Custom feeds
-- Content recommendation engine
+- [ ] Custom feeds
+- [ ] Content recommendation engine
 
-### Platform Features
+Day 26:
 
-- Advanced search with Elasticsearch
-- Media upload and management
-- Analytics dashboard
-- API for third-party integrations
-- Mobile app
+- [ ] framer motions animations
 
-### Moderation & Administration
+Day 27:
 
-- Advanced moderation tools
-- User roles and permissions
-- Content flagging system
-- Automated content moderation
-- Admin dashboard
+- [ ] unit testing
 
 ## Getting Started
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/noezis.git
+git clone https://github.com/1sma31l/noezis.git
 
 # Install dependencies
-bun install
+npm install
 
 # Setup environment variables
 cp .env.example .env
 
 # Start the development server
-bun dev
+npm run dev
 
-# Start the database
-./start-database.sh
 ```
 
 ## Contributing
