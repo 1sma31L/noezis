@@ -78,19 +78,16 @@ function WhatDoYouThink() {
             defaultType="question"
           />
           <Separator orientation="vertical" />
-          <CreateContentDialog
-            trigger={
-              <Button
-                variant="ghost"
-                size={"sm"}
-                className="!px-1 text-xs sm:!px-2 md:text-sm"
-              >
-                <RiMessage2Line className="!h-3 !w-3" />
-                <p>Answer</p>
-              </Button>
-            }
-            defaultType="answer"
-          />
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className="!px-1 text-xs sm:!px-2 md:text-sm"
+          >
+            <Link href="/explore#questions" className="flex items-center gap-1">
+              <RiMessage2Line className="!h-3 !w-3" />
+              <p>Answer</p>
+            </Link>
+          </Button>
           <Separator orientation="vertical" />{" "}
           <Button
             variant="ghost"
