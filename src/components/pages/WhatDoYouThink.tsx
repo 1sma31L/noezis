@@ -12,6 +12,7 @@ import {
   RiMessage2Line,
   RiMessage3Line,
 } from "react-icons/ri";
+import CreateContentDialog from "./CreateContentDialog";
 
 function WhatDoYouThink() {
   const { data: profile } = useProfile();
@@ -35,41 +36,61 @@ function WhatDoYouThink() {
             </Avatar>
           </Link>
           <div className="flex-1">
-            <Button
-              variant="outline"
-              className="text-muted-foreground w-full !justify-start rounded-full"
-            >
-              What do you think?
-            </Button>
+            <CreateContentDialog
+              trigger={
+                <Button
+                  variant="outline"
+                  className="text-muted-foreground w-full !justify-start rounded-full"
+                >
+                  What do you think?
+                </Button>
+              }
+              defaultType="quickTake"
+            />
           </div>
         </div>
         <div className="flex h-5 w-full flex-row items-center justify-between gap-1 sm:justify-center md:gap-2">
-          <Button
-            variant="ghost"
-            size={"sm"}
-            className="!px-1 text-xs sm:!px-2 md:text-sm"
-          >
-            <RiFireLine className="!h-3 !w-3" />
-            <p>Quick Take</p>
-          </Button>
+          <CreateContentDialog
+            trigger={
+              <Button
+                variant="ghost"
+                size={"sm"}
+                className="!px-1 text-xs sm:!px-2 md:text-sm"
+              >
+                <RiFireLine className="!h-3 !w-3" />
+                <p>Quick Take</p>
+              </Button>
+            }
+            defaultType="quickTake"
+          />
           <Separator orientation="vertical" />
-          <Button
-            variant="ghost"
-            size={"sm"}
-            className="!px-1 text-xs sm:!px-2 md:text-sm"
-          >
-            <RiQuestionLine className="!h-3 !w-3" />
-            <p>Ask</p>
-          </Button>
+          <CreateContentDialog
+            trigger={
+              <Button
+                variant="ghost"
+                size={"sm"}
+                className="!px-1 text-xs sm:!px-2 md:text-sm"
+              >
+                <RiQuestionLine className="!h-3 !w-3" />
+                <p>Ask</p>
+              </Button>
+            }
+            defaultType="question"
+          />
           <Separator orientation="vertical" />
-          <Button
-            variant="ghost"
-            size={"sm"}
-            className="!px-1 text-xs sm:!px-2 md:text-sm"
-          >
-            <RiMessage2Line className="!h-3 !w-3" />
-            <p>Answer</p>
-          </Button>
+          <CreateContentDialog
+            trigger={
+              <Button
+                variant="ghost"
+                size={"sm"}
+                className="!px-1 text-xs sm:!px-2 md:text-sm"
+              >
+                <RiMessage2Line className="!h-3 !w-3" />
+                <p>Answer</p>
+              </Button>
+            }
+            defaultType="answer"
+          />
           <Separator orientation="vertical" />{" "}
           <Button
             variant="ghost"
