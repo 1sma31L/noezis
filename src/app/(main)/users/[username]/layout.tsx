@@ -173,7 +173,9 @@ function UserProfile({
           )}
           {/* EDIT PROFILE */}
           <div className="flex flex-row items-center justify-center gap-2">
-            {isOwner && profile && <EditProfileDialog profile={profile} />}
+            {isOwner && profile && (
+              <EditProfileDialog profile={profile} isLoading={isLoading} />
+            )}
           </div>
           {/*  */}
         </div>

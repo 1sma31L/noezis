@@ -49,7 +49,13 @@ import { toast } from "sonner";
 
 type updateProfileSchema = z.infer<typeof updateProfileSchema>;
 
-function EditProfileDialog({ profile }: { profile: ProfileWithUser }) {
+function EditProfileDialog({
+  profile,
+  isLoading,
+}: {
+  profile: ProfileWithUser;
+  isLoading: boolean;
+}) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -370,6 +376,7 @@ function EditProfileDialog({ profile }: { profile: ProfileWithUser }) {
               variant="outline"
               className="!md:text-sm text-muted-foreground !bg-primary/10 rounded-full !text-xs"
               size={"sm"}
+              disabled={isLoading}
             >
               Edit Profile
               <RiEditLine className="h-4 w-4" />
