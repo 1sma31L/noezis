@@ -19,7 +19,7 @@ import {
 
 function MobileNavBar() {
   const pathname = usePathname();
-  const { data: profile, isLoading } = useProfile();
+  const { data: profile, isPending } = useProfile();
 
   const navigationItems = [
     {
@@ -67,7 +67,6 @@ function MobileNavBar() {
               "flex flex-col items-center justify-center",
               isActive ? "text-primary" : "text-muted-foreground",
               item.isSpecial && "relative -top-2",
-              item.label === "Profile" && isLoading && "opacity-50",
             )}
           >
             <div className="text-xl">
