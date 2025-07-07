@@ -189,6 +189,8 @@ Day 25:
 Day 26:
 
 - [ ] framer motions animations
+- [ ] SEO
+- [ ] Assign a domaine
 
 Day 27:
 

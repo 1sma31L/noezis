@@ -87,19 +87,24 @@ function Notifications() {
   };
 
   return (
-    <main className="container mx-auto flex min-h-screen flex-col gap-6 px-4 py-8">
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold">Notifications</h1>
-          <p className="text-muted-foreground text-sm">
+    <main className="container mx-auto flex min-h-screen flex-col gap-3 py-4 sm:gap-6 sm:px-4 sm:py-8">
+      <div className="flex items-center justify-between px-2">
+        <div className="space-y-0.5 sm:space-y-1">
+          <h1 className="text-xl font-bold sm:text-2xl">Notifications</h1>
+          <p className="text-muted-foreground text-xs sm:text-sm">
             Stay updated with your latest activities
           </p>
         </div>
-        <Button variant="outline" className="text-xs" onClick={markAllAsRead}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-7 text-[10px] sm:h-9 sm:text-xs"
+          onClick={markAllAsRead}
+        >
           Mark all as read
         </Button>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 sm:gap-4">
         {notifications.map((notification) => (
           <NotificationCard key={notification.id} notification={notification} />
         ))}

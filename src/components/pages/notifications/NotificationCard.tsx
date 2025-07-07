@@ -35,52 +35,57 @@ export function NotificationCard({
     <Card
       className={`w-full transition-colors ${notification.read ? "opacity-80" : "bg-accent/5"}`}
     >
-      <CardContent className="flex items-start gap-4 p-4">
+      <CardContent className="flex items-start gap-2 p-2 sm:gap-4 sm:p-4">
         <div className="relative">
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
             <AvatarImage
               src={notification.user.image}
               alt={notification.user.name}
             />
             <AvatarFallback>{notification.user.name[0]}</AvatarFallback>
           </Avatar>
-          <div className="bg-card absolute -right-1 -bottom-1 rounded-full p-0.5">
+          <div className="bg-card absolute -right-1 -bottom-1 rounded-full p-0.5 text-sm sm:text-base">
             {getNotificationIcon()}
           </div>
         </div>
-        <div className="flex-1 space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="font-medium">
+        <div className="flex-1 space-y-0.5 sm:space-y-1">
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+            <span className="text-sm font-medium sm:text-base">
               {notification.user.name}
               {notification.user.isVerified && (
                 <RiCheckboxCircleFill
-                  className="ml-1 inline-block"
+                  className="ml-1 inline-block h-3 w-3 sm:h-4 sm:w-4"
                   style={{ color: "#2a623d" }}
                 />
               )}
             </span>
-            <span className="text-muted-foreground text-sm">
+            <span className="text-muted-foreground text-xs sm:text-sm">
               {notification.content}
             </span>
           </div>
           {(notification.type === "answer" ||
             notification.type === "question") && (
-            <div className="bg-accent/10 rounded-md p-2 text-sm">
+            <div className="bg-accent/10 rounded-md p-1.5 text-xs sm:p-2 sm:text-sm">
               {notification.questionTitle}
             </div>
           )}
           {notification.type === "comment" && (
-            <div className="bg-accent/10 rounded-md p-2 text-sm">
+            <div className="bg-accent/10 rounded-md p-1.5 text-xs sm:p-2 sm:text-sm">
               &quot;{notification.comment}&quot;
             </div>
           )}
-          <div className="flex items-center gap-2 pt-1">
-            <Badge variant="outline" className="gap-1 text-xs">
-              <RiTimeLine className="h-3 w-3" />
+          <div className="flex items-center gap-2 pt-0.5 sm:pt-1">
+            <Badge
+              variant="outline"
+              className="h-5 gap-1 py-0 text-[10px] sm:h-6 sm:text-xs"
+            >
+              <RiTimeLine className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
               {notification.time}
             </Badge>
             {!notification.read && (
-              <Badge className="bg-primary/10 text-primary text-xs">New</Badge>
+              <Badge className="bg-primary/10 text-primary h-5 py-0 text-[10px] sm:h-6 sm:text-xs">
+                New
+              </Badge>
             )}
           </div>
         </div>
