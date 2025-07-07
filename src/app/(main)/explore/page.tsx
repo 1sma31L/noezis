@@ -84,7 +84,10 @@ function Explore() {
         </div>
         <div className="grid gap-4">
           {DUMMY_QUESTIONS.map((question) => (
-            <Card key={question.id} className="hover:bg-muted/50 p-4">
+            <Card
+              key={question.id}
+              className="hover:bg-muted/50 cursor-pointer p-4 transition-all duration-300"
+            >
               <div className="flex flex-col gap-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
@@ -106,9 +109,7 @@ function Explore() {
                   </div>
                 </div>
                 <Link href={`/questions/${question.id}`} className="group">
-                  <h2 className="group-hover:text-primary text-lg font-semibold">
-                    {question.title}
-                  </h2>
+                  <h2 className="text-lg font-semibold">{question.title}</h2>
                 </Link>
                 <div className="flex flex-wrap gap-2">
                   {question.tags.map((tag) => (

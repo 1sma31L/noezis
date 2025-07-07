@@ -95,7 +95,7 @@ Day 6:
 Day 7:
 
 - [x] notifications page
-- [ ] make the modals and dialog for creating posts and quick takes
+- [x] make the modals and dialog for creating posts and quick takes
 - [ ] Add zustand as state managment
       bugs:
 - [ ] form values not updated
