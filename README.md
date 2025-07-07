@@ -94,7 +94,7 @@ Day 6:
 
 Day 7:
 
-- [ ] better explore page +notifications page
+- [ ] notifications page
 - [ ] make the modals and dialog for creating posts and quick takes
 - [ ] Add zustand as state managment
       bugs:
