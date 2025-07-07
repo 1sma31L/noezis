@@ -41,7 +41,7 @@ import { toast } from "sonner";
 const contentTypes = {
   quickTake: "Quick Take",
   question: "Ask a Question",
-  answer: "Share an Answer",
+  // answer: "Share an Answer",
 } as const;
 
 type ContentType = keyof typeof contentTypes;
