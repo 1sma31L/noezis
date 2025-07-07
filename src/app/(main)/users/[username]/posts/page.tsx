@@ -2,11 +2,11 @@
 import React from "react";
 import Post from "@/components/pages/home/Post";
 import { use } from "react";
-import { useVisitedProfileStore } from "@/lib/store/profile";
+import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
 
 function UserPosts({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { visitedProfile: profile } = useVisitedProfileStore();
+  const { visitedProfile: profile } = useVisitedProfile();
 
   const userInfo = {
     id: 1,

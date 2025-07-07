@@ -26,7 +26,7 @@ function WhatDoYouThink() {
           >
             <Avatar className="h-8 w-8 md:h-10 md:w-10">
               <AvatarImage
-                src={profile?.user.image ?? ""}
+                src={profile?.user.image ?? undefined}
                 alt={profile?.user.name ?? "User avatar"}
                 className="object-cover"
               />

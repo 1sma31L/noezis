@@ -6,15 +6,11 @@ import QuickTake from "@/components/pages/home/QuickTake";
 import React from "react";
 import { use } from "react";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
-import { useVisitedProfileStore } from "@/lib/store/profile";
+import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
 
 function UserProfile({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const {
-    visitedProfile: profile,
-    isOwner,
-    isLoading,
-  } = useVisitedProfileStore();
+  const { visitedProfile: profile, isOwner, isLoading } = useVisitedProfile();
 
   const userInfo = {
     id: 1,

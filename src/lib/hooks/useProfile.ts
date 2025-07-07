@@ -1,8 +1,13 @@
 import { useProfileStore } from "@/lib/store/profile";
 
 export function useProfile() {
-  const { profile, setProfile, isAuthenticated, setIsAuthenticated } =
-    useProfileStore();
+  const {
+    profile,
+    setProfile,
+    isAuthenticated,
+    setIsAuthenticated,
+    removeProfile,
+  } = useProfileStore();
 
   return {
     profile,
@@ -10,5 +15,6 @@ export function useProfile() {
     isAuthenticated,
     setIsAuthenticated,
     isLoading: false,
+    removeProfile,
   };
 }

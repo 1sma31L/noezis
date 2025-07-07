@@ -25,7 +25,7 @@ import {
 import { useProfile } from "@/lib/hooks/useProfile";
 
 function NavBar() {
-  const { profile, isAuthenticated } = useProfile();
+  const { profile, isAuthenticated, removeProfile } = useProfile();
 
   const router = useRouter();
   return (
@@ -112,7 +112,7 @@ function NavBar() {
                   >
                     <Avatar>
                       <AvatarImage
-                        src={profile?.user?.image ?? ""}
+                        src={profile?.user?.image ?? undefined}
                         className="object-cover"
                       />
                       <AvatarFallback className="bg-primary">
@@ -160,6 +160,7 @@ function NavBar() {
                         fetchOptions: {
                           onSuccess: () => {
                             router.push("/signin");
+                            removeProfile();
                           },
                         },
                       })

@@ -1,3 +1,6 @@
-import { useProfileStore, useVisitedProfileStore } from "./slice";
+import {
+  useProfileStore,
+  useVisitedProfileStore,
+} from "@/lib/store/profile/slice";
 
 export { useProfileStore, useVisitedProfileStore };

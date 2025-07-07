@@ -15,6 +15,7 @@ interface VisitedProfileState {
 interface ProfileState {
   profile: ProfileWithUser | null;
   setProfile: (profile: ProfileWithUser | null) => void;
+  removeProfile: () => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   isLoading: boolean;
@@ -26,6 +27,7 @@ export const useProfileStore = create<ProfileState>()(
     (set) => ({
       profile: null,
       setProfile: (profile) => set({ profile }),
+      removeProfile: () => set({ profile: null, isAuthenticated: false }),
       isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
       isLoading: false,

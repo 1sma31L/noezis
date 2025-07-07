@@ -22,7 +22,7 @@ import { useInitProfileByUsername } from "@/lib/hooks/useInitProfile";
 import EditProfileDialog from "@/components/buttons/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/lib/constants";
 import ProfileTabs from "@/components/ProfileTabs";
-import { useVisitedProfileStore } from "@/lib/store/profile";
+import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
 
 function UserProfile({
   params,
@@ -43,7 +43,7 @@ function UserProfile({
     setIsLoading,
     isOwner,
     setIsOwner,
-  } = useVisitedProfileStore();
+  } = useVisitedProfile();
 
   useEffect(() => {
     setIsLoading(isProfileLoading);
