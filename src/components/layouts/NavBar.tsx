@@ -29,7 +29,7 @@ function NavBar() {
   const { data: profile } = useProfile();
   const router = useRouter();
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-sm">
+    <nav className="bg-background/80 fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-md">
       <ul className="flex w-full flex-row items-center justify-between gap-1 text-sm md:text-base lg:gap-2">
         <li>
           <Link
