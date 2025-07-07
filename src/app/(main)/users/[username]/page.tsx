@@ -3,19 +3,19 @@ import Post from "@/components/pages/home/Post";
 import Answer from "@/components/pages/home/Answer";
 import Question from "@/components/pages/home/Question";
 import QuickTake from "@/components/pages/home/QuickTake";
-import React, { useEffect } from "react";
-import { useInitProfileByUsername } from "@/lib/hooks/useInitProfile";
+import React from "react";
 import { use } from "react";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
-import { useSession } from "@/lib/clients/auth-client";
 import { useVisitedProfileStore } from "@/lib/store/profile";
 
 function UserProfile({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { data: profile } = useInitProfileByUsername(username);
-  const { data: session } = useSession();
+  const {
+    visitedProfile: profile,
+    isOwner,
+    isLoading,
+  } = useVisitedProfileStore();
 
-  const isOwner = session?.user.id === profile?.user.id;
   const userInfo = {
     id: 1,
     name:
@@ -184,7 +184,7 @@ However, it's important to note that AI is an assistant, not a replacement. The 
 
   return (
     <div className="flex min-h-screen flex-col items-start justify-start gap-2 md:gap-4">
-      {isOwner && <WhatDoYouThink />}
+      {isOwner && !isLoading && <WhatDoYouThink />}
       {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}
