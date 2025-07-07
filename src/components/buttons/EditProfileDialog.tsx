@@ -36,11 +36,14 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { ANONYMOUS_BANNER_IMAGE, ANONYMOUS_PROFILE_IMAGE } from "@/constants";
+import {
+  ANONYMOUS_BANNER_IMAGE,
+  ANONYMOUS_PROFILE_IMAGE,
+} from "@/lib/constants";
 import { api } from "@/trpc/react";
 import { updateProfileSchema } from "@/lib/schemas/user";
 import { useQueryClient } from "@tanstack/react-query";
-import { uploadImage } from "@/helpers/appwrite";
+import { uploadImage } from "@/lib/helpers/appwrite";
 import { BUCKET_IDS } from "@/lib/clients/appwrite-client";
 import { toast } from "sonner";
 

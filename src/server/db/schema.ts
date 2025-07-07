@@ -1,6 +1,6 @@
 import { sql, relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
-import { ANONYMOUS_PROFILE_IMAGE } from "@/constants";
+import { ANONYMOUS_PROFILE_IMAGE } from "@/lib/constants";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),

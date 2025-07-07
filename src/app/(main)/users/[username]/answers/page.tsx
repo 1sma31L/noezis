@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Answer from "@/components/pages/home/Answer";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
 import { use } from "react";
 
 function UserAnswers({ params }: { params: Promise<{ username: string }> }) {

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { parseBioMentions } from "@/helpers/strings/parseBioMentions";
+import { parseBioMentions } from "@/lib/helpers/strings/parseBioMentions";
 import {
   RiGlobalLine,
   RiUserLine,
@@ -18,11 +18,10 @@ import {
   RiMapPin2Line,
 } from "react-icons/ri";
 import { useSession } from "@/lib/clients/auth-client";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
 import EditProfileDialog from "@/components/buttons/EditProfileDialog";
-import { ANONYMOUS_BANNER_IMAGE } from "@/constants";
+import { ANONYMOUS_BANNER_IMAGE } from "@/lib/constants";
 import ProfileTabs from "@/components/ProfileTabs";
-import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 
 function UserProfile({
   params,

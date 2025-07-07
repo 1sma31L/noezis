@@ -1,4 +1,3 @@
-import React from "react";
 import LeftSidebar from "@/components/layouts/LeftSidebar";
 import RightSidebar from "@/components/layouts/RightSidebar";
 import MobileNavBar from "@/components/layouts/mobile/MobileNavBar";

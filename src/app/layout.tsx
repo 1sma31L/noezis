@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 import { Manrope } from "next/font/google";
 import { type ReactNode } from "react";
 
-import { Providers } from "@/providers";
+import { Providers } from "@/lib/providers";
 import NavBar from "@/components/layouts/NavBar";
 
 const manrope = Manrope({

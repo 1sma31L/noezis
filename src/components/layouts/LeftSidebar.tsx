@@ -19,7 +19,7 @@ import {
 
 function LeftSidebar() {
   const pathname = usePathname();
-  const { data: profile, isLoading } = useProfile();
+  const { profile, isLoading } = useProfile();
   const navigationItems = [
     {
       label: "Home",

@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider, useTheme } from "next-themes";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "sonner";
+import { ProfileProvider } from "@/lib/providers/profile-provider";
 
 export function Providers({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
@@ -23,7 +24,7 @@ export function Providers({ children }: { children: ReactNode }) {
           position="top-center"
           theme={(resolvedTheme as "light" | "dark" | "system") ?? "system"}
         />
-        {children}
+        <ProfileProvider>{children}</ProfileProvider>
       </TRPCReactProvider>
     </ThemeProvider>
   );

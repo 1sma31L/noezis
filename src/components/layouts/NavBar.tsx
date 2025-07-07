@@ -4,9 +4,8 @@ import { ModeToggle } from "@/components/buttons/ModeToggle";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { signOut, useSession } from "@/lib/clients/auth-client";
+import { signOut } from "@/lib/clients/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useProfile } from "@/lib/hooks/useProfile";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,10 +22,11 @@ import {
   RiLogoutBoxLine,
   RiNotificationLine,
 } from "react-icons/ri";
+import { useProfile } from "@/lib/hooks/useProfile";
 
 function NavBar() {
-  const { data: session } = useSession();
-  const { data: profile } = useProfile();
+  const { profile, isAuthenticated } = useProfile();
+
   const router = useRouter();
   return (
     <nav className="bg-background/80 fixed top-0 right-0 left-0 z-50 container mx-auto px-4 py-4 backdrop-blur-md">
@@ -49,7 +49,7 @@ function NavBar() {
         <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
           <ModeToggle />
 
-          {!session ? (
+          {!isAuthenticated ? (
             <>
               <Button
                 variant="default"

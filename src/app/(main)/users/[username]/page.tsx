@@ -4,7 +4,7 @@ import Answer from "@/components/pages/home/Answer";
 import Question from "@/components/pages/home/Question";
 import QuickTake from "@/components/pages/home/QuickTake";
 import React from "react";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+import { useProfileByUsername } from "@/lib/hooks/useInitProfile";
 import { use } from "react";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import { useSession } from "@/lib/clients/auth-client";

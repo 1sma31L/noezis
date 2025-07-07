@@ -6,7 +6,7 @@ const PROFILE_QUERY_CONFIG = {
   keepPreviousData: true,
 };
 
-export function useProfile() {
+export function useInitProfile() {
   const { data: session } = useSession();
 
   return api.user.getProfileByUserId.useQuery(
