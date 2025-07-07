@@ -79,9 +79,13 @@ function NavBar() {
                       <RiNotificationLine className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-56"
+                    sideOffset={20}
+                  >
                     <DropdownMenuLabel className="font-normal">
-                      <p className="text-sm leading-none font-medium">
+                      <p className="text-xs leading-none font-medium md:text-sm">
                         Notifications
                       </p>
                     </DropdownMenuLabel>
@@ -91,7 +95,7 @@ function NavBar() {
                       <DropdownMenuItem asChild>
                         <Link href="/notifications">
                           <RiNotificationLine className="mr-2 h-4 w-4" />
-                          <p className="text-sm leading-none font-medium">
+                          <p className="text-xs leading-none font-medium md:text-sm">
                             No notifications yet
                           </p>
                         </Link>
@@ -117,7 +121,11 @@ function NavBar() {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56"
+                  sideOffset={20}
+                >
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm leading-none font-medium">
