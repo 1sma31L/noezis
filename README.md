@@ -19,15 +19,15 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] Next.js 15 (App Router)
 - [x] React 19
 - [x] TypeScript
+- [x] TanStack Query
 - [x] Tailwind CSS
 - [x] Shadcn/ui
 - [x] Lucide Icons
 - [x] React Icons
-- [ ] TipTap Editor
-- [x] React Query
-- [ ] Framer Motion
 - [x] React Hook Form
 - [x] Zod (Form Validation)
+- [ ] TipTap Editor
+- [ ] Framer Motion
 
 ### Backend
 
@@ -35,8 +35,8 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] Drizzle ORM
 - [x] PostgreSQL
 - [x] NextAuth.js
-- [ ] Redis (Caching)
 - [ ] Elasticsearch (Search)
+- [ ] Redis (Caching)
 
 ### DevOps & Tools
 
@@ -48,7 +48,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 
 ## MVP Development Roadmap (3 Weeks)
 
-### Week 1 (Core Foundation)
+### Week 1 (Core Foundation - User centeric)
 
 Day 1:
 
@@ -87,10 +87,10 @@ Day 5:
 
 Day 6:
 
-- [x] add posts and all pages in profiel
-- [x] add explore page
-- [x] better navbar and notification icon for mobile
-- [x] optmizie the queries and caching (react query/trpc/drizzle)
+- [x] Add posts and all pages in profiel
+- [x] Add explore page
+- [x] Better navbar and notification icon for mobile
+- [x] Optimize the queries and caching (react query/trpc/drizzle)
 
 Day 7:
 
@@ -100,101 +100,85 @@ Day 7:
       bugs:
 - [x] form values not updated
 
+### Week 2 (Features and Posts modules)
+
 Day 8:
 
-- [ ] add text editor
-- [ ] trpc procedures for creating and fetching posts and quick takes
+- [ ] Add text editor
+- [ ] tRPC procedures for creating and fetching posts and quick takes
+- [ ] Fetch posts and quick takes in profile and home page
+- [ ] Design the settings page
 
 Day 9:
 
-- [ ] fetch posts and quick takes in profile and home page
-- [ ] add comments and nested comments along with a page for each content type
+- [ ] Implementing the q/a creating and fetching them
+- [ ] Add comments and nested comments along with a page for each content type
+- [ ] Implement follower/following system
 
 Day 10:
 
-- [ ] modals and dialogs for createing q/a
-- [ ] implemting the q/a creating and fetching them
+- [ ] Add spaces
+- [ ] Advanced Topic hierarchy
+- [ ] Advanced search with Elasticsearch
 
 Day 11:
 
-- [ ] whats trending page
-- [ ] implement follower/following system
+- [ ] Design the messages page and implement it
+- [ ] Add notifications
 
 Day 12:
 
-- [ ] add search functionality
-- [ ] design the settings page
+- [ ] Design the control page for post versioning and implement it
+- [ ] Add role based access
 
 Day 13:
 
-- [ ] add spaces
-- [ ] Advanced Topic hierarchy
+- [ ] Design the admin dashboard and implement it
+- [ ] Add statistic to admin dashboard
 
 Day 14:
 
-- [ ] add realtime optimization (Alby)
-- [ ] design the messages page and implement it
+- [ ] Add karma system
+- [ ] Add bookmarks and reading later system
+- [ ] User activity
+- [ ] User achevments
+
+### Week 3 (FEATURES)
 
 Day 15:
 
-- [ ] design the control page for post versioning and implement it
-- [ ] add role based access
+- [ ] Add realtime optimization (Alby)
+- [ ] Media upload and management (video player)
 
 Day 16:
 
-- [ ] design the admin dashboard and implement it
-- [ ] add the admin dashboard
+- [ ] Draft for posts
+- [ ] Add redis for caching
 
 Day 17:
 
-- [ ] Media upload and management (video player)
-- [ ] add statistic to admin dashboard
+- [ ] Content flagging system
+- [ ] Advanced moderation tools (PerspectiveAPI)
 
 Day 18:
 
-- [ ] add karma system
-- [ ] add bookmarks and reading later system
+- [ ] SEO
+- [ ] Trending keywords
+- [ ] Tag system with synonyms
 
 Day 19:
-
-- [ ] user activity
-- [ ] user achevments
-
-FEATURES (1 week)
-
-Day 20:
-
-- [ ] draft for posts
-- [ ] add redis for caching
-
-Day 21:
-
-- [ ] Content flagging system
-- [ ] Advanced moderation tools (perspectiveapi)
-
-Day 22:
-
-- [ ] Advanced search with Elasticsearch
-
-Day 24:
-
-- [ ] Tag system with synonyms
-- [ ] Trending keywords
-
-Day 25:
 
 - [ ] Custom feeds
 - [ ] Content recommendation engine
 
-Day 26:
+Day 20:
 
-- [ ] framer motions animations
-- [ ] SEO
-- [ ] Assign a domaine
+- [ ] Framer motions animations
 
-Day 27:
+Day 21:
 
-- [ ] unit testing
+- [ ] Logging system and monitoring (Axiom, Vercel)
+- [ ] unit testing (jest)
 
 ## Getting Started
 
