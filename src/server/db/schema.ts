@@ -87,3 +87,23 @@ export const profile = pgTable("profile", (d) => ({
 export const profileRelations = relations(profile, ({ one }) => ({
   user: one(user, { fields: [profile.userId], references: [user.id] }),
 }));
+
+export const post = pgTable("post", (d) => ({
+  id: d.varchar({ length: 255 }).primaryKey(),
+  authorId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, {
+      onDelete: "cascade",
+    }),
+  title: d.varchar({ length: 255 }).notNull(),
+  content: d.jsonb().notNull(),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));

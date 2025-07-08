@@ -26,7 +26,7 @@ A modern social media platform focused on high-quality discussions, knowledge sh
 - [x] React Icons
 - [x] React Hook Form
 - [x] Zod (Form Validation)
-- [ ] TipTap Editor
+- [x] TipTap Editor
 - [ ] Framer Motion
 
 ### Backend
@@ -104,14 +104,14 @@ Day 7:
 
 Day 8:
 
-- [ ] Add text editor
-- [ ] tRPC procedures for creating and fetching posts and quick takes
-- [ ] Fetch posts and quick takes in profile and home page
-- [ ] Design the settings page
+- [x] Add text editor
+- [x] tRPC procedures for creating
 
 Day 9:
 
-- [ ] Implementing the q/a creating and fetching them
+- [ ] Fetch posts in profile and home page
+- [ ] Design the settings page
+- [ ] Implementing the q/a/quick take creating and fetching them
 - [ ] Add comments and nested comments along with a page for each content type
 - [ ] Implement follower/following system
 

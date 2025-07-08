@@ -1,15 +1,15 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Providers } from "@/lib/providers";
 import NavBar from "@/components/layouts/NavBar";
 
-const manrope = Manrope({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <Providers>
           <NavBar />

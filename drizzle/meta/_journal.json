@@ -15,6 +15,13 @@
       "when": 1751419399021,
       "tag": "0001_dashing_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752005528284,
+      "tag": "0002_green_nitro",
+      "breakpoints": true
     }
   ]
 }

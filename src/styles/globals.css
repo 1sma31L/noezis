@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 ::selection {
   @apply bg-primary text-primary-foreground;
@@ -18,7 +19,7 @@ html {
 
 @theme {
   --font-sans:
-    var(--font-manrope), ui-sans-serif, system-ui, sans-serif,
+    var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -55,7 +56,7 @@ html {
   --sidebar-accent-foreground: oklch(0.325 0 0);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --font-sans: Manrope, sans-serif;
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-serif: Lora, serif;
   --font-mono: "SF Mono", monospace;
   --radius: 0.5rem;
@@ -108,7 +109,7 @@ html {
   --sidebar-accent-foreground: oklch(0.8074 0.0142 93.0137);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --font-sans: Manrope, sans-serif;
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-serif: Lora, serif;
   --font-mono: "SF Mono", monospace;
   --radius: 0.5rem;
