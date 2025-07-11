@@ -257,11 +257,11 @@ const Tiptap = () => {
           </div>
         </div>
       </div>
-      {/* {env.NEXT_PUBLIC_APP_ENV === "development" && (
+      {env.NEXT_PUBLIC_APP_ENV === "development" && (
         <pre className="max-w-auto overflow-auto py-10">
           {JSON.stringify(post, null, 2)}
         </pre>
-      )} */}
+      )}
     </div>
   );
 };
