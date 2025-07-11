@@ -6,6 +6,7 @@ import Link from "next/link";
 import { RiArrowRightLine } from "react-icons/ri";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useProfile } from "@/lib/hooks/useProfile";
 
 // Hardcoded questions for now
 const DUMMY_QUESTIONS = [
@@ -48,8 +49,8 @@ const DUMMY_QUESTIONS = [
 ];
 
 function Explore() {
+  const { profile } = useProfile();
   const { data: accounts } = api.user.getAllAccounts.useQuery(undefined, {});
-
   return (
     <main className="container mx-auto max-w-4xl space-y-12 py-6">
       <div className="flex flex-col gap-6">
@@ -64,9 +65,11 @@ function Explore() {
           </Link>
         </div>
         <div className="grid gap-4 2xl:grid-cols-2">
-          {accounts?.map((account) => (
-            <ProfileCard key={account.id} user={account} />
-          ))}
+          {accounts
+            ?.filter((account) => account.id !== profile?.id)
+            .map((account) => (
+              <ProfileCard key={account.id} user={account} />
+            ))}
         </div>
       </div>
 
