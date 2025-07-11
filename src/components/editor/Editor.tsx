@@ -5,7 +5,6 @@ import {
   EditorContent,
   BubbleMenu,
   type Editor,
-  generateHTML,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Typography from "@tiptap/extension-typography";
@@ -22,8 +21,10 @@ import { Toggle } from "@/components/ui/toggle";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { usePost } from "@/lib/hooks/usePost";
-import { useProfile } from "@/lib/hooks/useProfile";
 import { useEffect } from "react";
+import { env } from "@/env";
+
+const EDITOR_LIMIT = 1000;
 
 interface EditorWithCharCount extends Editor {
   storage: {
@@ -80,7 +81,6 @@ const EditorBubbleMenu = ({ editor }: { editor: Editor }) => {
 };
 
 const Tiptap = () => {
-  const { profile } = useProfile();
   const { setPost, post } = usePost();
 
   const editor = useEditor({
@@ -103,6 +103,9 @@ const Tiptap = () => {
         heading: {
           levels: [1, 2, 3, 4],
         },
+      }),
+      CharacterCount.configure({
+        limit: EDITOR_LIMIT,
       }),
       Link.configure({
         HTMLAttributes: {
@@ -202,15 +205,70 @@ const Tiptap = () => {
   if (!editor) {
     return null;
   }
+  const percentage = editor
+    ? Math.round(
+        (100 / EDITOR_LIMIT) * editor.storage.characterCount.characters(),
+      )
+    : 0;
 
   return (
     <div className="w-full">
       <EditorBubbleMenu editor={editor} />
       <EditorContent editor={editor} />
-
-      <pre className="max-w-auto overflow-auto py-10">
-        {JSON.stringify(post, null, 2)}
-      </pre>
+      <div
+        className={`text-muted-foreground flex flex-col items-center gap-3 pt-16 text-sm ${
+          editor.storage.characterCount.characters() === EDITOR_LIMIT
+            ? "text-destructive"
+            : ""
+        }`}
+      >
+        <div className="relative flex min-w-[120px] flex-col gap-0.5 self-end">
+          <div className="absolute top-2 -left-8 h-5 w-5">
+            <svg
+              height="20"
+              width="20"
+              viewBox="0 0 20 20"
+              className="rotate-[-90deg]"
+            >
+              <circle
+                r="8"
+                cx="10"
+                cy="10"
+                className="fill-muted stroke-none"
+              />
+              <circle
+                r="8"
+                cx="10"
+                cy="10"
+                fill="transparent"
+                className={`stroke-current transition-all ${
+                  percentage > 90 ? "stroke-destructive" : "stroke-primary"
+                }`}
+                strokeWidth="2"
+                strokeDasharray={`calc(${percentage} * 50.24 / 100) 50.24`}
+                transform="rotate(0) translate(0)"
+              />
+            </svg>
+          </div>
+          <div className="flex items-center justify-between gap-2">
+            <span>Characters: </span>
+            <span className="font-medium">
+              {editor.storage.characterCount.characters()}/{EDITOR_LIMIT}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>Words</span>
+            <span className="font-medium">
+              {editor.storage.characterCount.words()}
+            </span>
+          </div>
+        </div>
+      </div>
+      {env.NEXT_PUBLIC_APP_ENV === "development" && (
+        <pre className="max-w-auto overflow-auto py-10">
+          {JSON.stringify(post, null, 2)}
+        </pre>
+      )}
     </div>
   );
 };

@@ -9,7 +9,6 @@ import { usePost } from "@/lib/hooks/usePost";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useProfile } from "@/lib/hooks/useProfile";
 
 function CreatePost() {
   const router = useRouter();

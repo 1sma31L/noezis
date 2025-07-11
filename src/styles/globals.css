@@ -190,3 +190,9 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* YAYAYAYAAYAYAYAYAY */
+.tiptap p.is-editor-empty:first-child::before {
+  @apply text-muted-foreground/40 pointer-events-none float-left h-0;
+  content: attr(data-placeholder);
+}
