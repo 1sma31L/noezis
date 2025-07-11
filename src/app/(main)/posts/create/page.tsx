@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Tiptap from "@/components/editor/Editor";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -9,6 +10,10 @@ import { usePost } from "@/lib/hooks/usePost";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { uploadImage } from "@/lib/helpers/appwrite";
+import { BUCKET_IDS } from "@/lib/clients/appwrite-client";
 
 function CreatePost() {
   const router = useRouter();
@@ -23,6 +28,16 @@ function CreatePost() {
       toast.error("Failed to create post");
     },
   });
+  useEffect(() => {
+    if (!post) {
+      setPost({
+        title: "",
+        content: JSON.parse("{}") as JSON,
+        tags: [],
+        thumbnail: "",
+      });
+    }
+  }, [post, setPost]);
   return (
     <div className="container mx-auto flex min-h-screen max-w-4xl flex-col gap-4 px-4 py-8">
       <h1 className="text-foreground text-4xl font-bold tracking-tight">
@@ -38,13 +53,7 @@ function CreatePost() {
           id="title"
           placeholder="Your Title"
           onChange={(e) => {
-            if (!post) {
-              setPost({
-                title: e.target.value,
-                content: {},
-              });
-              return;
-            }
+            if (!post) return;
             setPost({
               ...post,
               title: e.target.value,
@@ -56,7 +65,79 @@ function CreatePost() {
       </div>
       <Separator className="my-4" />
       <Tiptap />
-
+      {/* Tags */}
+      <div className="flex flex-col gap-2">
+        <Label>Tags</Label>
+        <Input
+          type="text"
+          placeholder="Tags"
+          onChange={(e) => {
+            if (!post) return;
+            setPost({
+              ...post,
+              tags: e.target.value.split(",").map((tag) => tag.trim()),
+            });
+          }}
+          value={post?.tags.join(",") ?? ""}
+        />
+      </div>
+      {/* Add thumbnail upload */}
+      <div className="flex flex-col gap-2">
+        <Label>Thumbnail</Label>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={async (e) => {
+            if (!post) return;
+            const file = e.target.files?.[0];
+            if (file) {
+              const toastId = toast.loading("Uploading thumbnail...");
+              try {
+                const fileUrl = await uploadImage(
+                  file,
+                  BUCKET_IDS.POST_THUMBNAILS,
+                );
+                setPost({
+                  ...post,
+                  thumbnail: fileUrl,
+                });
+                toast.dismiss(toastId);
+                toast.success("Thumbnail uploaded successfully");
+              } catch (error) {
+                console.error("Error uploading thumbnail:", error);
+                toast.dismiss(toastId);
+                toast.error("Failed to upload thumbnail");
+              }
+            }
+          }}
+        />
+        {post?.thumbnail && (
+          <div className="mt-2">
+            <p className="text-muted-foreground mb-2 text-sm">
+              Current thumbnail:
+            </p>
+            <div className="flex items-center gap-4">
+              <img
+                src={post.thumbnail}
+                alt="Post thumbnail"
+                className="max-w-[200px] rounded-md border"
+              />
+              <button
+                type="button"
+                className="bg-destructive hover:bg-destructive/80 ml-2 rounded px-3 py-1 text-xs font-medium text-white"
+                onClick={() => {
+                  setPost({
+                    ...post,
+                    thumbnail: "",
+                  });
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="mt-12 flex flex-col items-center justify-between gap-4 md:flex-row">
         <div className="text-muted-foreground self-start text-sm">
           <p>The editor supports markdown!</p>

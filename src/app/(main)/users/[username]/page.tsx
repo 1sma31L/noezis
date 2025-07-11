@@ -188,9 +188,9 @@ However, it's important to note that AI is an assistant, not a replacement. The 
         <QuickTake key={quickTake.id} {...quickTake} />
       ))}
       <Answer {...exampleAnswer} />
-      {posts.map((post) => (
+      {/* {posts.map((post) => (
         <Post key={post.id} {...post} />
-      ))}
+      ))} */}
     </div>
   );
 }

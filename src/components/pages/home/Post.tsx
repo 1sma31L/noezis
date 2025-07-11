@@ -13,6 +13,14 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   RiThumbUpLine,
   RiMoreLine,
   RiThumbUpFill,
@@ -23,46 +31,40 @@ import {
   RiBookmarkLine,
   RiBookmarkFill,
   RiCheckboxCircleFill,
+  RiTwitterXFill,
+  RiFacebookFill,
+  RiLinkedinFill,
+  RiFileCopyLine,
 } from "react-icons/ri";
 
-interface PostProps {
-  user: {
-    id: number;
-    name: string;
-    username: string;
-    image: string;
-    job: string;
-    isVerified: boolean;
-  };
-  id: number;
-  title: string;
-  date: string;
-  content: string;
-  thumbnail: string;
-  upvotes: number;
-  downvotes: number;
-  comments: number;
-  shares: number;
-  views: number;
-  tags: string[];
-}
+import type { PostWithAuthor } from "@/lib/types/post";
+import { generateHTML, type JSONContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import Typography from "@tiptap/extension-typography";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+
+const extensions = [StarterKit, Underline, Link, Typography];
 
 function Post({
-  user,
+  author,
   id,
   title,
-  date,
+  createdAt,
   content,
   thumbnail,
-  upvotes,
-  downvotes,
   comments,
   shares,
-  views,
   tags,
-}: PostProps) {
+}: PostWithAuthor) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const wordCount = content.trim().split(/\s+/).length;
+  const postContent =
+    typeof window !== "undefined"
+      ? generateHTML(content as JSONContent, extensions)
+      : "";
+  const wordCount = postContent.trim().split(/\s+/).length;
   const MAX_WORDS = 50;
   const shouldShowMore = wordCount > MAX_WORDS;
 
@@ -72,23 +74,68 @@ function Post({
     return words.slice(0, limit).join(" ") + "...";
   };
 
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const { data: reactionStatus, refetch: refetchReactionStatus } =
+    api.reaction.getReactionStatus.useQuery(
+      {
+        postId: id,
+      },
+      {
+        enabled: !!id,
+      },
+    );
+  const { mutate: sharePost } = api.share.sharePost.useMutation({
+    onSuccess: () => {
+      toast.success("Post shared");
+    },
+    onError: () => {
+      toast.error("Failed to share post");
+    },
+  });
+  const { data: reactionCounts, refetch: refetchReactionCounts } =
+    api.reaction.getReactionCounts.useQuery({
+      contentId: id,
+    });
 
+  const { mutate: toggleReaction } = api.reaction.toggleReaction.useMutation({
+    onSuccess: () => {
+      toast.success("Reaction toggled");
+      // Directly refetch the queries
+      void refetchReactionStatus();
+      void refetchReactionCounts();
+    },
+    onError: () => {
+      toast.error("Failed to toggle reaction");
+    },
+  });
+  const { mutate: savePost } = api.save.savePost.useMutation({
+    onSuccess: () => {
+      toast.success("Post saved");
+      void refetchSaveStatus();
+    },
+    onError: () => {
+      toast.error("Failed to save post");
+    },
+  });
+  const { data: saveStatus, refetch: refetchSaveStatus } =
+    api.save.getSaveStatus.useQuery({
+      postId: id,
+    });
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       <CardHeader className="flex w-full flex-row items-center justify-start gap-2 md:gap-4">
         <Avatar className="h-8 w-8 md:h-10 md:w-10">
-          <AvatarImage src={user.image} alt={user.name} />
+          <AvatarImage
+            src={author.user.image ?? ""}
+            alt={author.user.name ?? ""}
+          />
           <AvatarFallback className="bg-primary text-background">
-            {user.name.charAt(0)}
+            {author.user.name.charAt(0)}
           </AvatarFallback>
         </Avatar>
         <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
           <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-            {user.name}
-            {user.isVerified && (
+            {author.user.name}
+            {author.isVerified && (
               <RiCheckboxCircleFill
                 style={{
                   color: "#2a623d",
@@ -97,11 +144,15 @@ function Post({
               />
             )}
           </p>
-          <p className="text-muted-foreground text-[9px] md:text-xs">
-            {user.job}
-          </p>
+          {author.jobTitle && (
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {author.jobTitle}
+            </p>
+          )}
         </div>
-        <p className="text-muted-foreground text-[9px] md:text-xs">{date}</p>
+        <p className="text-muted-foreground text-[9px] md:text-xs">
+          {createdAt.toLocaleDateString()}
+        </p>
       </CardHeader>
 
       <CardContent className="flex flex-col items-start justify-start gap-2">
@@ -109,10 +160,16 @@ function Post({
           {title}
         </CardTitle>
         <CardDescription className="flex w-full flex-col gap-2">
-          <div className="relative">
-            <p className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
-              {isExpanded ? content : truncateWords(content, MAX_WORDS)}
-            </p>
+          <article className="relative">
+            <div className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: isExpanded
+                    ? postContent
+                    : truncateWords(postContent, MAX_WORDS),
+                }}
+              />
+            </div>
             {!isExpanded && shouldShowMore && (
               <div
                 className="absolute right-0 bottom-0 left-0 h-24"
@@ -122,7 +179,7 @@ function Post({
                 }}
               />
             )}
-          </div>
+          </article>
 
           {shouldShowMore && (
             <Button
@@ -145,7 +202,7 @@ function Post({
         )}
 
         <div className="mt-2 flex flex-wrap gap-2">
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <Badge
               key={tag}
               className="bg-accent text-muted-foreground text-[9px] md:text-xs"
@@ -163,38 +220,48 @@ function Post({
                 variant="ghost"
                 size="sm"
                 className={`text-muted-foreground hover:text-foreground flex flex-row items-center justify-start gap-2 ${
-                  isUpvoted ? "text-primary hover:text-primary" : ""
+                  reactionStatus?.hasReacted &&
+                  reactionStatus?.reactionType === "like"
+                    ? "text-primary hover:text-primary"
+                    : ""
                 }`}
                 onClick={() => {
-                  if (isDownvoted) setIsDownvoted(false);
-                  setIsUpvoted(!isUpvoted);
+                  toggleReaction({ postId: id, type: "like" });
                 }}
               >
-                {isUpvoted ? (
+                {reactionStatus?.hasReacted &&
+                reactionStatus?.reactionType === "like" ? (
                   <RiThumbUpFill className="text-primary" />
                 ) : (
                   <RiThumbUpLine />
                 )}
-                <span className="text-[9px] md:text-xs">{upvotes}</span>
+                <span className="text-[9px] md:text-xs">
+                  {reactionCounts?.likes}
+                </span>
               </Button>
               <Separator orientation="vertical" />
               <Button
                 variant="ghost"
                 size="sm"
                 className={`text-muted-foreground hover:text-foreground ${
-                  isDownvoted ? "text-destructive hover:text-destructive" : ""
+                  reactionStatus?.hasReacted &&
+                  reactionStatus?.reactionType === "dislike"
+                    ? "text-destructive hover:text-destructive"
+                    : ""
                 }`}
                 onClick={() => {
-                  if (isUpvoted) setIsUpvoted(false);
-                  setIsDownvoted(!isDownvoted);
+                  toggleReaction({ postId: id, type: "dislike" });
                 }}
               >
-                {isDownvoted ? (
+                {reactionStatus?.hasReacted &&
+                reactionStatus?.reactionType === "dislike" ? (
                   <RiThumbDownFill className="text-destructive" />
                 ) : (
                   <RiThumbDownLine />
                 )}
-                <span className="text-[9px] md:text-xs">{downvotes}</span>
+                <span className="text-[9px] md:text-xs">
+                  {reactionCounts?.dislikes}
+                </span>
               </Button>
             </div>
 
@@ -209,14 +276,70 @@ function Post({
             </Button>
 
             {/* Share */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground hidden md:flex"
-            >
-              <RiShareLine />
-              {shares && <p className="text-[9px] md:text-xs">{shares}</p>}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground hidden md:flex"
+                >
+                  <RiShareLine />
+                  {shares && <p className="text-[9px] md:text-xs">{shares}</p>}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Share Post</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    const url = `${window.location.origin}/posts/${id}`;
+                    window.open(
+                      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+                      "_blank",
+                    );
+
+                    sharePost({ postId: id });
+                  }}
+                >
+                  <RiTwitterXFill className="mr-2" /> Twitter
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    const url = `${window.location.origin}/posts/${id}`;
+                    window.open(
+                      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                      "_blank",
+                    );
+                    sharePost({ postId: id });
+                  }}
+                >
+                  <RiFacebookFill className="mr-2" /> Facebook
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    const url = `${window.location.origin}/posts/${id}`;
+                    window.open(
+                      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+                      "_blank",
+                    );
+                    sharePost({ postId: id });
+                  }}
+                >
+                  <RiLinkedinFill className="mr-2" /> LinkedIn
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    const url = `${window.location.origin}/posts/${id}`;
+                    void navigator.clipboard.writeText(url);
+                    toast.success("Link copied to clipboard");
+                    sharePost({ postId: id });
+                  }}
+                >
+                  <RiFileCopyLine className="mr-2" /> Copy Link
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Save + Settings */}
@@ -225,9 +348,12 @@ function Post({
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground"
-              onClick={() => setIsSaved(!isSaved)}
+              onClick={() => {
+                savePost({ postId: id });
+                void refetchSaveStatus();
+              }}
             >
-              {isSaved ? (
+              {saveStatus?.isSaved ? (
                 <RiBookmarkFill className="text-yellow-500" />
               ) : (
                 <RiBookmarkLine className="text-muted-foreground" />

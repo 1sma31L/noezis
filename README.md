@@ -109,14 +109,18 @@ Day 8:
 
 Day 9:
 
-- [ ] Fetch posts in profile and home page
+- [x] Fetch posts in profile and home page
+
+Day 10:
+Enhancments:
+
+- genrate the html on pos submit o you dont have to deal with window undefined
+- use more polymorphic design for all content types
+
 - [ ] Design the settings page
 - [ ] Implementing the q/a/quick take creating and fetching them
 - [ ] Add comments and nested comments along with a page for each content type
 - [ ] Implement follower/following system
-
-Day 10:
-
 - [ ] Add spaces
 - [ ] Advanced Topic hierarchy
 - [ ] Advanced search with Elasticsearch

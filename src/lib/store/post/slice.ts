@@ -1,12 +1,14 @@
 // create user store
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { type post } from "@/server/db/schema";
 import { persist } from "zustand/middleware";
 
-type BasePost = typeof post.$inferSelect;
-type Post = Omit<BasePost, "id" | "createdAt" | "updatedAt" | "authorId"> &
-  Partial<Pick<BasePost, "id" | "createdAt" | "updatedAt" | "authorId">>;
+type Post = {
+  title: string;
+  content: JSON;
+  tags: string[];
+  thumbnail: string;
+};
 
 interface PostState {
   post: Post | null;

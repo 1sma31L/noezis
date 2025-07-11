@@ -9,4 +9,5 @@ export const storage = new Storage(client);
 export const BUCKET_IDS = {
   PROFILE_PICTURES: "6862f6fe003b753eaeef",
   BANNER_PICTURES: "6867fba4002bfce25363",
+  POST_THUMBNAILS: "68711cec00168d1b0e20",
 } as const;

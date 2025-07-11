@@ -4,64 +4,66 @@ import Question from "@/components/pages/home/Question";
 import QuickTake from "@/components/pages/home/QuickTake";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import React from "react";
+import { api } from "@/trpc/server";
+import { Loader2 } from "lucide-react";
 
-const posts = [
-  {
-    user: {
-      id: 1,
-      name: "Charlie Brooker",
-      username: "charliebrooker",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie",
-      job: "Writer & Creator of Black Mirror",
-      isVerified: true,
-    },
-    id: 1,
-    title: "The Impact of Black Mirror",
-    upvotes: Math.floor(Math.random() * 500),
-    downvotes: Math.floor(Math.random() * 50),
-    comments: Math.floor(Math.random() * 100),
-    shares: Math.floor(Math.random() * 30),
-    views: Math.floor(Math.random() * 5000),
-    date: "2021-01-01",
-    content: `Black Mirror is a groundbreaking anthology series created by Charlie Brooker that explores the dark and often dystopian sides of modern society and technology. Each episode presents a standalone story, delving into themes such as surveillance, artificial intelligence, social media, and the unintended consequences of technological advancement.
+// const posts = [
+//   {
+//     user: {
+//       id: 1,
+//       name: "Charlie Brooker",
+//       username: "charliebrooker",
+//       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie",
+//       job: "Writer & Creator of Black Mirror",
+//       isVerified: true,
+//     },
+//     id: 1,
+//     title: "The Impact of Black Mirror",
+//     upvotes: Math.floor(Math.random() * 500),
+//     downvotes: Math.floor(Math.random() * 50),
+//     comments: Math.floor(Math.random() * 100),
+//     shares: Math.floor(Math.random() * 30),
+//     views: Math.floor(Math.random() * 5000),
+//     date: "2021-01-01",
+//     content: `Black Mirror is a groundbreaking anthology series created by Charlie Brooker that explores the dark and often dystopian sides of modern society and technology. Each episode presents a standalone story, delving into themes such as surveillance, artificial intelligence, social media, and the unintended consequences of technological advancement.
 
-The show is renowned for its thought-provoking narratives and its ability to hold a mirror up to our own world, forcing viewers to question the role technology plays in our lives. From the chilling world of "Nosedive," where social status is determined by ratings, to the haunting digital afterlife of "San Junipero," Black Mirror challenges us to consider both the promise and peril of innovation.
+// The show is renowned for its thought-provoking narratives and its ability to hold a mirror up to our own world, forcing viewers to question the role technology plays in our lives. From the chilling world of "Nosedive," where social status is determined by ratings, to the haunting digital afterlife of "San Junipero," Black Mirror challenges us to consider both the promise and peril of innovation.
 
-By blending science fiction with social commentary, Black Mirror has become a cultural touchstone, sparking conversations about ethics, privacy, and the future of humanity. Its influence can be seen in how we discuss technology today, making it one of the most important series of the 21st century.`,
+// By blending science fiction with social commentary, Black Mirror has become a cultural touchstone, sparking conversations about ethics, privacy, and the future of humanity. Its influence can be seen in how we discuss technology today, making it one of the most important series of the 21st century.`,
 
-    thumbnail:
-      "https://images.hindustantimes.com/img/2022/05/16/1600x900/bm_1652705745405_1652705756503.png",
-    tags: ["astronomy", "space", "universe"],
-  },
-  {
-    user: {
-      id: 2,
-      name: "Jane Doe",
-      username: "janedoe",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
-      job: "AI Researcher",
-      isVerified: true,
-    },
-    id: 2,
-    title: "The Rise of Artificial Intelligence",
-    date: "2021-01-02",
-    content: `Artificial Intelligence (AI) is rapidly transforming the world around us. From virtual assistants and recommendation systems to self-driving cars and advanced robotics, AI technologies are becoming an integral part of our daily lives. 
+//     thumbnail:
+//       "https://images.hindustantimes.com/img/2022/05/16/1600x900/bm_1652705745405_1652705756503.png",
+//     tags: ["astronomy", "space", "universe"],
+//   },
+//   {
+//     user: {
+//       id: 2,
+//       name: "Jane Doe",
+//       username: "janedoe",
+//       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
+//       job: "AI Researcher",
+//       isVerified: true,
+//     },
+//     id: 2,
+//     title: "The Rise of Artificial Intelligence",
+//     date: "2021-01-02",
+//     content: `Artificial Intelligence (AI) is rapidly transforming the world around us. From virtual assistants and recommendation systems to self-driving cars and advanced robotics, AI technologies are becoming an integral part of our daily lives.
 
-AI leverages large datasets and powerful algorithms to learn patterns, make predictions, and automate complex tasks. Machine learning, a subset of AI, enables computers to improve their performance over time without being explicitly programmed for every scenario.
+// AI leverages large datasets and powerful algorithms to learn patterns, make predictions, and automate complex tasks. Machine learning, a subset of AI, enables computers to improve their performance over time without being explicitly programmed for every scenario.
 
-The impact of AI is seen across industries: healthcare uses AI for diagnostics and drug discovery, finance relies on AI for fraud detection and algorithmic trading, and education benefits from personalized learning experiences. However, the rise of AI also brings important questions about ethics, job displacement, and the need for responsible development.
+// The impact of AI is seen across industries: healthcare uses AI for diagnostics and drug discovery, finance relies on AI for fraud detection and algorithmic trading, and education benefits from personalized learning experiences. However, the rise of AI also brings important questions about ethics, job displacement, and the need for responsible development.
 
-As AI continues to evolve, it holds the promise of solving some of humanity's biggest challenges, while also requiring us to thoughtfully consider its implications for society.`,
-    thumbnail:
-      "https://plus.unsplash.com/premium_photo-1683121710572-7723bd2e235d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZXxlbnwwfHwwfHx8MA%3D%3D",
-    upvotes: Math.floor(Math.random() * 500),
-    downvotes: Math.floor(Math.random() * 50),
-    comments: Math.floor(Math.random() * 100),
-    shares: Math.floor(Math.random() * 30),
-    views: Math.floor(Math.random() * 5000),
-    tags: ["astronomy", "space", "universe"],
-  },
-];
+// As AI continues to evolve, it holds the promise of solving some of humanity's biggest challenges, while also requiring us to thoughtfully consider its implications for society.`,
+//     thumbnail:
+//       "https://plus.unsplash.com/premium_photo-1683121710572-7723bd2e235d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZXxlbnwwfHwwfHx8MA%3D%3D",
+//     upvotes: Math.floor(Math.random() * 500),
+//     downvotes: Math.floor(Math.random() * 50),
+//     comments: Math.floor(Math.random() * 100),
+//     shares: Math.floor(Math.random() * 30),
+//     views: Math.floor(Math.random() * 5000),
+//     tags: ["astronomy", "space", "universe"],
+//   },
+// ];
 
 const questions = [
   {
@@ -219,18 +221,19 @@ const quickTakes = [
   },
 ];
 
-function Home() {
+async function Home() {
+  const posts = await api.post.all();
   return (
     <main className="relative flex min-h-screen flex-col items-start justify-start gap-4">
       <WhatDoYouThink />
-      {questions.map((question) => (
+      {/* {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}
       {quickTakes.map((quickTake) => (
         <QuickTake key={quickTake.id} {...quickTake} />
       ))}
-      <Answer {...exampleAnswer} />
-      {posts.map((post) => (
+      <Answer {...exampleAnswer} /> */}
+      {posts?.map((post) => (
         <Post key={post.id} {...post} />
       ))}
     </main>

@@ -86,16 +86,9 @@ const Tiptap = () => {
   const editor = useEditor({
     onUpdate: ({ editor }: { editor: Editor }) => {
       if (!post) {
-        setPost({
-          title: "",
-          content: editor.getJSON() as JSON,
-        });
         return;
       }
-      setPost({
-        ...post,
-        content: editor.getJSON() as JSON,
-      });
+      setPost({ ...post, content: editor.getJSON() as JSON });
     },
 
     extensions: [
@@ -197,7 +190,7 @@ const Tiptap = () => {
   }) as EditorWithCharCount | null;
   useEffect(() => {
     if (post) {
-      editor?.commands.setContent(post.content as JSON);
+      editor?.commands.setContent(post.content);
     } else {
       editor?.commands.setContent("");
     }
@@ -264,11 +257,11 @@ const Tiptap = () => {
           </div>
         </div>
       </div>
-      {env.NEXT_PUBLIC_APP_ENV === "development" && (
+      {/* {env.NEXT_PUBLIC_APP_ENV === "development" && (
         <pre className="max-w-auto overflow-auto py-10">
           {JSON.stringify(post, null, 2)}
         </pre>
-      )}
+      )} */}
     </div>
   );
 };

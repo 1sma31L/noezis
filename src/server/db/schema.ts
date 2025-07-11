@@ -1,6 +1,15 @@
 import { sql, relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
 import { ANONYMOUS_PROFILE_IMAGE } from "@/lib/constants";
+
+export const contentTypeEnum = pgEnum("content_type", [
+  "post",
+  "comment",
+  "answer",
+  "quickTake",
+]);
+
+export const reactionTypeEnum = pgEnum("reaction_type", ["like", "dislike"]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -64,6 +73,7 @@ export const profile = pgTable("profile", (d) => ({
     .references(() => user.id, { onDelete: "cascade" }),
   username: d.varchar({ length: 50 }).notNull().unique(),
   bio: d.text(),
+  jobTitle: d.varchar({ length: 100 }),
   location: d.varchar({ length: 100 }),
   website: d.varchar({ length: 255 }),
   bannerImage: d.varchar({ length: 255 }),
@@ -98,6 +108,16 @@ export const post = pgTable("post", (d) => ({
     }),
   title: d.varchar({ length: 255 }).notNull(),
   content: d.jsonb().notNull(),
+  tags: d.text().array(),
+  thumbnail: d.varchar({ length: 255 }),
+  views: d.integer().notNull().default(0),
+  comments: d.integer().notNull().default(0),
+  shares: d.integer().notNull().default(0),
+  isReviewed: d.boolean().notNull().default(false),
+  isPublished: d.boolean().notNull().default(false),
+  isRefused: d.boolean().notNull().default(false),
+  isDeleted: d.boolean().notNull().default(false),
+  refusedReason: d.text(),
   createdAt: d
     .timestamp({ mode: "date", withTimezone: true })
     .notNull()
@@ -106,4 +126,64 @@ export const post = pgTable("post", (d) => ({
     .timestamp({ mode: "date", withTimezone: true })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const postRelations = relations(post, ({ one }) => ({
+  author: one(profile, {
+    fields: [post.authorId],
+    references: [profile.userId],
+  }),
+}));
+
+export const reaction = pgTable("reaction", (d) => ({
+  id: d.varchar({ length: 255 }).primaryKey(),
+  contentId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => post.id, { onDelete: "cascade" }),
+  userId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  contentType: contentTypeEnum("content_type").notNull(),
+  type: reactionTypeEnum("reaction_type").notNull(),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const save = pgTable("save", (d) => ({
+  id: d.varchar({ length: 255 }).primaryKey(),
+  contentId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => post.id, { onDelete: "cascade" }),
+  userId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const saveRelations = relations(save, ({ one }) => ({
+  content: one(post, {
+    fields: [save.contentId],
+    references: [post.id],
+  }),
+  user: one(user, {
+    fields: [save.userId],
+    references: [user.id],
+  }),
 }));

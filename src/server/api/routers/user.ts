@@ -6,7 +6,7 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { profile, user } from "@/server/db/schema";
-import { eq, not, or, and } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { updateProfileSchema } from "@/lib/schemas/user";
 
 export const userRouter = createTRPCRouter({
