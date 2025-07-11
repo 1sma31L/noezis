@@ -16,6 +16,8 @@ import {
   RiCheckboxCircleFill,
   RiMapPin2Fill,
   RiMapPin2Line,
+  RiHeartFill,
+  RiHeart2Fill,
 } from "react-icons/ri";
 import { useSession } from "@/lib/clients/auth-client";
 import { useInitProfileByUsername } from "@/lib/hooks/useInitProfile";
@@ -23,6 +25,7 @@ import EditProfileDialog from "@/components/buttons/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/lib/constants";
 import ProfileTabs from "@/components/ProfileTabs";
 import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
+import { GiHeartStake } from "react-icons/gi";
 
 function UserProfile({
   params,
@@ -146,6 +149,22 @@ function UserProfile({
                     />
                   </span>
                 )}
+                {profile?.isLove && (
+                  <span
+                    className="inline align-middle"
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    &nbsp;
+                    <GiHeartStake
+                      className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
+                      style={{
+                        color: "#ff009e",
+                        display: "inline-block",
+                        marginBottom: "0.35rem",
+                      }}
+                    />
+                  </span>
+                )}
               </h1>
 
               {/* USERNAME */}
@@ -179,7 +198,7 @@ function UserProfile({
           </div>
           {/*  */}
         </div>
-        <div className="flex flex-col items-start justify-start gap-2 md:gap-4">
+        <div className="flex w-full flex-col items-start justify-start gap-2 md:gap-4">
           {profile?.bio ? (
             <p className="text-muted-foreground max-w-[700px]">
               {parseBioMentions(profile.bio)}
@@ -195,9 +214,9 @@ function UserProfile({
               No bio provided.
             </p>
           )}
-          <div className="flex flex-row items-center justify-start gap-4">
+          <div className="flex w-full flex-row items-center justify-start gap-4">
             {profile?.location ? (
-              <div className="flex w-full flex-row items-center justify-start gap-1">
+              <div className="flex flex-row items-center justify-start gap-1">
                 <RiMapPin2Fill className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   {profile?.location}
@@ -234,7 +253,7 @@ function UserProfile({
                 Loading...
               </p>
             ) : (
-              <div className="flex flex-row items-center justify-center gap-1">
+              <div className="flex flex-row items-center justify-start gap-1">
                 <RiGlobalLine className="h-4 w-4" />
                 <p className="text-muted-foreground text-xs md:text-sm">
                   No website provided.

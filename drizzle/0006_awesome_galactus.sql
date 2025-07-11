@@ -1,0 +1,1 @@
+ALTER TABLE "profile" ADD COLUMN "isLove" boolean DEFAULT false NOT NULL;

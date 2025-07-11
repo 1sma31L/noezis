@@ -81,6 +81,7 @@ export const profile = pgTable("profile", (d) => ({
   gender: d.varchar({ length: 50 }),
   interests: d.text(),
   isVerified: d.boolean().notNull().default(false),
+  isLove: d.boolean().notNull().default(false),
   isPrivate: d.boolean().notNull().default(false),
   isBanned: d.boolean().notNull().default(false),
   isDeleted: d.boolean().notNull().default(false),

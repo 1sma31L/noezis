@@ -46,6 +46,7 @@ import Link from "@tiptap/extension-link";
 import Typography from "@tiptap/extension-typography";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { parseBioMentions } from "@/lib/helpers/strings/parseBioMentions";
 
 const extensions = [StarterKit, Underline, Link, Typography];
 
