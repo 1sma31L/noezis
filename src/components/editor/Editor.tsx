@@ -24,7 +24,7 @@ import { usePost } from "@/lib/hooks/usePost";
 import { useEffect } from "react";
 import { env } from "@/env";
 
-const EDITOR_LIMIT = 1000;
+const EDITOR_LIMIT = 100000;
 
 interface EditorWithCharCount extends Editor {
   storage: {
