@@ -21,7 +21,7 @@ import { Toggle } from "@/components/ui/toggle";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { usePost } from "@/lib/hooks/usePost";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { env } from "@/env";
 
 const EDITOR_LIMIT = 100000;
@@ -82,6 +82,7 @@ const EditorBubbleMenu = ({ editor }: { editor: Editor }) => {
 
 const Tiptap = () => {
   const { setPost, post } = usePost();
+  const [isMounted, setIsMounted] = useState(false);
 
   const editor = useEditor({
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -92,11 +93,7 @@ const Tiptap = () => {
     },
 
     extensions: [
-      StarterKit.configure({
-        heading: {
-          levels: [1, 2, 3, 4],
-        },
-      }),
+      StarterKit,
       CharacterCount.configure({
         limit: EDITOR_LIMIT,
       }),
@@ -183,21 +180,26 @@ const Tiptap = () => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert md:prose-lg max-w-none  w-full  bg-background focus:outline-none",
+          "prose dark:prose-invert md:prose-lg max-w-none w-full bg-background focus:outline-none",
       },
     },
     immediatelyRender: false,
   }) as EditorWithCharCount | null;
+
   useEffect(() => {
+    setIsMounted(true);
     if (post) {
       editor?.commands.setContent(post.content);
     } else {
       editor?.commands.setContent("");
     }
-  }, [post, editor]);
-  if (!editor) {
-    return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!editor || !isMounted) {
+    return <div className="bg-muted h-40 w-full animate-pulse rounded-md" />;
   }
+
   const percentage = editor
     ? Math.round(
         (100 / EDITOR_LIMIT) * editor.storage.characterCount.characters(),

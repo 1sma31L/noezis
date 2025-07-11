@@ -1,6 +1,7 @@
+/* FUCKED UP I KNOW */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -60,10 +61,16 @@ function Post({
   tags,
 }: PostWithAuthor) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const postContent =
-    typeof window !== "undefined"
-      ? generateHTML(content as JSONContent, extensions)
-      : "";
+  const [postContent, setPostContent] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (content) {
+      setPostContent(generateHTML(content as JSONContent, extensions));
+    }
+  }, [content]);
+
   const wordCount = postContent.trim().split(/\s+/).length;
   const MAX_WORDS = 50;
   const shouldShowMore = wordCount > MAX_WORDS;
@@ -161,16 +168,21 @@ function Post({
         </CardTitle>
         <CardDescription className="flex w-full flex-col gap-2">
           <article className="relative">
-            <div className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: isExpanded
-                    ? postContent
-                    : truncateWords(postContent, MAX_WORDS),
-                }}
-              />
+            <div className="text-muted-foreground w-full text-xs leading-6 sm:text-sm md:text-base">
+              {isMounted ? (
+                <div
+                  className="prose dark:prose-invert prose-green max-w-4xl"
+                  dangerouslySetInnerHTML={{
+                    __html: isExpanded
+                      ? postContent
+                      : truncateWords(postContent, MAX_WORDS),
+                  }}
+                />
+              ) : (
+                <div className="bg-muted h-20 animate-pulse rounded-md" />
+              )}
             </div>
-            {!isExpanded && shouldShowMore && (
+            {!isExpanded && shouldShowMore && isMounted && (
               <div
                 className="absolute right-0 bottom-0 left-0 h-24"
                 style={{
@@ -181,7 +193,7 @@ function Post({
             )}
           </article>
 
-          {shouldShowMore && (
+          {shouldShowMore && isMounted && (
             <Button
               variant="ghost"
               size="sm"
