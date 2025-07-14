@@ -23,9 +23,10 @@ import {
   RiNotificationLine,
 } from "react-icons/ri";
 import { useProfile } from "@/lib/hooks/useProfile";
+import { Skeleton } from "../ui/skeleton";
 
 function NavBar() {
-  const { profile, isAuthenticated, removeProfile } = useProfile();
+  const { data: profile, isLoading } = useProfile();
 
   const router = useRouter();
   return (
@@ -49,7 +50,12 @@ function NavBar() {
         <li className="flex flex-row items-center justify-center gap-1 lg:gap-2">
           <ModeToggle />
 
-          {!isAuthenticated ? (
+          {isLoading ? (
+            <div className="flex flex-row items-center justify-center gap-1 lg:gap-2">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <Skeleton className="h-8 w-8 rounded-full" />
+            </div>
+          ) : !profile ? (
             <>
               <Button
                 variant="default"
@@ -160,7 +166,6 @@ function NavBar() {
                         fetchOptions: {
                           onSuccess: () => {
                             router.push("/signin");
-                            removeProfile();
                           },
                         },
                       })

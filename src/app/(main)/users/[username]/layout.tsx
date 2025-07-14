@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { use, useEffect } from "react";
+import React, { use } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -16,15 +16,12 @@ import {
   RiCheckboxCircleFill,
   RiMapPin2Fill,
   RiMapPin2Line,
-  RiHeartFill,
-  RiHeart2Fill,
 } from "react-icons/ri";
 import { useSession } from "@/lib/clients/auth-client";
-import { useInitProfileByUsername } from "@/lib/hooks/useInitProfile";
+import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import EditProfileDialog from "@/components/buttons/EditProfileDialog";
 import { ANONYMOUS_BANNER_IMAGE } from "@/lib/constants";
 import ProfileTabs from "@/components/ProfileTabs";
-import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
 import { GiHeartStake } from "react-icons/gi";
 
 function UserProfile({
@@ -36,39 +33,8 @@ function UserProfile({
 }) {
   const { username } = use(params);
   const { data: session } = useSession();
-  const { data: fetchedProfile, isLoading: isProfileLoading } =
-    useInitProfileByUsername(username);
-
-  const {
-    setVisitedProfile,
-    visitedProfile: profile,
-    isLoading,
-    setIsLoading,
-    isOwner,
-    setIsOwner,
-  } = useVisitedProfile();
-
-  useEffect(() => {
-    setIsLoading(isProfileLoading);
-
-    if (!isProfileLoading && fetchedProfile) {
-      setVisitedProfile(fetchedProfile);
-      setIsOwner(session?.user?.id === fetchedProfile.user.id);
-    }
-
-    return () => {
-      setVisitedProfile(null);
-      setIsOwner(false);
-      setIsLoading(false);
-    };
-  }, [
-    session?.user,
-    isProfileLoading,
-    fetchedProfile,
-    setIsOwner,
-    setVisitedProfile,
-    setIsLoading,
-  ]);
+  const { data: profile, isLoading } = useProfileByUsername(username);
+  const isOwner = session?.user?.id === profile?.user.id;
 
   const navigationTabs = [
     {

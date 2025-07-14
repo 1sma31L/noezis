@@ -15,7 +15,7 @@ import {
 import CreateContentDialog from "./CreateContentDialog";
 
 function WhatDoYouThink() {
-  const { profile } = useProfile();
+  const { data: profile } = useProfile();
   return (
     <Card className="w-full px-1">
       <CardContent className="flex flex-col items-center justify-start gap-6">

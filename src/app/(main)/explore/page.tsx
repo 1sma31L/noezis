@@ -49,7 +49,7 @@ const DUMMY_QUESTIONS = [
 ];
 
 function Explore() {
-  const { profile } = useProfile();
+  const { data: profile } = useProfile();
   const { data: accounts } = api.user.getAllAccounts.useQuery(undefined, {});
   return (
     <main className="container mx-auto max-w-4xl space-y-12 py-6">

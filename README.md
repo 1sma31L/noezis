@@ -112,35 +112,47 @@ Day 9:
 - [x] Fetch posts in profile and home page
 
 Day 10:
-Enhancments:
 
-- genrate the html on pos submit o you dont have to deal with window undefined
-- use more polymorphic design for all content types
+- [ ] Refactor the code to make zustand only responsible for the clinet state (I AM STUPID)
+- [ ] Use more polymorphic design for all content types
 
+Day 11:
+
+- [ ] Use prefetch using react query to enhance performance
+- [ ] Genrate the html on post submit o you dont have to deal with window undefined
 - [ ] Design the settings page
+
+Day 12:
+
 - [ ] Implementing the q/a/quick take creating and fetching them
 - [ ] Add comments and nested comments along with a page for each content type
+
+Day 13:
+
 - [ ] Implement follower/following system
 - [ ] Add spaces
+
+Day 14:
+
 - [ ] Advanced Topic hierarchy
 - [ ] Advanced search with Elasticsearch
 
-Day 11:
+Day 15:
 
 - [ ] Design the messages page and implement it
 - [ ] Add notifications
 
-Day 12:
+Day 16:
 
 - [ ] Design the control page for post versioning and implement it
 - [ ] Add role based access
 
-Day 13:
+Day 16:
 
 - [ ] Design the admin dashboard and implement it
 - [ ] Add statistic to admin dashboard
 
-Day 14:
+Day 17:
 
 - [ ] Add karma system
 - [ ] Add bookmarks and reading later system
@@ -149,37 +161,37 @@ Day 14:
 
 ### Week 3 (FEATURES)
 
-Day 15:
+Day 18:
 
 - [ ] Add realtime optimization (Alby)
 - [ ] Media upload and management (video player)
 
-Day 16:
+Day 19:
 
 - [ ] Draft for posts
 - [ ] Add redis for caching
 
-Day 17:
+Day 20:
 
 - [ ] Content flagging system
 - [ ] Advanced moderation tools (PerspectiveAPI)
 
-Day 18:
+Day 21:
 
 - [ ] SEO
 - [ ] Trending keywords
 - [ ] Tag system with synonyms
 
-Day 19:
+Day 22:
 
 - [ ] Custom feeds
 - [ ] Content recommendation engine
 
-Day 20:
+Day 23:
 
 - [ ] Framer motions animations
 
-Day 21:
+Day 24:
 
 - [ ] Logging system and monitoring (Axiom, Vercel)
 - [ ] unit testing (jest)

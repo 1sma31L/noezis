@@ -6,7 +6,7 @@ const PROFILE_QUERY_CONFIG = {
   keepPreviousData: true,
 };
 
-export function useInitProfile() {
+export function useProfile() {
   const { data: session } = useSession();
 
   return api.user.getProfileByUserId.useQuery(
@@ -19,7 +19,7 @@ export function useInitProfile() {
   );
 }
 
-export function useInitProfileByUsername(username: string) {
+export function useProfileByUsername(username: string) {
   return api.user.getProfileByUsername.useQuery(
     { username },
     {

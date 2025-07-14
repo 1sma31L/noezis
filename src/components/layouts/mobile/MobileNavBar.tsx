@@ -19,7 +19,7 @@ import {
 
 function MobileNavBar() {
   const pathname = usePathname();
-  const { profile } = useProfile();
+  const { data: profile } = useProfile();
 
   const navigationItems = [
     {

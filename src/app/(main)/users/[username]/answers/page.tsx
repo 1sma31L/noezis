@@ -2,11 +2,13 @@
 import React from "react";
 import Answer from "@/components/pages/home/Answer";
 import { use } from "react";
-import { useVisitedProfile } from "@/lib/hooks/useVisitedProfile";
+import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
 function UserAnswers({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { visitedProfile: profile } = useVisitedProfile();
+  const { data: profile, isLoading } = useProfileByUsername(username);
+
+  if (isLoading) return <div>Loading...</div>;
 
   const userInfo = {
     id: 1,
