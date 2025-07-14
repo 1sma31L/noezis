@@ -113,7 +113,7 @@ Day 9:
 
 Day 10:
 
-- [ ] Refactor the code to make zustand only responsible for the clinet state (I AM STUPID)
+- [x] Refactor the code to make zustand only responsible for the clinet state (I AM STUPID)
 - [ ] Use more polymorphic design for all content types
 
 Day 11:
