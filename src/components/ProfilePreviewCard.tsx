@@ -1,15 +1,18 @@
-"use client";
-
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Card, CardContent, CardHeader } from "./card";
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { Button } from "./button";
+import { Card } from "./ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 import Link from "next/link";
 import { RiUserAddLine, RiCheckboxCircleFill } from "react-icons/ri";
 
 import { type ProfileWithUser } from "@/lib/types/user";
 
-export function ProfileCard({ user }: { user: ProfileWithUser }) {
+export default function ProfilePreviewCard({
+  user,
+}: {
+  user: ProfileWithUser;
+}) {
   return (
     <Card className="relative w-full overflow-hidden pt-0">
       {/* Banner Image with gradient overlay */}
