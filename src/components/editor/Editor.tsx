@@ -194,7 +194,7 @@ const Tiptap = () => {
       editor?.commands.setContent("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [post]);
 
   if (!editor || !isMounted) {
     return <div className="bg-muted h-40 w-full animate-pulse rounded-md" />;
@@ -260,9 +260,11 @@ const Tiptap = () => {
         </div>
       </div>
       {env.NEXT_PUBLIC_APP_ENV === "development" && (
-        <pre className="max-w-auto overflow-auto py-10">
-          {JSON.stringify(post, null, 2)}
-        </pre>
+        <div className="flex w-full flex-col gap-2">
+          <pre className="max-w-full overflow-auto py-10">
+            {JSON.stringify(editor.getJSON(), null, 2)}
+          </pre>
+        </div>
       )}
     </div>
   );

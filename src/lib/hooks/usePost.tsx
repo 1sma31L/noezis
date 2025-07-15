@@ -1,7 +1,7 @@
 import { usePostStore } from "@/lib/store/post";
 
 export const usePost = () => {
-  const { post, setPost, isLoading, setIsLoading } = usePostStore();
+  const { post, setPost, isLoading, setIsLoading, resetPost } = usePostStore();
 
-  return { post, setPost, isLoading, setIsLoading };
+  return { post, setPost, isLoading, setIsLoading, resetPost };
 };

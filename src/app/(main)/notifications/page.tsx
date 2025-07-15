@@ -20,7 +20,6 @@ export interface mockNotificationsProps {
   read: boolean;
 }
 
-// Mock data for demonstration
 const mockNotifications: mockNotificationsProps[] = [
   {
     id: 1,

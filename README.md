@@ -114,9 +114,12 @@ Day 9:
 Day 10:
 
 - [x] Refactor the code to make zustand only responsible for the clinet state (I AM STUPID)
-- [ ] Use more polymorphic design for all content types
 
 Day 11:
+
+- [ ] Use more polymorphic design for all content types
+- [ ] fix editor reset bug
+- [x] refactor the code to make it more readable and maintainable
 
 - [ ] Use prefetch using react query to enhance performance
 - [ ] Genrate the html on post submit o you dont have to deal with window undefined

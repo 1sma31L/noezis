@@ -1,7 +1,5 @@
-// create user store
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 type Post = {
   title: string;
@@ -10,19 +8,29 @@ type Post = {
   thumbnail: string;
 };
 
+const initialPost: Post = {
+  title: "",
+  content: JSON.parse("{}") as JSON,
+  tags: [],
+  thumbnail: "",
+};
+
 interface PostState {
-  post: Post | null;
-  setPost: (post: Post | null) => void;
+  post: Post;
+  setPost: (post: Post) => void;
+  resetPost: () => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
 
 export const usePostStore = create<PostState>()(
+  /* TODO: fix the anonymous name */
   devtools(
     persist(
       (set) => ({
-        post: null,
+        post: initialPost,
         setPost: (post) => set({ post }),
+        resetPost: () => set({ post: initialPost }),
         isLoading: false,
         setIsLoading: (isLoading) => set({ isLoading }),
       }),
