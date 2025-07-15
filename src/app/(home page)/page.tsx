@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -9,8 +8,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import Image from "next/image";
-import SignInButton from "@/components/buttons/SignInButton";
-import { RiMailLine } from "react-icons/ri";
+import SignInWithProviderButton from "@/components/SignInWithProviderButton";
+import SignUpWithEmailButton from "@/components/SignUpWithEmailButton";
 
 export default function Home() {
   return (
@@ -38,17 +37,12 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex w-full flex-col items-center justify-center gap-4">
-            <SignInButton provider="google" />
-            <SignInButton provider="github" />
+            <SignInWithProviderButton provider="google" />
+            <SignInWithProviderButton provider="github" />
             <div className="text-muted-foreground text-center text-sm">
               or continue to{" "}
             </div>
-            <Button className="w-full rounded-xl py-6" variant="outline">
-              <RiMailLine className="mr-2" />
-              <Link href="/signup" className="">
-                Sign in with Email
-              </Link>
-            </Button>
+            <SignUpWithEmailButton />
           </CardContent>
           <CardFooter className="flex w-full flex-col items-center justify-center gap-2">
             <div className="text-muted-foreground text-center text-xs">
