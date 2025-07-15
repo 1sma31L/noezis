@@ -14,7 +14,6 @@ import SignUpWithEmailButton from "@/components/SignUpWithEmailButton";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start py-8 lg:justify-center">
-      {/* CARD */}
       <div className="flex flex-col items-center justify-between pt-10 lg:relative lg:flex-row lg:px-10 lg:pt-0">
         <div className="hidden w-[300px] lg:block"></div>{" "}
         <Image

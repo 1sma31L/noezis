@@ -5,11 +5,16 @@ import { auth } from "@/server/auth";
 import { headers } from "next/headers";
 
 async function Layout({ children }: { children: React.ReactNode }) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (session?.user?.id) {
-    redirect("/home");
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (session?.user?.id) {
+      redirect("/home");
+    }
+  } catch (error) {
+    console.error(error);
+    redirect("/signin");
   }
   return (
     <div>

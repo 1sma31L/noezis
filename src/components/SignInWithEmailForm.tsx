@@ -86,7 +86,12 @@ export default function SignInForm() {
         <p className="text-destructive text-sm">{errors.root.message}</p>
       )}
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        className="w-full rounded-lg"
+        disabled={isSubmitting}
+        size={"lg"}
+      >
         {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
     </form>

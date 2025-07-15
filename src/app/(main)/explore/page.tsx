@@ -8,7 +8,6 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useProfile } from "@/lib/hooks/useProfile";
 
-// Hardcoded questions for now
 const DUMMY_QUESTIONS = [
   {
     id: "1",

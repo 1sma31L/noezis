@@ -106,7 +106,12 @@ export default function SignUpForm() {
         <p className="text-destructive text-sm">{errors.root.message}</p>
       )}
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        className="w-full rounded-lg"
+        disabled={isSubmitting}
+        size={"lg"}
+      >
         {isSubmitting ? "Creating account..." : "Sign Up"}
       </Button>
     </form>
