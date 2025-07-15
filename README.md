@@ -117,16 +117,17 @@ Day 10:
 
 Day 11:
 
-- [ ] Use more polymorphic design for all content types
-- [ ] fix editor reset bug
+- [x] fix editor reset bug
 - [x] refactor the code to make it more readable and maintainable
-
-- [ ] Use prefetch using react query to enhance performance
-- [ ] Genrate the html on post submit o you dont have to deal with window undefined
-- [ ] Design the settings page
 
 Day 12:
 
+- [ ] add Profiel extendabele componenet
+- [ ] Use more polymorphic design for all content types
+- [ ] restructi the components folder
+- [ ] Use prefetch using react query to enhance performance
+- [ ] Genrate the html on post submit o you dont have to deal with window undefined
+- [ ] Design the settings page
 - [ ] Implementing the q/a/quick take creating and fetching them
 - [ ] Add comments and nested comments along with a page for each content type
 

@@ -1,18 +1,13 @@
 "use client";
 import React, { use } from "react";
 import Post from "@/components/pages/home/Post";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
-import { api } from "@/trpc/react";
+import { usePostsByUsername } from "@/lib/hooks/usePostsByUsername";
 
 function UserPosts({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
-  const { data: profile, isLoading } = useProfileByUsername(username);
-  const { data: posts, isLoading: postsLoading } =
-    api.post.getPublicPostsOfUser.useQuery({
-      userId: profile?.user.id ?? "",
-    });
+  const { posts, isLoading: postsLoading } = usePostsByUsername(username);
 
-  if (isLoading || postsLoading) return <div>Loading...</div>;
+  if (postsLoading) return <div>Loading...</div>;
   if (!posts) return <div>No posts found</div>;
 
   return (

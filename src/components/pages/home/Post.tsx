@@ -172,7 +172,7 @@ function Post({
             <div className="text-muted-foreground w-full text-xs leading-6 sm:text-sm md:text-base">
               {isMounted ? (
                 <div
-                  className="prose dark:prose-invert prose-green max-w-4xl"
+                  className="prose prose-sm dark:prose-invert prose-green sm:prose-sm md:prose-base max-w-4xl"
                   dangerouslySetInnerHTML={{
                     __html: isExpanded
                       ? postContent
