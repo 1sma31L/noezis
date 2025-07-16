@@ -1,16 +1,11 @@
 "use client";
 import { RiUserAddLine, RiMessageLine, RiMoreLine } from "react-icons/ri";
 import { Button } from "./ui/button";
-import { useSession } from "@/lib/clients/auth-client";
-import { api } from "@/trpc/react";
+import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
 function ContactProfile({ username }: { username: string }) {
-  const { data: session } = useSession();
-  const [profile] = api.user.getProfileByUsername.useSuspenseQuery({
-    username,
-  });
-  const isOwner = session?.user?.id === profile?.user.id;
-  if (!session || !profile) return null;
+  const { data: profile, isOwner } = useProfileByUsername(username);
+  if (!profile) return null;
 
   return (
     <>

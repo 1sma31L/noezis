@@ -7,30 +7,57 @@ import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 import { NavBarNotifications } from "./NavBarNotifications";
 import { NavBarProfile } from "./NavBarProfile";
+import type { Session } from "@/server/auth";
+import { useSession } from "@/lib/hooks/useSession";
 
-export function NavBarAuth() {
-  const { data: profile, isLoading } = useProfile();
+export function NavBarAuth({
+  session: serverSession,
+}: {
+  session?: Session | null;
+}) {
+  const { data: profile } = useProfile();
+  const { data: session } = useSession(serverSession);
 
-  if (isLoading) {
+  if (!session?.session) {
+    return (
+      <>
+        <Button
+          variant="default"
+          className="hidden rounded-full sm:block"
+          asChild
+        >
+          <Link href="/signup">Get Started</Link>
+        </Button>
+        <Button
+          variant="ghost"
+          className="hidden rounded-full sm:block"
+          asChild
+        >
+          <Link href="/signin">Login</Link>
+        </Button>
+      </>
+    );
+  }
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex flex-row items-center justify-center gap-1 lg:gap-2">
+  //       <Skeleton className="h-8 w-8 rounded-full" />
+  //       <Skeleton className="h-8 w-8 rounded-full" />
+  //     </div>
+  //   );
+  // }
+  if (session.user && !profile) {
+    // Skele of picture
     return (
       <div className="flex flex-row items-center justify-center gap-1 lg:gap-2">
-        <Skeleton className="h-8 w-8 rounded-full" />
-        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-8 w-8 rounded-full px-1" />
       </div>
     );
   }
 
   if (!profile) {
-    return (
-      <>
-        <Button variant="default" className="hidden rounded-full sm:block">
-          <Link href="/signup">Get Started</Link>
-        </Button>
-        <Button variant="ghost" className="hidden rounded-full sm:block">
-          <Link href="/signin">Login</Link>
-        </Button>
-      </>
-    );
+    return null;
   }
 
   return (

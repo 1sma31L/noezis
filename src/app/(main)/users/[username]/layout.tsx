@@ -15,7 +15,6 @@ import { Suspense } from "react";
 import { api } from "@/trpc/server";
 import { HydrateClient } from "@/trpc/server";
 import { ErrorBoundary } from "react-error-boundary";
-import { notFound } from "next/navigation";
 
 type userProfileProps = {
   params: Promise<{ username: string }>;
@@ -25,15 +24,7 @@ type userProfileProps = {
 async function UserProfile({ params, children }: userProfileProps) {
   const { username } = await params;
   await api.user.getProfileByUsername.prefetch({ username });
-  try {
-    const profile = await api.user.getProfileByUsername({ username });
-    if (!profile) {
-      notFound();
-    }
-  } catch (error) {
-    console.log(error);
-    notFound();
-  }
+
   const navigationTabs = [
     {
       label: "All",

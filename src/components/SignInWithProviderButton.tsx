@@ -30,7 +30,7 @@ export default function SignInWithProviderButton({
     <Button
       variant="outline"
       size={"lg"}
-      className={`w-full rounded-lg ${providers.find((p) => p.provider === provider)?.color}`}
+      className={`w-full cursor-pointer rounded-lg ${providers.find((p) => p.provider === provider)?.color}`}
       onClick={() => signInWithProvider(provider)}
     >
       {providers.find((p) => p.provider === provider)?.icon}

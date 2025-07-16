@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RiUserLine, RiSettingsLine, RiLogoutBoxLine } from "react-icons/ri";
 import type { ProfileWithUser } from "@/lib/types/user";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function NavBarProfile({ profile }: { profile: ProfileWithUser }) {
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -71,7 +72,15 @@ export function NavBarProfile({ profile }: { profile: ProfileWithUser }) {
           onClick={() =>
             signOut({
               fetchOptions: {
-                onSuccess: () => {
+                onSuccess: async () => {
+                  await Promise.all([
+                    queryClient.invalidateQueries({
+                      queryKey: ["session"],
+                    }),
+                    queryClient.invalidateQueries({
+                      queryKey: ["user", "getProfileByUserId"],
+                    }),
+                  ]);
                   router.push("/signin");
                 },
               },

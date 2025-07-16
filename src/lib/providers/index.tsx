@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider, useTheme } from "next-themes";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "sonner";
+import { ReactScan } from "@/components/ReactScan";
 
 export function Providers({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
@@ -17,6 +18,7 @@ export function Providers({ children }: { children: ReactNode }) {
     >
       <TRPCReactProvider>
         <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactScan  /> */}
         <Toaster
           richColors
           closeButton
