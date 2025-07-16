@@ -1,14 +1,16 @@
 "use client";
+
 import { RiCheckboxCircleFill } from "react-icons/ri";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import { GiHeartStake } from "react-icons/gi";
+import { api } from "@/trpc/react";
 
 function ProfileBadges({ username }: { username: string }) {
-  const { data: profile, isLoading } = useProfileByUsername(username);
-
+  const [profile] = api.user.getProfileByUsername.useSuspenseQuery({
+    username,
+  });
   return (
     <>
-      {profile?.isVerified && !isLoading && (
+      {profile?.isVerified && (
         <span className="inline align-middle" style={{ whiteSpace: "nowrap" }}>
           &nbsp;
           <RiCheckboxCircleFill
@@ -21,7 +23,7 @@ function ProfileBadges({ username }: { username: string }) {
           />
         </span>
       )}
-      {profile?.isLove && !isLoading && (
+      {profile?.isLove && (
         <span className="inline align-middle" style={{ whiteSpace: "nowrap" }}>
           &nbsp;
           <GiHeartStake

@@ -1,9 +1,10 @@
 "use client";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+import { api } from "@/trpc/react";
 
 function ProfileName({ username }: { username: string }) {
-  const { data: profile, isLoading } = useProfileByUsername(username);
-
+  const [profile] = api.user.getProfileByUsername.useSuspenseQuery({
+    username,
+  });
   return <>{profile?.user.name}</>;
 }
 

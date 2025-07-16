@@ -11,16 +11,29 @@ import ProfileEdit from "@/components/ProfileEdit";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import ProfileBanner from "@/components/ProfileBanner";
 import ProfileName from "@/components/ProfileName";
+import { Suspense } from "react";
+import { api } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
+import { ErrorBoundary } from "react-error-boundary";
+import { notFound } from "next/navigation";
 
-async function UserProfile({
-  params,
-  children,
-}: {
+type userProfileProps = {
   params: Promise<{ username: string }>;
   children: React.ReactNode;
-}) {
-  const { username } = await params;
+};
 
+async function UserProfile({ params, children }: userProfileProps) {
+  const { username } = await params;
+  await api.user.getProfileByUsername.prefetch({ username });
+  try {
+    const profile = await api.user.getProfileByUsername({ username });
+    if (!profile) {
+      notFound();
+    }
+  } catch (error) {
+    console.log(error);
+    notFound();
+  }
   const navigationTabs = [
     {
       label: "All",
@@ -45,35 +58,59 @@ async function UserProfile({
   ];
 
   return (
-    <main className="relative flex flex-col items-start justify-center gap-4 md:gap-6">
-      <div className="flex w-full flex-col items-start justify-center gap-2 px-2 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
-        <ProfileBanner username={username} />
-        <ProfileAvatar username={username} />
-        <div className="flex w-full flex-row items-center justify-between gap-2">
-          <div className="flex flex-col items-start justify-center">
-            <h1 className="inline text-xl leading-tight font-bold break-words lg:text-3xl">
-              <ProfileName username={username} />
-              <ProfileBadges username={username} />
-            </h1>
-            <ProfileUsername username={username} />
-          </div>
-          {/* TODO: fix revalidation  */}
-          <ProfileEdit username={username} />
+    <HydrateClient>
+      <main className="relative flex flex-col items-start justify-center gap-4 md:gap-6">
+        <div className="flex w-full flex-col items-start justify-center gap-2 px-2 pt-24 text-sm md:gap-4 md:px-4 md:text-base">
+          <ErrorBoundary fallback={<p>Error loading profile...</p>}>
+            <Suspense fallback={<p>Loading banner...</p>}>
+              <ProfileBanner username={username} />
+            </Suspense>
+            <Suspense fallback={<p>Loading avatar...</p>}>
+              <ProfileAvatar username={username} />
+            </Suspense>
+            <div className="flex w-full flex-row items-center justify-between gap-2">
+              <div className="flex flex-col items-start justify-center">
+                <h1 className="inline text-xl leading-tight font-bold break-words lg:text-3xl">
+                  <Suspense fallback={<p>Loading name...</p>}>
+                    <ProfileName username={username} />
+                  </Suspense>
+                  <Suspense fallback={<p>Loading badges...</p>}>
+                    <ProfileBadges username={username} />
+                  </Suspense>
+                </h1>
+                <Suspense fallback={<p>Loading username...</p>}>
+                  <ProfileUsername username={username} />
+                </Suspense>
+              </div>
+              <Suspense fallback={<p>Loading edit button...</p>}>
+                <ProfileEdit username={username} />
+              </Suspense>
+            </div>
+            <div className="flex w-full flex-col items-start justify-start gap-2 md:gap-4">
+              <Suspense fallback={<p>Loading bio...</p>}>
+                <ProfileBio username={username} />
+              </Suspense>
+              <div className="flex w-full flex-row items-center justify-start gap-4">
+                <Suspense fallback={<p>Loading location...</p>}>
+                  <ProfileLocation username={username} />
+                </Suspense>
+                <Suspense fallback={<p>Loading website...</p>}>
+                  <ProfileWebsite username={username} />
+                </Suspense>
+              </div>
+            </div>
+            <FollowersAndFollowing />
+            <Suspense fallback={<p>Loading contact...</p>}>
+              <ContactProfile username={username} />
+            </Suspense>
+            <Separator className="my-2 w-full" />
+            <ProfileTabs navigationTabs={navigationTabs} />
+          </ErrorBoundary>
         </div>
-        <div className="flex w-full flex-col items-start justify-start gap-2 md:gap-4">
-          <ProfileBio username={username} />
-          <div className="flex w-full flex-row items-center justify-start gap-4">
-            <ProfileLocation username={username} />
-            <ProfileWebsite username={username} />
-          </div>
-        </div>
-        <FollowersAndFollowing />
-        <ContactProfile username={username} />
-        <Separator className="my-2 w-full" />
-        <ProfileTabs navigationTabs={navigationTabs} />
-      </div>
-      <div className="w-full">{children}</div>
-    </main>
+
+        <div className="w-full">{children}</div>
+      </main>
+    </HydrateClient>
   );
 }
 

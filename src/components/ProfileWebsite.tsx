@@ -1,11 +1,13 @@
 "use client";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+
 import { RiGlobalLine } from "react-icons/ri";
 import Link from "next/link";
+import { api } from "@/trpc/react";
 
 function ProfileWebsite({ username }: { username: string }) {
-  const { data: profile, isLoading } = useProfileByUsername(username);
-
+  const [profile] = api.user.getProfileByUsername.useSuspenseQuery({
+    username,
+  });
   return (
     <>
       {profile?.website ? (
@@ -19,10 +21,6 @@ function ProfileWebsite({ username }: { username: string }) {
             {profile?.website}
           </p>
         </Link>
-      ) : isLoading ? (
-        <p className="text-muted-foreground animate-pulse text-xs md:text-sm">
-          Loading...
-        </p>
       ) : (
         <div className="flex flex-row items-center justify-start gap-1">
           <RiGlobalLine className="h-4 w-4" />

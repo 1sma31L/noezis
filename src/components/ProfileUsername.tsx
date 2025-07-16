@@ -1,10 +1,12 @@
 "use client";
-import { useProfileByUsername } from "@/lib/hooks/useProfile";
+
 import Link from "next/link";
+import { api } from "@/trpc/react";
 
 function ProfileUsername({ username }: { username: string }) {
-  const { data: profile, isLoading } = useProfileByUsername(username);
-
+  const [profile] = api.user.getProfileByUsername.useSuspenseQuery({
+    username,
+  });
   return (
     <>
       {profile?.username ? (
@@ -14,8 +16,6 @@ function ProfileUsername({ username }: { username: string }) {
         >
           @{profile?.username}
         </Link>
-      ) : isLoading ? (
-        <p className="text-muted-foreground animate-pulse">Loading...</p>
       ) : (
         <p className="text-muted-foreground">No username provided.</p>
       )}

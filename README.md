@@ -122,9 +122,10 @@ Day 11:
 
 Day 12:
 
-- [ ] add Profiel extendabele componenet
+- [ ] restructure the components folder
+- [ ] add Profile extendabele componenet
 - [ ] Use more polymorphic design for all content types
-- [ ] restructi the components folder
+
 - [ ] Use prefetch using react query to enhance performance
 - [ ] Genrate the html on post submit o you dont have to deal with window undefined
 - [ ] Design the settings page
