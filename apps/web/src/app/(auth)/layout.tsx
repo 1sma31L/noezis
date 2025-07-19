@@ -10,6 +10,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
   if (session?.user?.id) {
     redirect("/home");
   }
+
   return <div>{children}</div>;
 }
 
