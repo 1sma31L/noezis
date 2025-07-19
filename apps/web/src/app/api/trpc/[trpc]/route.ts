@@ -24,7 +24,7 @@ const handler = (req: NextRequest) =>
     createContext: () => createContext(req),
     onError:
       env.NODE_ENV === "development"
-        ? ({ path, error }: { path: string; error: TRPCError }) => {
+        ? ({ path, error }: { path: string | undefined; error: TRPCError }) => {
             console.error(
               `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
             );
