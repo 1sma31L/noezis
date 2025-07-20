@@ -2,7 +2,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "../../lib/trpc";
+} from "@/server/lib/trpc";
 import { reaction } from "@/server/db/schema";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";

@@ -1,14 +1,27 @@
-import { trpcServer } from "@hono/trpc-server";
-import { appRouter } from "@/server/api";
+import { createCallerFactory, createTRPCRouter } from "@/server/lib/trpc";
+import { reactionRouter } from "@/server/routes/reaction";
+import { userRouter } from "@/server/routes/user";
+import { shareRouter } from "@/server/routes/share";
+import { postRouter } from "@/server/routes/post";
+import { saveRouter } from "@/server/routes/save";
 import { createTRPCContext } from "@/server/lib/trpc";
 import { Hono } from "hono";
+import { trpcServer } from "@hono/trpc-server";
+import { auth } from "@/server/lib/auth";
 import { env } from "@/env";
 import type { TRPCError } from "@trpc/server";
-import { auth } from "@/server/lib/auth";
 
 const app = new Hono().basePath("/api");
 
 app.on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw));
+
+export const appRouter = createTRPCRouter({
+  user: userRouter,
+  post: postRouter,
+  reaction: reactionRouter,
+  share: shareRouter,
+  save: saveRouter,
+});
 
 app.use(
   "/trpc/*",
@@ -33,5 +46,9 @@ app.use(
 app.get("/", (c) => {
   return c.text("OK");
 });
+
+export type AppRouter = typeof appRouter;
+
+export const createCaller = createCallerFactory(appRouter);
 
 export default app;

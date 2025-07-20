@@ -214,7 +214,7 @@ function Post({
         )}
 
         <div className="mt-2 flex flex-wrap gap-2">
-          {tags?.map((tag) => (
+          {tags?.map((tag: string) => (
             <Badge
               key={tag}
               className="bg-accent text-muted-foreground text-[9px] md:text-xs"

@@ -2,11 +2,11 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "../../lib/trpc";
-import { post, reaction } from "@/server/db/schema";
+} from "@/server/lib/trpc";
+import { post } from "@/server/db/schema";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { and, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 const postInsertSchema = createInsertSchema(post);
 

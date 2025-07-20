@@ -8,5 +8,5 @@ export const usePostsByUsername = (username: string) => {
       userId: profile?.user.id ?? "",
     });
 
-  return { posts, isLoading: postsLoading || isLoading };
+  return { posts, isLoading: postsLoading ?? isLoading };
 };
