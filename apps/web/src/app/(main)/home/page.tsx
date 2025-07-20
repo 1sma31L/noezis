@@ -1,10 +1,11 @@
+"use client";
 import Post from "@/components/pages/home/Post";
 import Answer from "@/components/pages/home/Answer";
 import Question from "@/components/pages/home/Question";
 import QuickTake from "@/components/pages/home/QuickTake";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import React from "react";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { Loader2 } from "lucide-react";
 
 // const posts = [
@@ -221,8 +222,10 @@ const quickTakes = [
   },
 ];
 
-async function Home() {
-  const posts = await api.post.all();
+function Home() {
+  const { data: posts, isLoading } = api.post.all.useQuery();
+  if (isLoading) return <div>Loading...</div>;
+  if (!posts) return <div>No posts found</div>;
   return (
     <main className="relative flex min-h-screen flex-col items-start justify-start gap-4">
       <WhatDoYouThink />
@@ -233,7 +236,7 @@ async function Home() {
         <QuickTake key={quickTake.id} {...quickTake} />
       ))}
       <Answer {...exampleAnswer} /> */}
-      {posts?.map((post) => (
+      {posts.map((post) => (
         <Post key={post.id} {...post} />
       ))}
     </main>

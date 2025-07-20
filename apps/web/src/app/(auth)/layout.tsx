@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import React from "react";
-import { auth } from "@/server/auth";
+import { auth } from "../../../../server/src/lib/auth";
 import { headers } from "next/headers";
 
 async function Layout({ children }: { children: React.ReactNode }) {

@@ -1,10 +1,11 @@
 {
 	"$schema": "https://turborepo.com/schema.json",
-	"ui": "tui",
+
 	"globalEnv": [
 		"NODE_ENV",
 		"DATABASE_URL",
 		"BETTER_AUTH_SECRET",
+		"BETTER_AUTH_URL",
 		"GITHUB_CLIENT_ID",
 		"GITHUB_CLIENT_SECRET",
 		"GOOGLE_CLIENT_ID",
@@ -12,7 +13,8 @@
 		"NEXT_PUBLIC_APPWRITE_PROJECT_ID",
 		"NEXT_PUBLIC_APPWRITE_ENDPOINT",
 		"APPWRITE_API_KEY",
-		"NEXT_PUBLIC_APP_ENV"
+		"NEXT_PUBLIC_APP_ENV",
+		"CORS_ORIGIN"
 	],
 	"tasks": {
 		"dev": {

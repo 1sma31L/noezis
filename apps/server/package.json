@@ -1,5 +1,5 @@
 {
-	"name": "@noezis/server",
+	"name": "server",
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
@@ -7,15 +7,29 @@
 		"check-types": "tsc --noEmit",
 		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
 		"dev": "bun run --hot --port=8080 src/index.ts",
-		"start": "bun run dist/index.js"
+		"start": "bun run dist/index.js",
+		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
+		"db:studio": "drizzle-kit studio",
+		"db:migrate": "drizzle-kit migrate"
 	},
 	"dependencies": {
-		"dotenv": "^17.2.0",
-		"hono": "^4.8.5"
+		"@hono/trpc-server": "^0.4.0",
+		"@trpc/client": "^11.4.2",
+		"@trpc/server": "^11.4.2",
+		"better-auth": "^1.2.12",
+		"dotenv": "^16.4.7",
+		"drizzle-orm": "^0.44.2",
+		"postgres": "^3.4.4",
+		"hono": "^4.8.2",
+		"pg": "^8.14.1",
+		"resend": "^4.6.0",
+		"zod": "^3.25.16"
 	},
 	"devDependencies": {
 		"tsdown": "^0.12.9",
-		"typescript": "^5.8.3",
-		"@types/bun": "^1.2.19"
+		"@types/bun": "^1.2.19",
+		"drizzle-kit": "^0.31.2",
+		"@types/pg": "^8.11.11"
 	}
 }

@@ -1,5 +1,12 @@
 import { createAuthClient } from "better-auth/react";
 
-export const { signIn, signUp, signOut } = createAuthClient();
+export const { signIn, signUp, signOut } = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  fetchOptions: {
+    credentials: "include",
+  },
+});
 
-export const authClient = createAuthClient();
+export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+});
