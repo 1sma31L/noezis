@@ -1,3 +1,4 @@
+"use client";
 import Tiptap from "@/components/editor/Editor";
 import { Separator } from "@/components/ui/separator";
 import { UploadPostThumbnail } from "@/components/UploadPostThumbnail";
