@@ -109,7 +109,7 @@ Day 8:
 
 Day 9:
 
-- [x] Fetch posts in profile and home page.
+- [x] Fetch posts in profile and home page
 
 Day 10:
 
