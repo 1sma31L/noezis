@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../lib/trpc";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { post } from "@/server/db/schema";

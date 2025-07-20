@@ -4,7 +4,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "@/server/api/trpc";
+} from "@/server/lib/trpc";
 import { profile, user } from "@/server/db/schema";
 import { eq, and } from "drizzle-orm";
 import { updateProfileSchema } from "@/lib/schemas/user";

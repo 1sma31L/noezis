@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ModeToggle } from "@/components/buttons/ModeToggle";
 import { NavBarAuth } from "./NavBarAuth";
-import { auth } from "@/server/auth";
+import { auth } from "@/server/lib/auth";
 import { api, HydrateClient } from "@/trpc/server";
 import { headers } from "next/headers";
 async function NavBar() {

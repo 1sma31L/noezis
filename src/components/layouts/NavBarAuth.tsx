@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 import { NavBarNotifications } from "./NavBarNotifications";
 import { NavBarProfile } from "./NavBarProfile";
-import type { Session } from "@/server/auth";
+import type { Session } from "@/server/lib/auth";
 import { useSession } from "@/lib/hooks/useSession";
 
 export function NavBarAuth({

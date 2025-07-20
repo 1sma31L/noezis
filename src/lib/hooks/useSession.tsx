@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "../clients/auth-client";
-import type { Session } from "@/server/auth";
+import type { Session } from "@/server/lib/auth";
 
 export function useSession(initialData?: Session | null) {
   const session = useQuery<Session | null>({

@@ -1,9 +1,9 @@
-import { userRouter } from "@/server/api/routers/user";
-import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
-import { postRouter } from "@/server/api/routers/post";
-import { reactionRouter } from "@/server/api/routers/reaction";
-import { shareRouter } from "@/server/api/routers/share";
-import { saveRouter } from "@/server/api/routers/save";
+import { userRouter } from "@/server/api/routes/user";
+import { createCallerFactory, createTRPCRouter } from "@/server/lib/trpc";
+import { postRouter } from "@/server/api/routes/post";
+import { reactionRouter } from "@/server/api/routes/reaction";
+import { shareRouter } from "@/server/api/routes/share";
+import { saveRouter } from "@/server/api/routes/save";
 /**
  * This is the primary router for your server.
  *

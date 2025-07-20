@@ -1,10 +1,10 @@
 import { trpcServer } from "@hono/trpc-server";
-import { appRouter } from "./api/root";
-import { createTRPCContext } from "./api/trpc";
+import { appRouter } from "@/server/api";
+import { createTRPCContext } from "@/server/lib/trpc";
 import { Hono } from "hono";
 import { env } from "@/env";
 import type { TRPCError } from "@trpc/server";
-import { auth } from "@/server/auth";
+import { auth } from "@/server/lib/auth";
 
 const app = new Hono().basePath("/api");
 
@@ -14,6 +14,7 @@ app.use(
   "/trpc/*",
   trpcServer({
     router: appRouter,
+    // to correct the path stripping
     endpoint: "/api/trpc",
     createContext: (_opts, context) => {
       return createTRPCContext({ headers: context.req.raw.headers });

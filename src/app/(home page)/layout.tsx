@@ -1,6 +1,6 @@
 import Footer from "@/components/layouts/Footer";
 import { redirect } from "next/navigation";
-import { auth } from "@/server/auth";
+import { auth } from "@/server/lib/auth";
 import { headers } from "next/headers";
 
 async function Layout({ children }: { children: React.ReactNode }) {

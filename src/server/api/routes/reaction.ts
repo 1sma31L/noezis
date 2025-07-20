@@ -1,4 +1,8 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "../../lib/trpc";
 import { reaction } from "@/server/db/schema";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
