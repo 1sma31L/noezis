@@ -10,7 +10,7 @@ async function NavBar() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  console.log("session", session);
+
   if (session) {
     await api.user.getProfileByUserId.prefetch({
       userId: session.user.id,

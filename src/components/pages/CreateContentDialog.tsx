@@ -83,7 +83,7 @@ function CreateContentDialog({
   const onSubmit = async (data: CreateContentSchema) => {
     try {
       // TODO: Implement the actual submission logic
-      console.log("Form data:", data);
+
       toast.success("Content created successfully!");
       onClose();
     } catch (error) {
