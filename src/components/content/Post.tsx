@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +45,8 @@ import Link from "@tiptap/extension-link";
 import Typography from "@tiptap/extension-typography";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import ContentTags from "./ContentTags";
+import ContentHeader from "./ContentHeader";
 
 const extensions = [StarterKit, Underline, Link, Typography];
 
@@ -129,40 +130,16 @@ function Post({
     });
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
-      <CardHeader className="flex w-full flex-row items-center justify-start gap-2 md:gap-4">
-        <Avatar className="h-8 w-8 md:h-10 md:w-10">
-          <AvatarImage
-            src={author.user.image ?? ""}
-            alt={author.user.name ?? ""}
-          />
-          <AvatarFallback className="bg-primary text-background">
-            {author.user.name.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-          <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-            {author.user.name}
-            {author.isVerified && (
-              <RiCheckboxCircleFill
-                style={{
-                  color: "#2a623d",
-                  display: "inline-block",
-                }}
-              />
-            )}
-          </p>
-          {author.jobTitle && (
-            <p className="text-muted-foreground text-[9px] md:text-xs">
-              {author.jobTitle}
-            </p>
-          )}
-        </div>
-        <p className="text-muted-foreground text-[9px] md:text-xs">
-          {createdAt.toLocaleDateString()}
-        </p>
-      </CardHeader>
+      <ContentHeader
+        image={author.user.image ?? ""}
+        name={author.user.name ?? ""}
+        jobTitle={author.jobTitle ?? ""}
+        isVerified={author.isVerified}
+        createdAt={createdAt.toLocaleDateString()}
+        type="post"
+      />
 
-      <CardContent className="flex flex-col items-start justify-start gap-2 w-full">
+      <CardContent className="flex w-full flex-col items-start justify-start gap-2">
         <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
           {title}
         </CardTitle>
@@ -215,18 +192,9 @@ function Post({
           </div>
         )}
 
-        <div className="mt-2 flex flex-wrap gap-2">
-          {tags?.map((tag: string) => (
-            <Badge
-              key={tag}
-              className="bg-accent text-muted-foreground text-[9px] md:text-xs"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        <ContentTags tags={tags} />
 
-        <div className="flex w-full flex-row items-center justify-between gap-2 pt-4">
+        <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
             {/* Voting */}
             <div className="bg-muted/50 flex h-8 flex-row items-center justify-start gap-2 rounded-full px-2">

@@ -22,7 +22,8 @@ import {
   RiNotificationLine,
   RiNotificationFill,
 } from "react-icons/ri";
-
+import ContentTags from "./ContentTags";
+import ContentHeader from "./ContentHeader";
 export interface QuestionProps {
   id: number;
   title: string;
@@ -73,53 +74,15 @@ function Question({
         isAnswered ? "border-l-primary border-l-4" : ""
       }`}
     >
-      <CardHeader className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Avatar className="h-8 w-8 md:h-10 md:w-10">
-            <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback className="bg-primary text-background">
-              {user.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-
-          <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-            <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-              {user.name}
-              {user.isVerified && (
-                <RiCheckboxCircleFill
-                  style={{
-                    color: "#2a623d",
-                    display: "inline-block",
-                  }}
-                />
-              )}
-            </p>
-            <p className="text-muted-foreground text-[9px] md:text-xs">
-              {user.job}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Badge
-            variant="outline"
-            className={`rounded-full ${
-              isAnswered
-                ? "bg-green-500/10 text-green-500"
-                : "bg-red-500/10 text-red-500"
-            }`}
-          >
-            {isAnswered ? (
-              <RiCheckboxCircleFill className="mr-1 inline-block" />
-            ) : (
-              <RiQuestionLine className="mr-1 inline-block" />
-            )}
-            Question
-          </Badge>
-
-          <p className="text-muted-foreground text-[9px] md:text-xs">{date}</p>
-        </div>
-      </CardHeader>
+      <ContentHeader
+        image={user.image ?? ""}
+        name={user.name ?? ""}
+        jobTitle={user.job ?? ""}
+        isVerified={user.isVerified}
+        createdAt={date}
+        isAnswered={isAnswered}
+        type="question"
+      />
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-4">
         <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
@@ -155,16 +118,7 @@ function Question({
           )}
         </CardDescription>
 
-        <div className="mt-2 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Badge
-              key={tag}
-              className="bg-accent text-muted-foreground text-[9px] md:text-xs"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        <ContentTags tags={tags} />
 
         <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">

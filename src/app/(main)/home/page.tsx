@@ -233,16 +233,16 @@ async function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-start justify-start gap-4">
       <WhatDoYouThink isOwner={isOwner} />
-      {/* {questions.map((question) => (
+      {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}
       {quickTakes.map((quickTake) => (
         <QuickTake key={quickTake.id} {...quickTake} />
       ))}
-      <Answer {...exampleAnswer} /> */}
-      {posts?.map((post) => (
-        <Post key={post.id} {...post} />
-      ))}
+      <Answer {...exampleAnswer} />
+      {posts?.map((post) => {
+        return <Post key={post.id} {...post} />;
+      })}
     </main>
   );
 }

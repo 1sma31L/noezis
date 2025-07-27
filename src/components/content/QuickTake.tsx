@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   RiBookmarkLine,
@@ -13,12 +11,12 @@ import {
   RiShareLine,
   RiThumbDownLine,
   RiMoreLine,
-  RiFlashlightFill,
   RiThumbUpFill,
   RiThumbDownFill,
   RiBookmarkFill,
-  RiCheckboxCircleFill,
 } from "react-icons/ri";
+import ContentTags from "./ContentTags";
+import ContentHeader from "./ContentHeader";
 
 interface QuickTakeProps {
   id: number;
@@ -56,55 +54,18 @@ function QuickTake({
 
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
-      <CardHeader className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Avatar className="h-8 w-8 md:h-10 md:w-10">
-            <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback className="bg-primary text-background">
-              {user.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
-            <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-              {user.name}
-              {user.isVerified && (
-                <RiCheckboxCircleFill
-                  style={{
-                    color: "#2a623d",
-                    display: "inline-block",
-                  }}
-                />
-              )}
-            </p>
-            <p className="text-muted-foreground text-[9px] md:text-xs">
-              {user.job}
-            </p>
-          </div>
-        </div>
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Badge
-            variant="outline"
-            className="bg-accent text-accent-foreground rounded-full"
-          >
-            <RiFlashlightFill className="mr-1 inline-block" />
-            Quick Take
-          </Badge>
-          <p className="text-muted-foreground text-[9px] md:text-xs">{date}</p>
-        </div>
-      </CardHeader>
+      <ContentHeader
+        image={user.image ?? ""}
+        name={user.name ?? ""}
+        jobTitle={user.job ?? ""}
+        isVerified={user.isVerified}
+        createdAt={date}
+        type="quickTake"
+      />
 
       <CardContent>
         <p className="text-xs leading-6 sm:text-sm md:text-base">{content}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Badge
-              key={tag}
-              className="bg-accent/50 text-accent-foreground text-[9px] md:text-xs"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        <ContentTags tags={tags} />
 
         <div className="flex w-full flex-row items-center justify-between gap-2 pt-4">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
