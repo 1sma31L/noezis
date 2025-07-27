@@ -2,8 +2,8 @@
 import { useProfile } from "@/lib/hooks/useProfile";
 import { api } from "@/trpc/react";
 import React from "react";
-import ProfilePreviewCard from "@/components/ProfilePreviewCard";
-import SectionTitle from "@/components/SectionTitle";
+import ProfilePreviewCard from "@/components/profile/ProfilePreviewCard";
+import SectionTitle from "@/components/pages/SectionTitle";
 
 function SuggestedAccounts() {
   const { data: profile } = useProfile();

@@ -1,4 +1,4 @@
-import ProfilePosts from "@/components/ProfilePosts";
+import ProfilePosts from "@/components/profile/ProfilePosts";
 
 async function UserProfile({
   params,

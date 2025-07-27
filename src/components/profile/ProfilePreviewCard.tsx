@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Card } from "./ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RiUserAddLine, RiCheckboxCircleFill } from "react-icons/ri";
 

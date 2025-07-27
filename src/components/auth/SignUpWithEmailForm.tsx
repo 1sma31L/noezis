@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 

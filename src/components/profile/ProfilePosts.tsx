@@ -1,5 +1,5 @@
 "use client";
-import Post from "@/components/pages/home/Post";
+import Post from "@/components/content/Post";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 import { usePostsByUsername } from "@/lib/hooks/usePostsByUsername";

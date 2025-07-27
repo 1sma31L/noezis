@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { signInWithProvider } from "@/lib/helpers/auth";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 

@@ -1,5 +1,5 @@
-import SuggestedAccounts from "@/components/SuggestedAccounts";
-import SuggestedQuestions from "@/components/SuggestedQuestions";
+import SuggestedAccounts from "@/components/pages/explore/SuggestedAccounts";
+import SuggestedQuestions from "@/components/pages/explore/SuggestedQuestions";
 
 function Explore() {
   return (

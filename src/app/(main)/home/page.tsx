@@ -1,7 +1,7 @@
-import Post from "@/components/pages/home/Post";
-import Answer from "@/components/pages/home/Answer";
-import Question from "@/components/pages/home/Question";
-import QuickTake from "@/components/pages/home/QuickTake";
+import Post from "@/components/content/Post";
+import Answer from "@/components/content/Answer";
+import Question from "@/components/content/Question";
+import QuickTake from "@/components/content/QuickTake";
 import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import React from "react";
 import { api } from "@/trpc/server";

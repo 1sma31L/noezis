@@ -6,8 +6,8 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import SignUpWithEmailForm from "@/components/SignUpWithEmailForm";
-import SignInWithProviderButton from "@/components/SignInWithProviderButton";
+import SignUpWithEmailForm from "@/components/auth/SignUpWithEmailForm";
+import SignInWithProviderButton from "@/components/auth/SignInWithProviderButton";
 
 export default function SignUp() {
   return (

@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { usePost } from "@/lib/hooks/usePost";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { uploadImage } from "@/lib/helpers/appwrite";
 import { BUCKET_IDS } from "@/lib/clients/appwrite-client";

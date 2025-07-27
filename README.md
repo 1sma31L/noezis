@@ -122,11 +122,10 @@ Day 11:
 
 Day 12:
 
-- [ ] restructure the components folder
+- [x] restructure the components folder
 - [ ] add Profile extendabele componenet
 - [ ] Use more polymorphic design for all content types
 
-- [ ] Use prefetch using react query to enhance performance
 - [ ] Genrate the html on post submit o you dont have to deal with window undefined
 - [ ] Design the settings page
 - [ ] Implementing the q/a/quick take creating and fetching them

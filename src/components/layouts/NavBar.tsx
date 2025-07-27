@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ModeToggle } from "@/components/buttons/ModeToggle";
+import { ModeToggle } from "@/components/layouts/ModeToggle";
 import { NavBarAuth } from "./NavBarAuth";
 import { auth } from "@/server/lib/auth";
 import { api, HydrateClient } from "@/trpc/server";

@@ -1,5 +1,5 @@
 "use client";
-import Question, { type QuestionProps } from "@/components/pages/home/Question";
+import Question, { type QuestionProps } from "@/components/content/Question";
 import { use } from "react";
 import React from "react";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";

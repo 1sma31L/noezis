@@ -1,5 +1,5 @@
 "use client";
-import EditProfileDialog from "./buttons/EditProfileDialog";
+import EditProfileDialog from "@/components/profile/EditProfileDialog";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
 export default function ProfileEdit({ username }: { username: string }) {

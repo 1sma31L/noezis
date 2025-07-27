@@ -1,10 +1,10 @@
 "use client";
-import Tiptap from "@/components/editor/Editor";
+import Tiptap from "@/components/content/Editor";
 import { Separator } from "@/components/ui/separator";
-import { UploadPostThumbnail } from "@/components/UploadPostThumbnail";
-import { PublishPost } from "@/components/PublishPost";
-import { CreatePostTitle } from "@/components/CreatePostTitle";
-import { CreatePostTags } from "@/components/CreatePostTags";
+import { UploadPostThumbnail } from "@/components/content/UploadPostThumbnail";
+import { PublishPost } from "@/components/content/PublishPost";
+import { CreatePostTitle } from "@/components/content/CreatePostTitle";
+import { CreatePostTags } from "@/components/content/CreatePostTags";
 
 function CreatePost() {
   return (

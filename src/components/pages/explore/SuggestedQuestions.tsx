@@ -1,6 +1,6 @@
 import React from "react";
-import SectionTitle from "@/components/SectionTitle";
-import QuestionPreviewCard from "./QuestionPreviewCard";
+import SectionTitle from "@/components/pages/SectionTitle";
+import QuestionPreviewCard from "@/components/content/QuestionPreviewCard";
 
 const DUMMY_QUESTIONS = [
   {

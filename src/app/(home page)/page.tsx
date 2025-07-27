@@ -8,8 +8,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import Image from "next/image";
-import SignInWithProviderButton from "@/components/SignInWithProviderButton";
-import SignUpWithEmailButton from "@/components/SignUpWithEmailButton";
+import SignInWithProviderButton from "@/components/auth/SignInWithProviderButton";
+import SignUpWithEmailButton from "@/components/auth/SignUpWithEmailButton";
 
 export default function Home() {
   return (

@@ -1,6 +1,6 @@
 "use client";
 import { RiUserAddLine, RiMessageLine, RiMoreLine } from "react-icons/ri";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
 function ContactProfile({ username }: { username: string }) {

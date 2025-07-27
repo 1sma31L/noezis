@@ -1,7 +1,7 @@
 "use client";
 import React, { Fragment, useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

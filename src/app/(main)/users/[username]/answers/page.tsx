@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Answer from "@/components/pages/home/Answer";
+import Answer from "@/components/content/Answer";
 import { use } from "react";
 import { useProfileByUsername } from "@/lib/hooks/useProfile";
 
