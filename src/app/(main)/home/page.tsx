@@ -6,6 +6,8 @@ import WhatDoYouThink from "@/components/pages/WhatDoYouThink";
 import React from "react";
 import { api } from "@/trpc/server";
 import { Loader2 } from "lucide-react";
+import { auth } from "@/server/lib/auth";
+import { headers } from "next/headers";
 
 // const posts = [
 //   {
@@ -223,9 +225,14 @@ const quickTakes = [
 
 async function Home() {
   const posts = await api.post.all();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!posts) return <div>No posts found</div>;
+  const isOwner = session?.user?.id === posts[0]?.authorId;
   return (
     <main className="relative flex min-h-screen flex-col items-start justify-start gap-4">
-      <WhatDoYouThink />
+      <WhatDoYouThink isOwner={isOwner} />
       {/* {questions.map((question) => (
         <Question key={question.id} {...question} />
       ))}

@@ -14,8 +14,9 @@ import {
 } from "react-icons/ri";
 import CreateContentDialog from "./CreateContentDialog";
 
-function WhatDoYouThink() {
+function WhatDoYouThink({ isOwner }: { isOwner: boolean }) {
   const { data: profile } = useProfile();
+  if (!isOwner) return null;
   return (
     <Card className="w-full px-1">
       <CardContent className="flex flex-col items-center justify-start gap-6">

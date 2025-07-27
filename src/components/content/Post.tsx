@@ -162,7 +162,7 @@ function Post({
         </p>
       </CardHeader>
 
-      <CardContent className="flex flex-col items-start justify-start gap-2">
+      <CardContent className="flex flex-col items-start justify-start gap-2 w-full">
         <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
           {title}
         </CardTitle>
@@ -171,7 +171,7 @@ function Post({
             <div className="text-muted-foreground w-full text-xs leading-6 sm:text-sm md:text-base">
               {isMounted ? (
                 <div
-                  className="prose prose-sm dark:prose-invert prose-green sm:prose-sm md:prose-base max-w-4xl"
+                  className="prose prose-sm dark:prose-invert prose-green sm:prose-sm md:prose-base max-w-full"
                   dangerouslySetInnerHTML={{
                     __html: isExpanded
                       ? postContent
@@ -206,11 +206,13 @@ function Post({
         </CardDescription>
 
         {thumbnail && (
-          <img
-            src={thumbnail}
-            alt={title}
-            className="rounded-lg object-cover"
-          />
+          <div className="w-full">
+            <img
+              src={thumbnail}
+              alt={title}
+              className="w-full rounded-lg object-cover"
+            />
+          </div>
         )}
 
         <div className="mt-2 flex flex-wrap gap-2">
