@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -17,55 +17,55 @@ import {
 } from "react-icons/ri";
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
+import type { QuickTakeWithAuthor } from "@/lib/types/quickTake";
+import { api } from "@/trpc/react";
+import { useSession } from "@/lib/hooks/useSession";
 
-interface QuickTakeProps {
-  id: number;
-  content: string;
-  user: {
-    id: number;
-    name: string;
-    username: string;
-    image: string;
-    job: string;
-    isVerified: boolean;
-  };
-  date: string;
-  upvotes: number;
-  downvotes: number;
-  shares: number;
-  tags: string[];
-  comments: number;
-}
+function QuickTake(quickTake: QuickTakeWithAuthor) {
+  const { data: session } = useSession();
+  const { data: reactionStatus, refetch: refetchReactionStatus } =
+    api.reaction.getReactionStatus.useQuery(
+      {
+        contentId: quickTake.id,
+        contentType: "quickTake",
+      },
+      {
+        enabled: !!quickTake.id || !!session?.user?.id,
+      },
+    );
 
-function QuickTake({
-  id,
-  content,
-  user,
-  date,
-  upvotes,
-  downvotes,
-  shares,
-  tags,
-  comments,
-}: QuickTakeProps) {
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const { data: reactionCounts, refetch: refetchReactionCounts } =
+    api.reaction.getReactionCounts.useQuery({
+      contentId: quickTake.id,
+      contentType: "quickTake",
+    });
+
+  const { mutate: toggleReaction } = api.reaction.toggleReaction.useMutation({
+    onSuccess: () => {
+      refetchReactionStatus();
+      refetchReactionCounts();
+    },
+  });
+
+  const isUpvoted = reactionStatus?.reactionType === "like";
+  const isDownvoted = reactionStatus?.reactionType === "dislike";
 
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       <ContentHeader
-        image={user.image ?? ""}
-        name={user.name ?? ""}
-        jobTitle={user.job ?? ""}
-        isVerified={user.isVerified}
-        createdAt={date}
+        image={quickTake.author.user.image ?? ""}
+        name={quickTake.author.user.name ?? ""}
+        jobTitle={quickTake.author.jobTitle ?? ""}
+        isVerified={quickTake.author.isVerified}
+        createdAt={quickTake.createdAt.toDateString()}
         type="quickTake"
       />
 
-      <CardContent>
-        <p className="text-xs leading-6 sm:text-sm md:text-base">{content}</p>
-        <ContentTags tags={tags} />
+      <CardContent className="flex w-full flex-col items-start justify-start gap-1">
+        <p className="text-xs leading-6 sm:text-sm md:text-base">
+          {quickTake.content}
+        </p>
+        <ContentTags tags={quickTake.tags} />
 
         <div className="flex w-full flex-row items-center justify-between gap-2 pt-4">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
@@ -78,8 +78,11 @@ function QuickTake({
                   isUpvoted ? "text-primary hover:text-primary" : ""
                 }`}
                 onClick={() => {
-                  if (isDownvoted) setIsDownvoted(false);
-                  setIsUpvoted(!isUpvoted);
+                  toggleReaction({
+                    contentId: quickTake.id,
+                    contentType: "quickTake",
+                    type: "like",
+                  });
                 }}
               >
                 {isUpvoted ? (
@@ -87,7 +90,9 @@ function QuickTake({
                 ) : (
                   <RiThumbUpLine />
                 )}
-                <span className="text-[9px] md:text-xs">{upvotes}</span>
+                <span className="text-[9px] md:text-xs">
+                  {reactionCounts?.likes}
+                </span>
               </Button>
               <Separator orientation="vertical" />
               <Button
@@ -97,8 +102,11 @@ function QuickTake({
                   isDownvoted ? "text-destructive hover:text-destructive" : ""
                 }`}
                 onClick={() => {
-                  if (isUpvoted) setIsUpvoted(false);
-                  setIsDownvoted(!isDownvoted);
+                  toggleReaction({
+                    contentId: quickTake.id,
+                    contentType: "quickTake",
+                    type: "dislike",
+                  });
                 }}
               >
                 {isDownvoted ? (
@@ -106,7 +114,9 @@ function QuickTake({
                 ) : (
                   <RiThumbDownLine />
                 )}
-                <span className="text-[9px] md:text-xs">{downvotes}</span>
+                <span className="text-[9px] md:text-xs">
+                  {reactionCounts?.dislikes}
+                </span>
               </Button>
             </div>
 
@@ -117,7 +127,7 @@ function QuickTake({
               className="text-muted-foreground hover:text-foreground"
             >
               <RiMessage2Line />
-              {comments && <p className="text-[9px] md:text-xs">{comments}</p>}
+              <p className="text-[9px] md:text-xs">0</p>
             </Button>
 
             {/* Share */}
@@ -127,24 +137,11 @@ function QuickTake({
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
               <RiShareLine />
-              {shares && <p className="text-[9px] md:text-xs">{shares}</p>}
+              <p className="text-[9px] md:text-xs">0</p>
             </Button>
           </div>
 
-          {/* Save */}
           <div className="flex flex-row items-center justify-start gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={() => setIsSaved(!isSaved)}
-            >
-              {isSaved ? (
-                <RiBookmarkFill className="text-yellow-500" />
-              ) : (
-                <RiBookmarkLine className="text-muted-foreground" />
-              )}
-            </Button>
             <Button
               variant="ghost"
               size="sm"

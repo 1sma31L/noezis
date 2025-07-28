@@ -12,7 +12,7 @@ import {
   RiMessage2Line,
   RiMessage3Line,
 } from "react-icons/ri";
-import CreateContentDialog from "./CreateContentDialog";
+import CreateContentDialog from "../content/CreateContentDialog";
 
 function WhatDoYouThink({ isOwner }: { isOwner: boolean }) {
   const { data: profile } = useProfile();

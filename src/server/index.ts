@@ -10,6 +10,8 @@ import { trpcServer } from "@hono/trpc-server";
 import { auth } from "@/server/lib/auth";
 import { env } from "@/env";
 import type { TRPCError } from "@trpc/server";
+import { contentRouter } from "@/server/routes/content";
+import { feedRouter } from "@/server/routes/feed";
 
 const app = new Hono().basePath("/api");
 
@@ -21,6 +23,8 @@ export const appRouter = createTRPCRouter({
   reaction: reactionRouter,
   share: shareRouter,
   save: saveRouter,
+  content: contentRouter,
+  feed: feedRouter,
 });
 
 app.use(

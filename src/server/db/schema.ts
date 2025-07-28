@@ -1,5 +1,13 @@
 import { sql, relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  pgEnum,
+  unique,
+  index,
+} from "drizzle-orm/pg-core";
 import { ANONYMOUS_PROFILE_IMAGE } from "@/lib/constants";
 
 export const contentTypeEnum = pgEnum("content_type", [
@@ -100,7 +108,10 @@ export const profileRelations = relations(profile, ({ one }) => ({
 }));
 
 export const post = pgTable("post", (d) => ({
-  id: d.varchar({ length: 255 }).primaryKey(),
+  id: d
+    .varchar({ length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   authorId: d
     .varchar({ length: 255 })
     .notNull()
@@ -136,27 +147,38 @@ export const postRelations = relations(post, ({ one }) => ({
   }),
 }));
 
-export const reaction = pgTable("reaction", (d) => ({
-  id: d.varchar({ length: 255 }).primaryKey(),
-  contentId: d
-    .varchar({ length: 255 })
-    .notNull()
-    .references(() => post.id, { onDelete: "cascade" }),
-  userId: d
-    .varchar({ length: 255 })
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  contentType: contentTypeEnum("content_type").notNull(),
-  type: reactionTypeEnum("reaction_type").notNull(),
-  createdAt: d
-    .timestamp({ mode: "date", withTimezone: true })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: d
-    .timestamp({ mode: "date", withTimezone: true })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-}));
+export const reaction = pgTable(
+  "reaction",
+  (d) => ({
+    id: d.varchar({ length: 255 }).primaryKey(),
+    userId: d
+      .varchar({ length: 255 })
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    contentId: d.varchar({ length: 255 }).notNull(),
+    contentType: contentTypeEnum("content_type").notNull(),
+    type: reactionTypeEnum("reaction_type").notNull(),
+    createdAt: d
+      .timestamp({ mode: "date", withTimezone: true })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: d
+      .timestamp({ mode: "date", withTimezone: true })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  }),
+  (table) => ({
+    // Composite unique constraint to prevent duplicate reactions
+    uniqueUserContentReaction: unique().on(
+      table.userId,
+      table.contentId,
+      table.contentType,
+    ),
+    // Indexes for performance
+    userIdIdx: index().on(table.userId),
+    contentIdx: index().on(table.contentId, table.contentType),
+  }),
+);
 
 export const save = pgTable("save", (d) => ({
   id: d.varchar({ length: 255 }).primaryKey(),
@@ -186,5 +208,37 @@ export const saveRelations = relations(save, ({ one }) => ({
   user: one(user, {
     fields: [save.userId],
     references: [user.id],
+  }),
+}));
+
+export const quickTake = pgTable("quick_take", (d) => ({
+  id: d
+    .varchar({ length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  authorId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, {
+      onDelete: "cascade",
+    }),
+  content: d.text().notNull(),
+  tags: d.text().array(),
+  thumbnail: d.varchar({ length: 255 }).default(""),
+  isDeleted: d.boolean().notNull().default(false),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const quickTakeRelations = relations(quickTake, ({ one }) => ({
+  author: one(profile, {
+    fields: [quickTake.authorId],
+    references: [profile.userId],
   }),
 }));

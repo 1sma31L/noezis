@@ -47,6 +47,7 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
+import { useSession } from "@/lib/hooks/useSession";
 
 const extensions = [StarterKit, Underline, Link, Typography];
 
@@ -64,7 +65,7 @@ function Post({
   const [isExpanded, setIsExpanded] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [isMounted, setIsMounted] = useState(false);
-
+  const { data: session } = useSession();
   useEffect(() => {
     setIsMounted(true);
     if (content) {
@@ -85,23 +86,25 @@ function Post({
   const { data: reactionStatus, refetch: refetchReactionStatus } =
     api.reaction.getReactionStatus.useQuery(
       {
-        postId: id,
+        contentId: id,
+        contentType: "post",
       },
       {
-        enabled: !!id,
+        enabled: !!id || !!session?.user?.id,
       },
     );
-  const { mutate: sharePost } = api.share.sharePost.useMutation({
-    onSuccess: () => {
-      toast.success("Post shared");
-    },
-    onError: () => {
-      toast.error("Failed to share post");
-    },
-  });
+  // const { mutate: sharePost } = api.share.sharePost.useMutation({
+  //   onSuccess: () => {
+  //     toast.success("Post shared");
+  //   },
+  //   onError: () => {
+  //     toast.error("Failed to share post");
+  //   },
+  // });
   const { data: reactionCounts, refetch: refetchReactionCounts } =
     api.reaction.getReactionCounts.useQuery({
       contentId: id,
+      contentType: "post",
     });
 
   const { mutate: toggleReaction } = api.reaction.toggleReaction.useMutation({
@@ -115,19 +118,19 @@ function Post({
       toast.error("Failed to toggle reaction");
     },
   });
-  const { mutate: savePost } = api.save.savePost.useMutation({
-    onSuccess: () => {
-      toast.success("Post saved");
-      void refetchSaveStatus();
-    },
-    onError: () => {
-      toast.error("Failed to save post");
-    },
-  });
-  const { data: saveStatus, refetch: refetchSaveStatus } =
-    api.save.getSaveStatus.useQuery({
-      postId: id,
-    });
+  // const { mutate: savePost } = api.save.savePost.useMutation({
+  //   onSuccess: () => {
+  //     toast.success("Post saved");
+  //     void refetchSaveStatus();
+  //   },
+  //   onError: () => {
+  //     toast.error("Failed to save post");
+  //   },
+  // });
+  // const { data: saveStatus, refetch: refetchSaveStatus } =
+  //   api.save.getSaveStatus.useQuery({
+  //     postId: id,
+  //   });
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       <ContentHeader
@@ -135,7 +138,7 @@ function Post({
         name={author.user.name ?? ""}
         jobTitle={author.jobTitle ?? ""}
         isVerified={author.isVerified}
-        createdAt={createdAt.toLocaleDateString()}
+        createdAt={createdAt.toDateString()}
         type="post"
       />
 
@@ -208,7 +211,11 @@ function Post({
                     : ""
                 }`}
                 onClick={() => {
-                  toggleReaction({ postId: id, type: "like" });
+                  toggleReaction({
+                    contentId: id,
+                    contentType: "post",
+                    type: "like",
+                  });
                 }}
               >
                 {reactionStatus?.hasReacted &&
@@ -232,7 +239,11 @@ function Post({
                     : ""
                 }`}
                 onClick={() => {
-                  toggleReaction({ postId: id, type: "dislike" });
+                  toggleReaction({
+                    contentId: id,
+                    contentType: "post",
+                    type: "dislike",
+                  });
                 }}
               >
                 {reactionStatus?.hasReacted &&
@@ -280,7 +291,7 @@ function Post({
                       "_blank",
                     );
 
-                    sharePost({ postId: id });
+                    // sharePost({ postId: id });
                   }}
                 >
                   <RiTwitterXFill className="mr-2" /> Twitter
@@ -292,7 +303,7 @@ function Post({
                       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
                       "_blank",
                     );
-                    sharePost({ postId: id });
+                    // sharePost({ postId: id });
                   }}
                 >
                   <RiFacebookFill className="mr-2" /> Facebook
@@ -304,7 +315,7 @@ function Post({
                       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
                       "_blank",
                     );
-                    sharePost({ postId: id });
+                    // sharePost({ postId: id });
                   }}
                 >
                   <RiLinkedinFill className="mr-2" /> LinkedIn
@@ -315,7 +326,7 @@ function Post({
                     const url = `${window.location.origin}/posts/${id}`;
                     void navigator.clipboard.writeText(url);
                     toast.success("Link copied to clipboard");
-                    sharePost({ postId: id });
+                    // sharePost({ postId: id });
                   }}
                 >
                   <RiFileCopyLine className="mr-2" /> Copy Link
@@ -331,15 +342,15 @@ function Post({
               size="sm"
               className="text-muted-foreground hover:text-foreground"
               onClick={() => {
-                savePost({ postId: id });
-                void refetchSaveStatus();
+                // savePost({ postId: id });
+                // void refetchSaveStatus();
               }}
             >
-              {saveStatus?.isSaved ? (
+              {/* {saveStatus?.isSaved ? (
                 <RiBookmarkFill className="text-yellow-500" />
               ) : (
                 <RiBookmarkLine className="text-muted-foreground" />
-              )}
+              )} */}
             </Button>
             <Button
               variant="ghost"

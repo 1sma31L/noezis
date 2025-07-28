@@ -1,0 +1,111 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1751413964388,
+      "tag": "0000_wealthy_nuke",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1751419399021,
+      "tag": "0001_dashing_jack_flag",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752005528284,
+      "tag": "0002_green_nitro",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752242144339,
+      "tag": "0003_strange_valkyrie",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752248434247,
+      "tag": "0004_cooing_bullseye",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752250653286,
+      "tag": "0005_colossal_sleeper",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1752271053668,
+      "tag": "0006_awesome_galactus",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1753707432870,
+      "tag": "0007_ambiguous_landau",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1753708361000,
+      "tag": "0008_worried_havok",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1753711110725,
+      "tag": "0009_magenta_stepford_cuckoos",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1753713081361,
+      "tag": "0010_fancy_silhouette",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1753713287854,
+      "tag": "0011_puzzling_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1753713408289,
+      "tag": "0012_romantic_smasher",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1753713565220,
+      "tag": "0013_long_secret_warriors",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1753713834197,
+      "tag": "0014_daily_vermin",
+      "breakpoints": true
+    }
+  ]
+}

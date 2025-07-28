@@ -36,6 +36,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
+import { api } from "@/trpc/react";
+import { splitTags } from "@/lib/helpers/strings/splitTags";
 
 // Define the content types
 const contentTypes = {
@@ -49,7 +51,7 @@ type ContentType = keyof typeof contentTypes;
 // Schema for the form
 const createContentSchema = z.object({
   type: z.enum(["quickTake", "question", "answer"] as const),
-  title: z.string().min(1, "Title is required").max(100),
+  title: z.string().max(100).optional(),
   content: z.string().min(1, "Content is required"),
   tags: z.string().optional(),
 });
@@ -65,7 +67,6 @@ function CreateContentDialog({
   trigger,
   defaultType = "quickTake",
 }: ContentDialogProps) {
-  // const [open, setOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [contentType, setContentType] = useState<ContentType>(defaultType);
@@ -80,19 +81,38 @@ function CreateContentDialog({
     },
   });
 
+  const { mutate: createQuickTake, isPending } =
+    api.content.createQuickTake.useMutation({
+      onSuccess: () => {
+        toast.success("Quick Take created successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to create Quick Take");
+      },
+    });
+  const handleCreateQuickTake = async (data: CreateContentSchema) => {
+    createQuickTake({
+      content: data.content,
+      tags: data.tags ? splitTags(data.tags) : [],
+    });
+  };
   const onSubmit = async (data: CreateContentSchema) => {
-    try {
-      // TODO: Implement the actual submission logic
-
-      toast.success("Content created successfully!");
-      onClose();
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to create content");
+    switch (data.type) {
+      case "quickTake":
+        handleCreateQuickTake(data);
+        break;
+      case "question":
+        break;
+      case "answer":
+        break;
+      default:
+        toast.error("Invalid content type");
     }
+    onClose();
   };
 
   const onClose = () => {
+    console.log("Form reset");
     form.reset();
     setDrawerOpen(false);
     setDialogOpen(false);
@@ -204,12 +224,18 @@ function CreateContentDialog({
           >
             Cancel
           </Button>
-          <Button type="submit" className="!text-xs sm:!text-sm">
-            {contentType === "quickTake"
-              ? "Share Take"
-              : contentType === "question"
-                ? "Ask Question"
-                : "Post Answer"}
+          <Button
+            type="submit"
+            className="!text-xs sm:!text-sm"
+            disabled={isPending}
+          >
+            {isPending
+              ? "Submitting..."
+              : contentType === "quickTake"
+                ? "Share Take"
+                : contentType === "question"
+                  ? "Ask Question"
+                  : "Post Answer"}
           </Button>
         </div>
       </form>

@@ -1,0 +1,1 @@
+ALTER TABLE "reaction" ADD CONSTRAINT "reaction_contentId_quick_take_id_fk" FOREIGN KEY ("contentId") REFERENCES "public"."quick_take"("id") ON DELETE cascade ON UPDATE no action;

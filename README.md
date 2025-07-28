@@ -123,82 +123,92 @@ Day 11:
 Day 12:
 
 - [x] restructure the components folder
-- [ ] add Profile extendabele componenet
-- [ ] Use more polymorphic design for all content types
-
-- [ ] Genrate the html on post submit o you dont have to deal with window undefined
-- [ ] Design the settings page
-- [ ] Implementing the q/a/quick take creating and fetching them
-- [ ] Add comments and nested comments along with a page for each content type
+- [x] fix some bugs
 
 Day 13:
 
-- [ ] Implement follower/following system
-- [ ] Add spaces
+- [x] add quick takes
 
 Day 14:
 
-- [ ] Advanced Topic hierarchy
-- [ ] Advanced search with Elasticsearch
+- [ ] add questions
+- [ ] add answers
 
-Day 15:
+day 15:
+
+- [ ] figure out best tables design for all content types and reactions
+- [ ] Add comments and nested comments along with a page for each content type
+- [ ] add shares button and the more options modal
+
+Day 16:
+
+- [ ] Use more polymorphic design for all content types
+- [ ] Genrate the html on post submit so you dont have to deal with window undefined
+- [ ] Design the settings page
+
+Day 17:
+
+- [ ] Add better feed system
+- [ ] Implement follower/following system
+
+Day 18 (HARD):
 
 - [ ] Design the messages page and implement it
 - [ ] Add notifications
 
-Day 16:
+Day 19 (Explore page):
+
+- [ ] Advanced Topic hierarchy
+- [ ] Advanced search with Elasticsearch
+
+Day 20:
 
 - [ ] Design the control page for post versioning and implement it
 - [ ] Add role based access
 
-Day 16:
+Day 21:
 
 - [ ] Design the admin dashboard and implement it
 - [ ] Add statistic to admin dashboard
 
-Day 17:
+Day 22:
 
 - [ ] Add karma system
-- [ ] Add bookmarks and reading later system
+- [ ] Add bookmarks and reading later system (save)
 - [ ] User activity
 - [ ] User achevments
 
 ### Week 3 (FEATURES)
 
-Day 18:
-
-- [ ] Add realtime optimization (Alby)
-- [ ] Media upload and management (video player)
-
-Day 19:
+Day 24:
 
 - [ ] Draft for posts
 - [ ] Add redis for caching
 
-Day 20:
+Day 25:
 
-- [ ] Content flagging system
+- [ ] Content flagging system and user repporting
 - [ ] Advanced moderation tools (PerspectiveAPI)
 
-Day 21:
+Day 26:
 
 - [ ] SEO
-- [ ] Trending keywords
+- [ ] Trending keywords (What is trending)
 - [ ] Tag system with synonyms
 
-Day 22:
+Day 27:
 
 - [ ] Custom feeds
 - [ ] Content recommendation engine
 
-Day 23:
+Day 28:
 
 - [ ] Framer motions animations
 
-Day 24:
+Day 29:
 
 - [ ] Logging system and monitoring (Axiom, Vercel)
-- [ ] unit testing (jest)
+- [ ] integration testing
 
 ## Getting Started
 

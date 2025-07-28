@@ -11,19 +11,21 @@ export const reactionRouter = createTRPCRouter({
   toggleReaction: protectedProcedure
     .input(
       z.object({
-        postId: z.string(),
+        contentId: z.string(),
+        contentType: z.enum(["post", "quickTake"]),
         type: z.enum(["like", "dislike"]),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { postId, type } = input;
+      const { contentId, contentType, type } = input;
       const { id: userId } = ctx.session.user;
 
       // Use a transaction to ensure data consistency
       return await ctx.db.transaction(async (tx) => {
         const existingReaction = await tx.query.reaction.findFirst({
           where: and(
-            eq(reaction.contentId, postId),
+            eq(reaction.contentId, contentId),
+            eq(reaction.contentType, contentType),
             eq(reaction.userId, userId),
           ),
         });
@@ -35,7 +37,8 @@ export const reactionRouter = createTRPCRouter({
               .delete(reaction)
               .where(
                 and(
-                  eq(reaction.contentId, postId),
+                  eq(reaction.contentId, contentId),
+                  eq(reaction.contentType, contentType),
                   eq(reaction.userId, userId),
                 ),
               );
@@ -50,7 +53,11 @@ export const reactionRouter = createTRPCRouter({
               updatedAt: new Date(),
             })
             .where(
-              and(eq(reaction.contentId, postId), eq(reaction.userId, userId)),
+              and(
+                eq(reaction.contentId, contentId),
+                eq(reaction.contentType, contentType),
+                eq(reaction.userId, userId),
+              ),
             );
           return { success: true, action: "updated" };
         }
@@ -58,8 +65,8 @@ export const reactionRouter = createTRPCRouter({
         // No existing reaction, create new one
         await tx.insert(reaction).values({
           id: crypto.randomUUID(),
-          contentId: postId,
-          contentType: "post",
+          contentId,
+          contentType,
           type,
           userId,
           createdAt: new Date(),
@@ -71,13 +78,22 @@ export const reactionRouter = createTRPCRouter({
     }),
 
   getReactionStatus: publicProcedure
-    .input(z.object({ postId: z.string() }))
+    .input(
+      z.object({
+        contentId: z.string(),
+        contentType: z.enum(["post", "quickTake"]),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      const { postId } = input;
+      const { contentId, contentType } = input;
       const { id: userId } = ctx.session?.user ?? { id: "" };
 
       const existingReaction = await ctx.db.query.reaction.findFirst({
-        where: and(eq(reaction.contentId, postId), eq(reaction.userId, userId)),
+        where: and(
+          eq(reaction.contentId, contentId),
+          eq(reaction.contentType, contentType),
+          eq(reaction.userId, userId),
+        ),
       });
 
       return {
@@ -87,19 +103,26 @@ export const reactionRouter = createTRPCRouter({
     }),
 
   getReactionCounts: publicProcedure
-    .input(z.object({ contentId: z.string() }))
+    .input(
+      z.object({
+        contentId: z.string(),
+        contentType: z.enum(["post", "quickTake"]),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      const { contentId } = input;
+      const { contentId, contentType } = input;
 
       const likes = await ctx.db.query.reaction.findMany({
         where: and(
           eq(reaction.contentId, contentId),
+          eq(reaction.contentType, contentType),
           eq(reaction.type, "like"),
         ),
       });
       const dislikes = await ctx.db.query.reaction.findMany({
         where: and(
           eq(reaction.contentId, contentId),
+          eq(reaction.contentType, contentType),
           eq(reaction.type, "dislike"),
         ),
       });
