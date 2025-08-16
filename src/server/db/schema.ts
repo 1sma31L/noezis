@@ -224,7 +224,6 @@ export const quickTake = pgTable("quick_take", (d) => ({
     }),
   content: d.text().notNull(),
   tags: d.text().array(),
-  thumbnail: d.varchar({ length: 255 }).default(""),
   isDeleted: d.boolean().notNull().default(false),
   createdAt: d
     .timestamp({ mode: "date", withTimezone: true })
@@ -240,5 +239,74 @@ export const quickTakeRelations = relations(quickTake, ({ one }) => ({
   author: one(profile, {
     fields: [quickTake.authorId],
     references: [profile.userId],
+  }),
+}));
+
+export const question = pgTable("question", (d) => ({
+  id: d
+    .varchar({ length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  authorId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, {
+      onDelete: "cascade",
+    }),
+  title: d.varchar({ length: 255 }).notNull(),
+  content: d.text().notNull(),
+  tags: d.text().array(),
+  isDeleted: d.boolean().notNull().default(false),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const questionRelations = relations(question, ({ one }) => ({
+  author: one(profile, {
+    fields: [question.authorId],
+    references: [profile.userId],
+  }),
+}));
+
+export const answer = pgTable("answer", (d) => ({
+  id: d
+    .varchar({ length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  questionId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => question.id, { onDelete: "cascade" }),
+  authorId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  content: d.text().notNull(),
+  tags: d.text().array(),
+  isDeleted: d.boolean().notNull().default(false),
+  createdAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: d
+    .timestamp({ mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+}));
+
+export const answerRelations = relations(answer, ({ one }) => ({
+  author: one(profile, {
+    fields: [answer.authorId],
+    references: [profile.userId],
+  }),
+  question: one(question, {
+    fields: [answer.questionId],
+    references: [question.id],
   }),
 }));

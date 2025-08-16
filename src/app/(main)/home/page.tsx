@@ -128,22 +128,26 @@ async function Home() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  const quickTakes = await api.content.getQuickTakesOfUser();
+  const quickTakes = await api.content.getQuickTakes();
+  const questions = await api.content.getQuestions();
+  const answers = await api.content.getAnswers();
   if (!posts) return <div>No posts found</div>;
   const isOwner = session?.user?.id === posts[0]?.authorId;
   return (
     <main className="relative flex min-h-screen flex-col items-start justify-start gap-4">
       <WhatDoYouThink isOwner={isOwner} />
+      {questions.map((question) => (
+        <Question key={question.id} {...question} />
+      ))}
+      {answers.map((answer) => (
+        <Answer key={answer.id} {...answer} />
+      ))}
       {quickTakes.map((quickTake) => (
         <QuickTake key={quickTake.id} {...quickTake} />
       ))}
       {posts?.map((post) => {
         return <Post key={post.id} {...post} />;
       })}
-      {/* {questions.map((question) => (
-        <Question key={question.id} {...question} />
-      ))}
-      <Answer {...exampleAnswer} /> */}
     </main>
   );
 }

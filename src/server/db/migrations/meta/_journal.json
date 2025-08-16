@@ -106,6 +106,27 @@
       "when": 1753713834197,
       "tag": "0014_daily_vermin",
       "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1755358292471,
+      "tag": "0015_stiff_jack_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1755360462676,
+      "tag": "0016_messy_deathstrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1755361306741,
+      "tag": "0017_slippery_darwin",
+      "breakpoints": true
     }
   ]
 }

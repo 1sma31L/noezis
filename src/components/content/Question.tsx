@@ -1,20 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   RiBookmarkLine,
-  RiCheckboxCircleFill,
-  RiQuestionLine,
   RiMessage2Line,
   RiShareLine,
   RiMoreLine,
@@ -24,41 +19,14 @@ import {
 } from "react-icons/ri";
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
-export interface QuestionProps {
-  id: number;
-  title: string;
-  content: string;
-  user: {
-    id: number;
-    name: string;
-    username: string;
-    image: string;
-    job: string;
-    isVerified: boolean;
-  };
-  date: string;
-  tags: string[];
-  answers: number;
-  isAnswered: boolean;
-  shares: number;
-}
+import type { QuestionWithAuthor } from "@/lib/types/question";
 
-function Question({
-  id,
-  title,
-  content,
-  user,
-  date,
-  tags,
-  answers,
-  isAnswered,
-  shares,
-}: QuestionProps) {
+function Question(question: QuestionWithAuthor) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
-  const wordCount = content.trim().split(/\s+/).length;
+  const wordCount = question.content.trim().split(/\s+/).length;
   const MAX_WORDS = 50;
   const shouldShowMore = wordCount > MAX_WORDS;
 
@@ -67,34 +35,35 @@ function Question({
     if (words.length <= limit) return text;
     return words.slice(0, limit).join(" ") + "...";
   };
-
+  if (!question) return null;
   return (
     <Card
-      className={`flex w-full flex-col items-start justify-start gap-4 md:gap-6 ${
-        isAnswered ? "border-l-primary border-l-4" : ""
-      }`}
+      className={`flex w-full flex-col items-start justify-start gap-4 md:gap-6`}
     >
+      {/* question.isAnswered ? "border-l-primary border-l-4" : "" */}
       <ContentHeader
-        image={user.image ?? ""}
-        name={user.name ?? ""}
-        jobTitle={user.job ?? ""}
-        isVerified={user.isVerified}
-        createdAt={date}
-        isAnswered={isAnswered}
+        image={question.author.user.image ?? ""}
+        name={question.author.user.name ?? ""}
+        jobTitle={question.author.jobTitle ?? ""}
+        isVerified={question.author.isVerified}
+        createdAt={question.createdAt.toISOString()}
+        isAnswered={false}
         type="question"
       />
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-4">
         <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
           <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
-            {title}
+            {question.title}
           </CardTitle>
         </div>
 
         <CardDescription className="flex w-full flex-col gap-2">
           <div className="relative">
             <p className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
-              {isExpanded ? content : truncateWords(content, MAX_WORDS)}
+              {isExpanded
+                ? question.content
+                : truncateWords(question.content, MAX_WORDS)}
             </p>
             {!isExpanded && shouldShowMore && (
               <div
@@ -118,7 +87,7 @@ function Question({
           )}
         </CardDescription>
 
-        <ContentTags tags={tags} />
+        <ContentTags tags={question.tags} />
 
         <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
@@ -152,7 +121,9 @@ function Question({
               className="text-muted-foreground hover:text-foreground"
             >
               <RiMessage2Line />
-              {answers && <p className="text-xs">{answers}</p>}
+              {/* {question.answers && (
+                <p className="text-xs">{question.answers}</p>
+              )} */}
             </Button>
 
             {/* Shares */}
@@ -162,7 +133,7 @@ function Question({
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
               <RiShareLine />
-              {shares && <p className="text-xs">{shares}</p>}
+              {/* {question.shares && <p className="text-xs">{question.shares}</p>} */}
             </Button>
           </div>
 

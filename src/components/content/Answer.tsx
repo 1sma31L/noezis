@@ -24,48 +24,18 @@ import {
   RiThumbUpFill,
   RiThumbDownFill,
 } from "react-icons/ri";
+import type { AnswerWithAuthor } from "@/lib/types/answer";
+import { api } from "@/trpc/react";
 
-interface AnswerProps {
-  question: {
-    id: number;
-    title: string;
-    content: string;
-    user: {
-      id: number;
-      name: string;
-      username: string;
-      image: string;
-      job: string;
-      isVerified: boolean;
-    };
-    date: string;
-    tags: string[];
-  };
-  answer: {
-    id: number;
-    content: string;
-    user: {
-      id: number;
-      name: string;
-      username: string;
-      image: string;
-      job: string;
-      isVerified: boolean;
-    };
-    date: string;
-    upvotes: number;
-    downvotes: number;
-    comments: number;
-    isAccepted: boolean;
-    shares: number;
-  };
-}
-
-function Answer({ question, answer }: AnswerProps) {
+function Answer(answer: AnswerWithAuthor) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [isDownvoted, setIsDownvoted] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+
+  const { data: question } = api.content.getQuestion.useQuery({
+    id: answer.questionId,
+  });
 
   const wordCount = answer.content.trim().split(/\s+/).length;
   const MAX_WORDS = 50;
@@ -79,20 +49,23 @@ function Answer({ question, answer }: AnswerProps) {
 
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
-      {/* Question Section */}
+      {/* Answer Section */}
       <CardHeader className="flex w-full flex-col gap-4">
         <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
           <div className="flex flex-row items-center justify-start gap-2">
             <Avatar className="h-8 w-8 md:h-10 md:w-10">
-              <AvatarImage src={question.user.image} alt={question.user.name} />
+              <AvatarImage
+                src={answer.author.user.image ?? ""}
+                alt={answer.author.user.name ?? ""}
+              />
               <AvatarFallback className="bg-primary text-background">
-                {question.user.name.charAt(0)}
+                {answer.author.user.name?.charAt(0)}
               </AvatarFallback>
             </Avatar>
             <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
               <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-                {question.user.name}
-                {question.user.isVerified && (
+                {answer.author.user.name}
+                {answer.author.isVerified && (
                   <RiCheckboxCircleFill
                     style={{
                       color: "#2a623d",
@@ -102,13 +75,13 @@ function Answer({ question, answer }: AnswerProps) {
                 )}
               </p>
               <p className="text-muted-foreground text-[9px] md:text-xs">
-                {question.user.job}
+                {answer.author.jobTitle}
               </p>
             </div>
           </div>
 
           <div className="flex flex-row items-center justify-start gap-2">
-            {answer.isAccepted && (
+            {true && (
               <Badge
                 variant="outline"
                 className="rounded-full bg-green-500/10 text-green-500"
@@ -118,19 +91,16 @@ function Answer({ question, answer }: AnswerProps) {
               </Badge>
             )}
             <p className="text-muted-foreground text-[9px] md:text-xs">
-              {question.date}
+              {answer.createdAt.toLocaleDateString()}
             </p>
           </div>
         </div>
         <div>
-          <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
-            {question.title}
-          </CardTitle>
-          <CardDescription className="mt-2 text-xs leading-6 sm:text-sm md:text-base">
-            {question.content}
-          </CardDescription>
+          <p className="mt-2 text-xs leading-6 sm:text-sm md:text-base">
+            {answer.content}
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
-            {question.tags.map((tag) => (
+            {answer.tags?.map((tag: string) => (
               <Badge
                 key={tag}
                 className="bg-accent text-muted-foreground text-[9px] md:text-xs"
@@ -144,20 +114,23 @@ function Answer({ question, answer }: AnswerProps) {
 
       <Separator />
 
-      {/* Answer Section */}
+      {/* Question Section */}
       <CardContent className="flex w-full flex-col gap-4">
         <div className="flex items-center gap-4">
           <Avatar className="h-8 w-8 md:h-10 md:w-10">
-            <AvatarImage src={answer.user.image} alt={answer.user.name} />
+            <AvatarImage
+              src={question?.author.user.image ?? ""}
+              alt={question?.author.user.name ?? ""}
+            />
             <AvatarFallback className="bg-primary text-background">
-              {answer.user.name.charAt(0)}
+              {question?.author.user.name?.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
-                {answer.user.name}
-                {answer.user.isVerified && (
+                {question?.author.user.name}
+                {question?.author.isVerified && (
                   <RiCheckboxCircleFill
                     style={{
                       color: "#2a623d",
@@ -168,16 +141,19 @@ function Answer({ question, answer }: AnswerProps) {
               </p>
             </div>
             <p className="text-muted-foreground text-[9px] md:text-xs">
-              {answer.user.job}
+              {question?.author.jobTitle}
             </p>
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative flex flex-col gap-2">
+          <CardTitle className="text-base font-medium lg:text-lg xl:text-xl 2xl:text-2xl">
+            {question?.title}
+          </CardTitle>
           <p className="text-muted-foreground text-xs leading-6 sm:text-sm md:text-base">
             {isExpanded
-              ? answer.content
-              : truncateWords(answer.content, MAX_WORDS)}
+              ? question?.content
+              : truncateWords(question?.content ?? "", MAX_WORDS)}
           </p>
           {!isExpanded && shouldShowMore && (
             <div
@@ -220,7 +196,7 @@ function Answer({ question, answer }: AnswerProps) {
                 ) : (
                   <RiThumbUpLine />
                 )}
-                <span className="text-[9px] md:text-xs">{answer.upvotes}</span>
+                <span className="text-[9px] md:text-xs">10</span>
               </Button>
               <Separator orientation="vertical" />
               <Button
@@ -239,9 +215,7 @@ function Answer({ question, answer }: AnswerProps) {
                 ) : (
                   <RiThumbDownLine />
                 )}
-                <span className="text-[9px] md:text-xs">
-                  {answer.downvotes}
-                </span>
+                <span className="text-[9px] md:text-xs">10</span>
               </Button>
             </div>
 
@@ -252,7 +226,7 @@ function Answer({ question, answer }: AnswerProps) {
               className="text-muted-foreground hover:text-foreground"
             >
               <RiMessage2Line />
-              <p className="text-[9px] md:text-xs">{answer.comments}</p>
+              <p className="text-[9px] md:text-xs">10</p>
             </Button>
 
             {/* Shares */}
@@ -262,9 +236,7 @@ function Answer({ question, answer }: AnswerProps) {
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
               <RiShareLine />
-              {answer.shares && (
-                <p className="text-[9px] md:text-xs">{answer.shares}</p>
-              )}
+              <p className="text-[9px] md:text-xs">10</p>
             </Button>
           </div>
 

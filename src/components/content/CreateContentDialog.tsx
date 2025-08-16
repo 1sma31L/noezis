@@ -43,7 +43,7 @@ import { splitTags } from "@/lib/helpers/strings/splitTags";
 const contentTypes = {
   quickTake: "Quick Take",
   question: "Ask a Question",
-  // answer: "Share an Answer",
+  answer: "Share an Answer",
 } as const;
 
 type ContentType = keyof typeof contentTypes;
@@ -54,6 +54,7 @@ const createContentSchema = z.object({
   title: z.string().max(100).optional(),
   content: z.string().min(1, "Content is required"),
   tags: z.string().optional(),
+  questionId: z.string().optional(),
 });
 
 type CreateContentSchema = z.infer<typeof createContentSchema>;
@@ -78,10 +79,11 @@ function CreateContentDialog({
       title: "",
       content: "",
       tags: "",
+      questionId: "",
     },
   });
 
-  const { mutate: createQuickTake, isPending } =
+  const { mutate: createQuickTake, isPending: isCreatingQuickTake } =
     api.content.createQuickTake.useMutation({
       onSuccess: () => {
         toast.success("Quick Take created successfully!");
@@ -90,20 +92,49 @@ function CreateContentDialog({
         toast.error("Failed to create Quick Take");
       },
     });
-  const handleCreateQuickTake = async (data: CreateContentSchema) => {
-    createQuickTake({
-      content: data.content,
-      tags: data.tags ? splitTags(data.tags) : [],
+  const { mutate: createQuestion, isPending: isCreatingQuestion } =
+    api.content.createQuestion.useMutation({
+      onSuccess: () => {
+        toast.success("Question created successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to create Question");
+      },
     });
-  };
+  const { mutate: createAnswer, isPending: isCreatingAnswer } =
+    api.content.createAnswer.useMutation({
+      onSuccess: () => {
+        toast.success("Answer created successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to create Answer");
+      },
+    });
   const onSubmit = async (data: CreateContentSchema) => {
     switch (data.type) {
       case "quickTake":
-        handleCreateQuickTake(data);
+        createQuickTake({
+          content: data.content,
+          tags: data.tags ? splitTags(data.tags) : [],
+        });
         break;
       case "question":
+        createQuestion({
+          title: data.title ?? "",
+          content: data.content,
+          tags: data.tags ? splitTags(data.tags) : [],
+        });
         break;
       case "answer":
+        if (!data.questionId) {
+          toast.error("Question ID is required");
+          return;
+        }
+        createAnswer({
+          questionId: data.questionId,
+          content: data.content,
+          tags: data.tags ? splitTags(data.tags) : [],
+        });
         break;
       default:
         toast.error("Invalid content type");
@@ -152,7 +183,23 @@ function CreateContentDialog({
             </FormItem>
           )}
         />
-
+        {contentType === "answer" && (
+          <FormField
+            control={form.control}
+            name="questionId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Question ID</FormLabel>
+                <Input
+                  {...field}
+                  placeholder="Enter question ID"
+                  className="text-xs sm:text-sm"
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         {contentType === "question" && (
           <FormField
             control={form.control}
@@ -227,9 +274,11 @@ function CreateContentDialog({
           <Button
             type="submit"
             className="!text-xs sm:!text-sm"
-            disabled={isPending}
+            disabled={
+              isCreatingQuickTake || isCreatingQuestion || isCreatingAnswer
+            }
           >
-            {isPending
+            {isCreatingQuickTake || isCreatingQuestion || isCreatingAnswer
               ? "Submitting..."
               : contentType === "quickTake"
                 ? "Share Take"
