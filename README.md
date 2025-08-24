@@ -140,8 +140,7 @@ Day 14:
 day 15:
 
 - [x] add content pages to show comments and reactions.
-- [ ] Genrate the html on post submit so you dont have to deal with window undefined
-- [ ] figure out best tables design for all content types and reactions
+- [x] add optimistc ui for reactions
 - [ ] Add comments and nested comments along with a page for each content type
 
 Day 16:
@@ -201,6 +200,7 @@ Day 25:
 
 ## Next Features
 
+- [ ] Genrate the html on post submit so you dont have to deal with window undefined
 - [ ] Custom feeds
 - [ ] Content recommendation engine
 

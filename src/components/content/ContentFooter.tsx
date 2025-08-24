@@ -27,28 +27,28 @@ import {
 } from "../ui/dropdown-menu";
 import { toast } from "sonner";
 import Link from "next/link";
+import useReaction from "@/lib/hooks/useReaction";
+import type { ContentType } from "@/lib/store/reaction";
+
+const typeToUrlMapping = {
+  post: "posts",
+  quickTake: "quicktakes",
+  question: "questions",
+  answer: "answers",
+};
+
 function ContentFooter({
-  isUpvoted,
-  isDownvoted,
-  setIsUpvoted,
-  setIsDownvoted,
-  reactionCounts,
   id,
   title,
   type,
 }: {
-  isUpvoted: boolean;
-  isDownvoted: boolean;
-  setIsUpvoted: (isUpvoted: boolean) => void;
-  setIsDownvoted: (isDownvoted: boolean) => void;
-  reactionCounts: {
-    likes: number;
-    dislikes: number;
-  };
   id: string;
   title: string;
-  type: "posts" | "quicktakes" | "questions" | "answers";
+  type: ContentType;
 }) {
+  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
+    useReaction(id, type);
+
   const [isSaved, setIsSaved] = useState(false);
   return (
     <div className="flex w-full flex-row items-center justify-between gap-2">
@@ -62,8 +62,7 @@ function ContentFooter({
               isUpvoted ? "text-primary hover:text-primary" : ""
             }`}
             onClick={() => {
-              if (isDownvoted) setIsDownvoted(false);
-              setIsUpvoted(!isUpvoted);
+              toggleReaction("like");
             }}
           >
             {isUpvoted ? (
@@ -83,8 +82,7 @@ function ContentFooter({
               isDownvoted ? "text-destructive hover:text-destructive" : ""
             }`}
             onClick={() => {
-              if (isUpvoted) setIsUpvoted(false);
-              setIsDownvoted(!isDownvoted);
+              toggleReaction("dislike");
             }}
           >
             {isDownvoted ? (
@@ -105,7 +103,7 @@ function ContentFooter({
           className="text-muted-foreground hover:text-foreground"
           asChild
         >
-          <Link href={`/${type ?? "posts"}/${id}`}>
+          <Link href={`/${typeToUrlMapping[type]}/${id}`}>
             <RiMessage2Line />
             <p className="text-[9px] md:text-xs">10</p>
           </Link>

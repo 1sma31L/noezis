@@ -16,9 +16,6 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 
 function Answer(answer: AnswerWithAuthor) {
-  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
-    useReaction(answer.id, "answer");
-
   const { data: question } = api.content.getQuestion.useQuery({
     id: answer.questionId,
   });
@@ -166,26 +163,9 @@ function Answer(answer: AnswerWithAuthor) {
           </Button>
         )}
         <ContentFooter
-          isUpvoted={isUpvoted}
-          isDownvoted={isDownvoted}
-          setIsUpvoted={() => {
-            toggleReaction({
-              contentId: answer.id,
-              contentType: "answer",
-              type: "like",
-            });
-          }}
-          setIsDownvoted={() => {
-            toggleReaction({
-              contentId: answer.id,
-              contentType: "answer",
-              type: "dislike",
-            });
-          }}
-          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={answer.id}
           title={question?.title ?? ""}
-          type="answers"
+          type="answer"
         />
       </CardContent>
     </Card>

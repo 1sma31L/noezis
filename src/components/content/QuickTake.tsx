@@ -1,18 +1,13 @@
 "use client";
 
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
 import type { QuickTakeWithAuthor } from "@/lib/types/quickTake";
 import ContentFooter from "./ContentFooter";
-import useReaction from "@/lib/hooks/useReaction";
-import Link from "next/link";
 
 function QuickTake(quickTake: QuickTakeWithAuthor) {
-  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
-    useReaction(quickTake.id, "quickTake");
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
       <ContentHeader
@@ -32,26 +27,9 @@ function QuickTake(quickTake: QuickTakeWithAuthor) {
         <ContentTags tags={quickTake.tags} />
 
         <ContentFooter
-          isUpvoted={isUpvoted}
-          isDownvoted={isDownvoted}
-          setIsUpvoted={() => {
-            toggleReaction({
-              contentId: quickTake.id,
-              contentType: "quickTake",
-              type: "like",
-            });
-          }}
-          setIsDownvoted={() => {
-            toggleReaction({
-              contentId: quickTake.id,
-              contentType: "quickTake",
-              type: "dislike",
-            });
-          }}
-          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={quickTake.id}
           title={quickTake.content}
-          type="quicktakes"
+          type="quickTake"
         />
       </CardContent>
     </Card>

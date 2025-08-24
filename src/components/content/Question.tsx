@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Card,
   CardContent,
@@ -13,13 +12,9 @@ import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
 import type { QuestionWithAuthor } from "@/lib/types/question";
 import ContentFooter from "./ContentFooter";
-import useReaction from "@/lib/hooks/useReaction";
 import useExpanded from "@/lib/hooks/useExpanded";
 
 function Question(question: QuestionWithAuthor) {
-  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
-    useReaction(question.id, "question");
-
   const {
     isExpanded,
     setIsExpanded,
@@ -83,26 +78,9 @@ function Question(question: QuestionWithAuthor) {
         <ContentTags tags={question.tags} />
 
         <ContentFooter
-          isUpvoted={isUpvoted}
-          isDownvoted={isDownvoted}
-          setIsUpvoted={() => {
-            toggleReaction({
-              contentId: question.id,
-              contentType: "question",
-              type: "like",
-            });
-          }}
-          setIsDownvoted={() => {
-            toggleReaction({
-              contentId: question.id,
-              contentType: "question",
-              type: "dislike",
-            });
-          }}
-          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={question.id}
           title={question.title}
-          type="questions"
+          type="question"
         />
 
         {/* <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">

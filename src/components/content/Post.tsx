@@ -20,7 +20,6 @@ import Typography from "@tiptap/extension-typography";
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
 import ContentFooter from "./ContentFooter";
-import useReaction from "@/lib/hooks/useReaction";
 import useExpanded from "@/lib/hooks/useExpanded";
 
 const extensions = [StarterKit, Underline, Link, Typography];
@@ -51,9 +50,6 @@ function Post({
     truncateWords,
     MAX_WORDS,
   } = useExpanded(postContent as string, false);
-
-  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
-    useReaction(id, "post");
 
   // const { mutate: sharePost } = api.share.sharePost.useMutation({
   //   onSuccess: () => {
@@ -144,28 +140,7 @@ function Post({
 
         <ContentTags tags={tags} />
 
-        <ContentFooter
-          isUpvoted={isUpvoted}
-          isDownvoted={isDownvoted}
-          setIsUpvoted={() => {
-            toggleReaction({
-              contentId: id,
-              contentType: "post",
-              type: "like",
-            });
-          }}
-          setIsDownvoted={() => {
-            toggleReaction({
-              contentId: id,
-              contentType: "post",
-              type: "dislike",
-            });
-          }}
-          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
-          id={id}
-          title={title}
-          type="posts"
-        />
+        <ContentFooter id={id} title={title} type="post" />
       </CardContent>
     </Card>
   );
