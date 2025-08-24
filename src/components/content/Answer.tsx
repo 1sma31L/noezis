@@ -13,6 +13,7 @@ import ContentFooter from "./ContentFooter";
 import useReaction from "@/lib/hooks/useReaction";
 import useExpanded from "@/lib/hooks/useExpanded";
 import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 
 function Answer(answer: AnswerWithAuthor) {
   const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
@@ -36,15 +37,19 @@ function Answer(answer: AnswerWithAuthor) {
       <CardHeader className="flex w-full flex-col gap-4">
         <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-4">
           <div className="flex flex-row items-center justify-start gap-2">
-            <Avatar className="h-8 w-8 md:h-10 md:w-10">
-              <AvatarImage
-                src={answer.author.user.image ?? ""}
-                alt={answer.author.user.name ?? ""}
-              />
-              <AvatarFallback className="bg-primary text-background">
-                {answer.author.user.name?.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
+            <Link
+              href={`${answer.author.username ? `/users/${answer.author.username}` : ""}`}
+            >
+              <Avatar className="h-8 w-8 md:h-10 md:w-10">
+                <AvatarImage
+                  src={answer.author.user.image ?? ""}
+                  alt={answer.author.user.name ?? ""}
+                />
+                <AvatarFallback className="bg-primary text-background">
+                  {answer.author.user.name?.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
             <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
               <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
                 {answer.author.user.name}
@@ -64,6 +69,11 @@ function Answer(answer: AnswerWithAuthor) {
           </div>
 
           <div className="flex flex-row items-center justify-start gap-2">
+            <p className="text-muted-foreground text-[9px] md:text-xs">
+              {formatDistanceToNow(new Date(answer.createdAt), {
+                addSuffix: true,
+              })}
+            </p>
             {true && (
               <Badge
                 variant="outline"
@@ -73,11 +83,6 @@ function Answer(answer: AnswerWithAuthor) {
                 Answer
               </Badge>
             )}
-            <p className="text-muted-foreground text-[9px] md:text-xs">
-              {formatDistanceToNow(new Date(answer.createdAt), {
-                addSuffix: true,
-              })}
-            </p>
           </div>
         </div>
         <div>
@@ -180,6 +185,7 @@ function Answer(answer: AnswerWithAuthor) {
           reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={answer.id}
           title={question?.title ?? ""}
+          type="answers"
         />
       </CardContent>
     </Card>

@@ -8,6 +8,7 @@ import ContentHeader from "./ContentHeader";
 import type { QuickTakeWithAuthor } from "@/lib/types/quickTake";
 import ContentFooter from "./ContentFooter";
 import useReaction from "@/lib/hooks/useReaction";
+import Link from "next/link";
 
 function QuickTake(quickTake: QuickTakeWithAuthor) {
   const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
@@ -21,6 +22,7 @@ function QuickTake(quickTake: QuickTakeWithAuthor) {
         isVerified={quickTake.author.isVerified}
         createdAt={quickTake.createdAt.toDateString()}
         type="quickTake"
+        username={quickTake.author.username}
       />
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-1">
@@ -49,6 +51,7 @@ function QuickTake(quickTake: QuickTakeWithAuthor) {
           reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={quickTake.id}
           title={quickTake.content}
+          type="quicktakes"
         />
       </CardContent>
     </Card>

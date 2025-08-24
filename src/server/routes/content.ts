@@ -45,6 +45,22 @@ export const contentRouter = createTRPCRouter({
     });
     return quickTakes;
   }),
+  getQuickTake: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { id } = input;
+      const myQuickTake = await ctx.db.query.quickTake.findFirst({
+        where: eq(quickTake.id, id),
+        with: {
+          author: {
+            with: {
+              user: true,
+            },
+          },
+        },
+      });
+      return myQuickTake;
+    }),
   createQuestion: protectedProcedure
     .input(
       z.object({

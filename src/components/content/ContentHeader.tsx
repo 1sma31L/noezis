@@ -9,10 +9,11 @@ import {
 } from "react-icons/ri";
 import { Badge } from "../ui/badge";
 import { formatDistanceToNow } from "date-fns";
-
+import Link from "next/link";
 function ContentHeader({
   image,
   name,
+  username,
   jobTitle,
   isVerified,
   createdAt,
@@ -21,6 +22,7 @@ function ContentHeader({
 }: {
   image: string;
   name: string;
+  username: string;
   jobTitle: string;
   isVerified: boolean;
   createdAt: string;
@@ -29,16 +31,18 @@ function ContentHeader({
 }) {
   return (
     <CardHeader className="flex w-full flex-row items-center justify-start gap-2 md:gap-4">
-      <Avatar className="h-8 w-8 md:h-10 md:w-10">
-        <AvatarImage
-          src={image ?? ""}
-          alt={name ?? ""}
-          className="object-cover"
-        />
-        <AvatarFallback className="bg-primary text-background">
-          {name.charAt(0)}
-        </AvatarFallback>
-      </Avatar>
+      <Link href={`${username ? `/users/${username}` : ""}`}>
+        <Avatar className="h-8 w-8 md:h-10 md:w-10">
+          <AvatarImage
+            src={image ?? ""}
+            alt={name ?? ""}
+            className="object-cover"
+          />
+          <AvatarFallback className="bg-primary text-background">
+            {name.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
+      </Link>
       <div className="flex w-full flex-1 flex-col items-start justify-start gap-0">
         <p className="flex flex-row items-center justify-start gap-1 text-xs font-medium md:text-base">
           {name}
@@ -57,6 +61,9 @@ function ContentHeader({
           </p>
         )}
       </div>
+      <p className="text-muted-foreground text-[9px] md:text-xs">
+        {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+      </p>
       <div className="flex flex-row items-center justify-start gap-2">
         {type === "quickTake" && (
           <Badge
@@ -102,9 +109,6 @@ function ContentHeader({
             Answer
           </Badge>
         )}
-        <p className="text-muted-foreground text-[9px] md:text-xs">
-          {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
-        </p>
       </div>
     </CardHeader>
   );

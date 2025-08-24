@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { toast } from "sonner";
-
+import Link from "next/link";
 function ContentFooter({
   isUpvoted,
   isDownvoted,
@@ -35,6 +35,7 @@ function ContentFooter({
   reactionCounts,
   id,
   title,
+  type,
 }: {
   isUpvoted: boolean;
   isDownvoted: boolean;
@@ -46,6 +47,7 @@ function ContentFooter({
   };
   id: string;
   title: string;
+  type: "posts" | "quicktakes" | "questions" | "answers";
 }) {
   const [isSaved, setIsSaved] = useState(false);
   return (
@@ -101,9 +103,12 @@ function ContentFooter({
           variant="ghost"
           size="sm"
           className="text-muted-foreground hover:text-foreground"
+          asChild
         >
-          <RiMessage2Line />
-          <p className="text-[9px] md:text-xs">10</p>
+          <Link href={`/${type ?? "posts"}/${id}`}>
+            <RiMessage2Line />
+            <p className="text-[9px] md:text-xs">10</p>
+          </Link>
         </Button>
 
         {/* Shares */}

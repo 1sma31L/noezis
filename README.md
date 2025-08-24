@@ -139,6 +139,7 @@ Day 14:
 
 day 15:
 
+- [x] add content pages to show comments and reactions.
 - [ ] Genrate the html on post submit so you dont have to deal with window undefined
 - [ ] figure out best tables design for all content types and reactions
 - [ ] Add comments and nested comments along with a page for each content type

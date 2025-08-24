@@ -86,6 +86,7 @@ function Post({
         isVerified={author.isVerified}
         createdAt={createdAt.toDateString()}
         type="post"
+        username={author.username}
       />
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-2">
@@ -163,6 +164,7 @@ function Post({
           reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={id}
           title={title}
+          type="posts"
         />
       </CardContent>
     </Card>

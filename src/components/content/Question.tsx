@@ -41,6 +41,7 @@ function Question(question: QuestionWithAuthor) {
         createdAt={question.createdAt.toISOString()}
         isAnswered={false}
         type="question"
+        username={question.author.username}
       />
 
       <CardContent className="flex w-full flex-col items-start justify-start gap-4">
@@ -101,6 +102,7 @@ function Question(question: QuestionWithAuthor) {
           reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
           id={question.id}
           title={question.title}
+          type="questions"
         />
 
         {/* <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
