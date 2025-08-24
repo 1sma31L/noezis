@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -8,34 +8,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  RiBookmarkLine,
-  RiMessage2Line,
-  RiShareLine,
-  RiMoreLine,
-  RiBookmarkFill,
-  RiNotificationLine,
-  RiNotificationFill,
-} from "react-icons/ri";
+
 import ContentTags from "./ContentTags";
 import ContentHeader from "./ContentHeader";
 import type { QuestionWithAuthor } from "@/lib/types/question";
+import ContentFooter from "./ContentFooter";
+import useReaction from "@/lib/hooks/useReaction";
+import useExpanded from "@/lib/hooks/useExpanded";
 
 function Question(question: QuestionWithAuthor) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
+    useReaction(question.id, "question");
 
-  const wordCount = question.content.trim().split(/\s+/).length;
-  const MAX_WORDS = 50;
-  const shouldShowMore = wordCount > MAX_WORDS;
+  const {
+    isExpanded,
+    setIsExpanded,
+    shouldShowMore,
+    truncateWords,
+    MAX_WORDS,
+  } = useExpanded(question.content, false);
 
-  const truncateWords = (text: string, limit: number) => {
-    const words = text.trim().split(/\s+/);
-    if (words.length <= limit) return text;
-    return words.slice(0, limit).join(" ") + "...";
-  };
-  if (!question) return null;
   return (
     <Card
       className={`flex w-full flex-col items-start justify-start gap-4 md:gap-6`}
@@ -89,9 +81,30 @@ function Question(question: QuestionWithAuthor) {
 
         <ContentTags tags={question.tags} />
 
-        <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
+        <ContentFooter
+          isUpvoted={isUpvoted}
+          isDownvoted={isDownvoted}
+          setIsUpvoted={() => {
+            toggleReaction({
+              contentId: question.id,
+              contentType: "question",
+              type: "like",
+            });
+          }}
+          setIsDownvoted={() => {
+            toggleReaction({
+              contentId: question.id,
+              contentType: "question",
+              type: "dislike",
+            });
+          }}
+          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
+          id={question.id}
+          title={question.title}
+        />
+
+        {/* <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">
           <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
-            {/* Answer Button */}
             <Button
               size="sm"
               className="bg-primary text-primary-foreground hover:bg-primary/90 !text-xs"
@@ -100,7 +113,6 @@ function Question(question: QuestionWithAuthor) {
               Answer
             </Button>
 
-            {/* Follow Question */}
             <Button
               variant="ghost"
               size="icon"
@@ -114,30 +126,25 @@ function Question(question: QuestionWithAuthor) {
               {isFollowing ? <RiNotificationFill /> : <RiNotificationLine />}
             </Button>
 
-            {/* Answers Count */}
             <Button
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground"
             >
               <RiMessage2Line />
-              {/* {question.answers && (
-                <p className="text-xs">{question.answers}</p>
-              )} */}
+              <p className="text-[9px] md:text-xs">0</p>
             </Button>
 
-            {/* Shares */}
             <Button
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground hidden md:flex"
             >
               <RiShareLine />
-              {/* {question.shares && <p className="text-xs">{question.shares}</p>} */}
+              <p className="text-[9px] md:text-xs">0</p>
             </Button>
           </div>
 
-          {/* Save */}
           <div className="flex flex-row items-center justify-start gap-2">
             <Button
               variant="ghost"
@@ -159,7 +166,7 @@ function Question(question: QuestionWithAuthor) {
               <RiMoreLine />
             </Button>
           </div>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );

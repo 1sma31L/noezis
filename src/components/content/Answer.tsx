@@ -1,51 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import {
-  RiCheckboxCircleFill,
-  RiThumbUpLine,
-  RiThumbDownLine,
-  RiMessage2Line,
-  RiShareLine,
-  RiBookmarkLine,
-  RiBookmarkFill,
-  RiMoreLine,
-  RiThumbUpFill,
-  RiThumbDownFill,
-} from "react-icons/ri";
+import { RiCheckboxCircleFill } from "react-icons/ri";
 import type { AnswerWithAuthor } from "@/lib/types/answer";
 import { api } from "@/trpc/react";
+import ContentFooter from "./ContentFooter";
+import useReaction from "@/lib/hooks/useReaction";
+import useExpanded from "@/lib/hooks/useExpanded";
+import { formatDistanceToNow } from "date-fns";
 
 function Answer(answer: AnswerWithAuthor) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
+    useReaction(answer.id, "answer");
 
   const { data: question } = api.content.getQuestion.useQuery({
     id: answer.questionId,
   });
 
-  const wordCount = answer.content.trim().split(/\s+/).length;
-  const MAX_WORDS = 50;
-  const shouldShowMore = wordCount > MAX_WORDS;
-
-  const truncateWords = (text: string, limit: number) => {
-    const words = text.trim().split(/\s+/);
-    if (words.length <= limit) return text;
-    return words.slice(0, limit).join(" ") + "...";
-  };
+  const {
+    isExpanded,
+    setIsExpanded,
+    shouldShowMore,
+    truncateWords,
+    MAX_WORDS,
+  } = useExpanded(answer.content, false);
 
   return (
     <Card className="flex w-full flex-col items-start justify-start gap-4 md:gap-6">
@@ -91,7 +74,9 @@ function Answer(answer: AnswerWithAuthor) {
               </Badge>
             )}
             <p className="text-muted-foreground text-[9px] md:text-xs">
-              {answer.createdAt.toLocaleDateString()}
+              {formatDistanceToNow(new Date(answer.createdAt), {
+                addSuffix: true,
+              })}
             </p>
           </div>
         </div>
@@ -175,94 +160,27 @@ function Answer(answer: AnswerWithAuthor) {
             {isExpanded ? "See less" : "See more"}
           </Button>
         )}
-
-        <div className="flex w-full flex-row items-center justify-between gap-2">
-          <div className="flex flex-row items-center justify-start gap-2 md:gap-4">
-            {/* Voting */}
-            <div className="bg-muted/50 flex h-8 flex-row items-center justify-start gap-2 rounded-full px-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`text-muted-foreground hover:text-foreground flex flex-row items-center justify-start gap-2 ${
-                  isUpvoted ? "text-primary hover:text-primary" : ""
-                }`}
-                onClick={() => {
-                  if (isDownvoted) setIsDownvoted(false);
-                  setIsUpvoted(!isUpvoted);
-                }}
-              >
-                {isUpvoted ? (
-                  <RiThumbUpFill className="text-primary" />
-                ) : (
-                  <RiThumbUpLine />
-                )}
-                <span className="text-[9px] md:text-xs">10</span>
-              </Button>
-              <Separator orientation="vertical" />
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`text-muted-foreground hover:text-foreground ${
-                  isDownvoted ? "text-destructive hover:text-destructive" : ""
-                }`}
-                onClick={() => {
-                  if (isUpvoted) setIsUpvoted(false);
-                  setIsDownvoted(!isDownvoted);
-                }}
-              >
-                {isDownvoted ? (
-                  <RiThumbDownFill className="text-destructive" />
-                ) : (
-                  <RiThumbDownLine />
-                )}
-                <span className="text-[9px] md:text-xs">10</span>
-              </Button>
-            </div>
-
-            {/* Comments */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <RiMessage2Line />
-              <p className="text-[9px] md:text-xs">10</p>
-            </Button>
-
-            {/* Shares */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground hidden md:flex"
-            >
-              <RiShareLine />
-              <p className="text-[9px] md:text-xs">10</p>
-            </Button>
-          </div>
-
-          {/* Save + Settings */}
-          <div className="flex flex-row items-center justify-start gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={() => setIsSaved(!isSaved)}
-            >
-              {isSaved ? (
-                <RiBookmarkFill className="text-yellow-500" />
-              ) : (
-                <RiBookmarkLine className="text-muted-foreground" />
-              )}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <RiMoreLine />
-            </Button>
-          </div>
-        </div>
+        <ContentFooter
+          isUpvoted={isUpvoted}
+          isDownvoted={isDownvoted}
+          setIsUpvoted={() => {
+            toggleReaction({
+              contentId: answer.id,
+              contentType: "answer",
+              type: "like",
+            });
+          }}
+          setIsDownvoted={() => {
+            toggleReaction({
+              contentId: answer.id,
+              contentType: "answer",
+              type: "dislike",
+            });
+          }}
+          reactionCounts={reactionCounts ?? { likes: 0, dislikes: 0 }}
+          id={answer.id}
+          title={question?.title ?? ""}
+        />
       </CardContent>
     </Card>
   );

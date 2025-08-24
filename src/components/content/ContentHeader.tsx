@@ -5,11 +5,10 @@ import {
   RiCheckboxCircleFill,
   RiFileTextFill,
   RiFlashlightFill,
-  RiMessage3Fill,
-  RiQuestionFill,
   RiQuestionLine,
 } from "react-icons/ri";
 import { Badge } from "../ui/badge";
+import { formatDistanceToNow } from "date-fns";
 
 function ContentHeader({
   image,
@@ -104,7 +103,7 @@ function ContentHeader({
           </Badge>
         )}
         <p className="text-muted-foreground text-[9px] md:text-xs">
-          {createdAt}
+          {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
         </p>
       </div>
     </CardHeader>

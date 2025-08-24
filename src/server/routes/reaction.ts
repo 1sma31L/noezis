@@ -12,7 +12,7 @@ export const reactionRouter = createTRPCRouter({
     .input(
       z.object({
         contentId: z.string(),
-        contentType: z.enum(["post", "quickTake"]),
+        contentType: z.enum(["post", "quickTake", "answer", "question"]),
         type: z.enum(["like", "dislike"]),
       }),
     )
@@ -81,7 +81,7 @@ export const reactionRouter = createTRPCRouter({
     .input(
       z.object({
         contentId: z.string(),
-        contentType: z.enum(["post", "quickTake"]),
+        contentType: z.enum(["post", "quickTake", "answer", "question"]),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -106,7 +106,7 @@ export const reactionRouter = createTRPCRouter({
     .input(
       z.object({
         contentId: z.string(),
-        contentType: z.enum(["post", "quickTake"]),
+        contentType: z.enum(["post", "quickTake", "answer", "question"]),
       }),
     )
     .query(async ({ ctx, input }) => {

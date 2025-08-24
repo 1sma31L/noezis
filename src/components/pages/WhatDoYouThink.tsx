@@ -14,9 +14,9 @@ import {
 } from "react-icons/ri";
 import CreateContentDialog from "../content/CreateContentDialog";
 
-function WhatDoYouThink({ isOwner }: { isOwner: boolean }) {
+function WhatDoYouThink() {
   const { data: profile } = useProfile();
-  if (!isOwner) return null;
+  if (!profile) return null;
   return (
     <Card className="w-full px-1">
       <CardContent className="flex flex-col items-center justify-start gap-6">
@@ -79,16 +79,19 @@ function WhatDoYouThink({ isOwner }: { isOwner: boolean }) {
             defaultType="question"
           />
           <Separator orientation="vertical" />
-          <Button
-            variant="ghost"
-            size={"sm"}
-            className="!px-1 text-xs sm:!px-2 md:text-sm"
-          >
-            <Link href="/explore#questions" className="flex items-center gap-1">
-              <RiMessage2Line className="!h-3 !w-3" />
-              <p>Answer</p>
-            </Link>
-          </Button>
+          <CreateContentDialog
+            trigger={
+              <Button
+                variant="ghost"
+                size={"sm"}
+                className="!px-1 text-xs sm:!px-2 md:text-sm"
+              >
+                <RiMessage2Line className="!h-3 !w-3" />
+                <p>Answer</p>
+              </Button>
+            }
+            defaultType="answer"
+          />
           <Separator orientation="vertical" />{" "}
           <Button
             variant="ghost"

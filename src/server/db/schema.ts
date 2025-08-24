@@ -12,7 +12,7 @@ import { ANONYMOUS_PROFILE_IMAGE } from "@/lib/constants";
 
 export const contentTypeEnum = pgEnum("content_type", [
   "post",
-  "comment",
+  "question",
   "answer",
   "quickTake",
 ]);
