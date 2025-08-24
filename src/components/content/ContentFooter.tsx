@@ -41,10 +41,12 @@ function ContentFooter({
   id,
   title,
   type,
+  comments = 0,
 }: {
   id: string;
   title: string;
   type: ContentType;
+  comments?: number;
 }) {
   const { isUpvoted, isDownvoted, toggleReaction, reactionCounts } =
     useReaction(id, type);
@@ -105,7 +107,7 @@ function ContentFooter({
         >
           <Link href={`/${typeToUrlMapping[type]}/${id}`}>
             <RiMessage2Line />
-            <p className="text-[9px] md:text-xs">10</p>
+            <p className="text-[9px] md:text-xs">{comments}</p>
           </Link>
         </Button>
 

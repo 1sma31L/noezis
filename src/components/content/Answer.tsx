@@ -166,6 +166,7 @@ function Answer(answer: AnswerWithAuthor) {
           id={answer.id}
           title={question?.title ?? ""}
           type="answer"
+          comments={answer.comments}
         />
       </CardContent>
     </Card>

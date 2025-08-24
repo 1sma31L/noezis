@@ -30,6 +30,7 @@ function QuickTake(quickTake: QuickTakeWithAuthor) {
           id={quickTake.id}
           title={quickTake.content}
           type="quickTake"
+          comments={quickTake.comments}
         />
       </CardContent>
     </Card>

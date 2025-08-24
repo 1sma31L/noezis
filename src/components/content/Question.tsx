@@ -81,6 +81,7 @@ function Question(question: QuestionWithAuthor) {
           id={question.id}
           title={question.title}
           type="question"
+          comments={question.comments}
         />
 
         {/* <div className="flex w-full flex-row items-center justify-between gap-2 pt-2">

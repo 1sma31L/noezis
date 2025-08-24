@@ -32,6 +32,7 @@ function Post({
   content,
   thumbnail,
   tags,
+  comments,
 }: PostWithAuthor) {
   const [postContent, setPostContent] = useState("");
   const [isMounted, setIsMounted] = useState(false);
@@ -140,7 +141,7 @@ function Post({
 
         <ContentTags tags={tags} />
 
-        <ContentFooter id={id} title={title} type="post" />
+        <ContentFooter id={id} title={title} type="post" comments={comments} />
       </CardContent>
     </Card>
   );

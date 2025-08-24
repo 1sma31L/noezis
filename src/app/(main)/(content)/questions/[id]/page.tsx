@@ -1,7 +1,8 @@
 "use client";
 import { useParams } from "next/navigation";
+import ContentPage from "@/components/content/ContentPage";
 
 export default function QuestionPage() {
   const { id } = useParams();
-  return <div>QuestionPage {id}</div>;
+  return <ContentPage contentType="question" contentId={id as string} />;
 }

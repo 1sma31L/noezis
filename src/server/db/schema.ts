@@ -224,6 +224,7 @@ export const quickTake = pgTable("quick_take", (d) => ({
     }),
   content: d.text().notNull(),
   tags: d.text().array(),
+  comments: d.integer().notNull().default(0),
   isDeleted: d.boolean().notNull().default(false),
   createdAt: d
     .timestamp({ mode: "date", withTimezone: true })
@@ -256,6 +257,7 @@ export const question = pgTable("question", (d) => ({
   title: d.varchar({ length: 255 }).notNull(),
   content: d.text().notNull(),
   tags: d.text().array(),
+  comments: d.integer().notNull().default(0),
   isDeleted: d.boolean().notNull().default(false),
   createdAt: d
     .timestamp({ mode: "date", withTimezone: true })
@@ -289,6 +291,7 @@ export const answer = pgTable("answer", (d) => ({
     .references(() => user.id, { onDelete: "cascade" }),
   content: d.text().notNull(),
   tags: d.text().array(),
+  comments: d.integer().notNull().default(0),
   isDeleted: d.boolean().notNull().default(false),
   createdAt: d
     .timestamp({ mode: "date", withTimezone: true })
@@ -308,5 +311,40 @@ export const answerRelations = relations(answer, ({ one }) => ({
   question: one(question, {
     fields: [answer.questionId],
     references: [question.id],
+  }),
+}));
+
+export const comment = pgTable("comment", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  authorId: text("author_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  contentType: contentTypeEnum("content_type").notNull(),
+  contentId: text("content_id").notNull(),
+  parentCommentId: text("parent_comment_id"),
+  content: text("content").notNull(),
+  isDeleted: boolean("is_deleted").notNull().default(false),
+  createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", { mode: "date", withTimezone: true })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const commentRelations = relations(comment, ({ one, many }) => ({
+  author: one(profile, {
+    fields: [comment.authorId],
+    references: [profile.userId],
+  }),
+  parentComment: one(comment, {
+    fields: [comment.parentCommentId],
+    references: [comment.id],
+    relationName: "CommentReplies",
+  }),
+  replies: many(comment, {
+    relationName: "CommentReplies",
   }),
 }));

@@ -141,7 +141,7 @@ day 15:
 
 - [x] add content pages to show comments and reactions.
 - [x] add optimistc ui for reactions
-- [ ] Add comments and nested comments along with a page for each content type
+- [x] Add comments and nested comments along with a page for each content type
 
 Day 16:
 

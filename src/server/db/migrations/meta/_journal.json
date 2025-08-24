@@ -134,6 +134,27 @@
       "when": 1756003066841,
       "tag": "0018_powerful_blindfold",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1756048841917,
+      "tag": "0019_slim_absorbing_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1756049638589,
+      "tag": "0020_large_gressill",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1756050006346,
+      "tag": "0021_fast_morgan_stark",
+      "breakpoints": true
     }
   ]
 }
