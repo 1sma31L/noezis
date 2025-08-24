@@ -131,84 +131,77 @@ Day 13:
 
 Day 14:
 
-- [ ] add questions
-- [ ] add answers
+- [x] add questions
+- [x] add answers
+- [x] add date-fns and refactor the code
+- [x] add shares button and the more options modal
+- [x] Use more polymorphic design for all content types
 
 day 15:
 
+- [ ] Genrate the html on post submit so you dont have to deal with window undefined
 - [ ] figure out best tables design for all content types and reactions
 - [ ] Add comments and nested comments along with a page for each content type
-- [ ] add shares button and the more options modal
 
 Day 16:
-
-- [ ] Use more polymorphic design for all content types
-- [ ] Genrate the html on post submit so you dont have to deal with window undefined
-- [ ] Design the settings page
-
-Day 17:
 
 - [ ] Add better feed system
 - [ ] Implement follower/following system
 
-Day 18 (HARD):
+Day 17:
 
+- [ ] Design the settings page
 - [ ] Design the messages page and implement it
-- [ ] Add notifications
 
-Day 19 (Explore page):
+Day 18:
+
+- [ ] Add notifications
+- [ ] Add karma system
+- [ ] Add bookmarks and reading later system (save)
+
+Day 19:
+
+- [ ] User activity
+- [ ] User achevments
+
+Day 20 (Explore page):
 
 - [ ] Advanced Topic hierarchy
 - [ ] Advanced search with Elasticsearch
+- [ ] Add redis for caching
 
-Day 20:
-
-- [ ] Design the control page for post versioning and implement it
-- [ ] Add role based access
+---- Admin
 
 Day 21:
 
 - [ ] Design the admin dashboard and implement it
 - [ ] Add statistic to admin dashboard
+- [ ] Add role based access
 
 Day 22:
-
-- [ ] Add karma system
-- [ ] Add bookmarks and reading later system (save)
-- [ ] User activity
-- [ ] User achevments
-
-### Week 3 (FEATURES)
-
-Day 24:
-
-- [ ] Draft for posts
-- [ ] Add redis for caching
-
-Day 25:
 
 - [ ] Content flagging system and user repporting
 - [ ] Advanced moderation tools (PerspectiveAPI)
 
-Day 26:
+Day 23:
 
 - [ ] SEO
 - [ ] Trending keywords (What is trending)
 - [ ] Tag system with synonyms
 
-Day 27:
-
-- [ ] Custom feeds
-- [ ] Content recommendation engine
-
-Day 28:
+Day 24:
 
 - [ ] Framer motions animations
 
-Day 29:
+Day 25:
 
 - [ ] Logging system and monitoring (Axiom, Vercel)
 - [ ] integration testing
+
+## Next Features
+
+- [ ] Custom feeds
+- [ ] Content recommendation engine
 
 ## Getting Started
 
